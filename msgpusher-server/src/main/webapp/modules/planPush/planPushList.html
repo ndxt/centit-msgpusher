@@ -1,0 +1,108 @@
+<div class="easyui-layout" id="userinfo_panel">
+
+	<div >
+
+		<div class="easyui-panel search-body" cls="search" style="width: 100%;">
+			<form class="clearFromValue">
+				<div class="search-item">
+					<label>osId</label>
+					<input class="easyui-combobox" id="selectOsId" data-options="
+					valueField: 'label',
+					textField: 'value',
+				"  name="osId" />
+				</div>
+				<div class="search-item">
+					<label>optId</label>
+					<input class="easyui-combobox" id="selectOptId" data-options="
+					valueField: 'label',
+					textField: 'value',
+				"  name="optId" />
+				</div>
+				<div class="search-item">
+					<label>状态</label>
+					<input class="easyui-combobox" id="selectPushState" data-options="
+					valueField: 'label',
+					textField: 'value',
+				"  name="pushState" />
+				</div>
+				<div class="search-item">
+					<label>开始</label>
+				<input class="easyui-datetimebox" id="pushTimeStart" data-options=""
+					   name="begin"/>
+				</div>
+				<div class="search-item">
+					<label>结束</label>
+				<input class="easyui-datetimebox" id="pushTimeEnd" data-options="
+					showSeconds:true"
+					   name="end"/>
+				</div>
+
+				<a class="easyui-linkbutton btn-search" iconCls="icon-search" onclick="search();"><p  id="e@btn.search">搜索</p></a>
+				<a class="easyui-linkbutton" style="margin-top:8px;" iconcls="icon-reload" onclick="javascript:$('.clearFromValue').form('clear');$('.defaultChecked').prop('checked','true');" group="" id="">
+					<p>重置</p>
+				</a>
+				<!--<a href="javascript:void(0)" style="margin-top:8px;" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyPush()">取消发送</a>-->
+				<a class="easyui-linkbutton" style="margin-top:8px;" iconCls="icon-remove" onclick="destroyPush();"><p>取消发送</p></a>
+			</form>
+
+		</div>
+
+		<table id="dg" url="service/msgdlvry/listAllPlanPush"
+			   width="98%"
+			   bottom="0"
+			   search=".search"
+			   layoutH="65"
+		>
+			<thead>
+			<tr>
+				<th data-options="field:'msgId'" width="10%" sortable="true" hidden=" true">msgId</th>
+				<th data-options="field:'msgSender'" width="10%" sortable="true">发送人</th>
+				<th data-options="field:'msgReceiver'" width="10%" sortable="true">接收人</th>
+				<th data-options="field:'pushType'" width="10%" sortable="true">推送方式</th>
+				<th data-options="field:'pushState'" width="10%" sortable="true">发送状态</th>
+				<th data-options="field:'planPushTime'" width="20%"  sortable="true">预发送时间</th>
+				<th data-options="field:'pushTime'" width="20%"  format="Unit">发送时间</th>
+			</tr>
+			</thead>
+		</table>
+	</div>
+</div>
+
+<script>
+
+	$.parser.onComplete = function(panel) {
+		$.parser.onComplete = $.noop;
+		requirejs([
+			'core/filter/filter.dictionary',
+			'modules/planPush/ctrl/planPush'
+		], function(FilterDictionary, FileAccessLog) {
+			FilterDictionary.add(['YesOrNo']).then(function() {
+				new FileAccessLog('planPush', panel).load(panel);
+			});
+		});
+	};
+	setI18NText("");
+
+	function destroyPush(){
+		var row = $('#dg').datagrid('getSelected');
+//		var msgId = row.msgId;
+		if (row){
+			$.messager.confirm('Confirm','确定取消发送嘛?',function(r){
+				if (r){
+					$.post('http://localhost:8084/message-delivery/service/msgdlvry/cancelPlanPush',{msgId:row.msgId},function(result){
+						debugger;
+						if (result.message == 'OK'){
+							$('#dg').datagrid('reload');    // reload the  data
+						} else {
+							$.messager.show({    // show error message
+								title: 'Error',
+								msg: result.errorMsg
+							});
+						}
+					},'json');
+				}
+			});
+		}
+	}
+
+</script>

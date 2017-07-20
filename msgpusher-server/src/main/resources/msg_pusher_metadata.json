@@ -1,0 +1,35 @@
+{
+  "osInfos": [
+    {
+      "osId": "YCXMGLPT",
+      "androidPkg": "com.centit.reporter",
+      "wxGzh":"ycxmglptgzh",
+      "optInfos":[
+        {
+          "optId":"projectDetail",
+          "androidView":".ui.ycui.ProjectDetailActivity"
+        },
+        {
+          "optId":"issueDetail",
+          "androidView":".ui.ycui.IssueDetailActivity"
+        },
+        {
+          "optId":"qz",
+          "androidView":".ui.ycui.IssueDetailActivity"
+        },
+        {
+          "optId":"df",
+          "androidView":".ui.ycui.IssueDetailActivity"
+        },
+        {
+          "optId":"dbrw",
+          "androidView":".ui.ycui.IssueDetailActivity"
+        },
+        {
+          "optId":"gzhb",
+          "androidView":".ui.ycui.IssueDetailActivity"
+        }
+      ]
+    }
+  ]
+}

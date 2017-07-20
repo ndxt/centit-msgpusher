@@ -1,0 +1,93 @@
+<div class="easyui-layout" id="userinfo_panel">
+
+	<div >
+	
+		<div class="easyui-panel search-body" cls="search" style="width: 100%;">
+			<form class="clearFromValue">
+				<div class="search-item">
+
+					<div class="search-item">
+					<label >OSID</label>
+					<input type="text" class="easyui-textbox" name="s_osId" />
+					</div>
+
+					<div class="search-item">
+					<label >optId</label>
+					<input type="text" class="easyui-textbox" name="s_optId" />
+					</div>
+
+					<div class="search-item">
+					<label >推送时间</label>
+					<input class="easyui-datetimebox" id="pushTimeStart" data-options=""
+					name="s_pushTimeStart"/>
+					</div>
+
+					<div class="search-item">
+					<label>—</label>
+					<input class="easyui-datetimebox" id="pushTimeEnd" data-options="
+					showSeconds:true"
+					name="s_pushTimeEnd"/>
+					</div>
+				</div>
+
+
+				<a class="easyui-linkbutton btn-search" iconCls="icon-search"><p  id="e@btn.search">搜索</p></a>
+				<a class="easyui-linkbutton" style="margin-top:8px;" iconcls="icon-reload" onclick="javascript:$('.clearFromValue').form('clear');$('.defaultChecked').prop('checked','true');" group="" id="">
+					<p>重置</p>
+				</a>
+				<a class="easyui-linkbutton" style="margin-top:8px;" iconCls="icon-remove" onclick="remove();"><p>删除超期记录</p></a>
+			</form>
+		</div>
+		
+		<table url="service/msgdlvry/view"
+			width="98%"
+			bottom="0"
+			search=".search"
+			layoutH="65"	
+			>
+			<thead>
+				<tr>
+					<th data-options="field:'msgSender'" width="19%" sortable="true">发送人</th>
+					<th data-options="field:'msgReceiver'" width="19%" sortable="true">接收人</th>
+					<th data-options="field:'msgSubject'" width="19%" sortable="true">主题</th>
+					<th data-options="field:'msgContent'" format="Unit" width="19%">内容</th>
+				
+				</tr>
+			</thead>
+		</table>
+	</div>
+</div>
+
+<script>
+	
+	$.parser.onComplete = function(panel) {
+		$.parser.onComplete = $.noop;
+		requirejs([
+					'core/filter/filter.dictionary',
+		           'modules/fileAccessLog/ctrl/fileAccessLog'
+		          ], function(FilterDictionary, FileAccessLog) {
+			FilterDictionary.add(['YesOrNo']).then(function() {
+				new FileAccessLog('fileAccessLog', panel).load(panel);
+			});
+		});
+	};
+	setI18NText("");
+	remove = function(){
+		$.messager.confirm('提示','确定要删除记录吗?',function(r){
+			if (r){
+				$.ajax({
+					type : "POST",
+					url : "http://localhost:8184/message-delivery/service/msgdlvry/delete",
+					data : {
+//						"osId" : "5",
+//						"optId" : "6"
+					},
+					success : function(result) {
+						$.messager.alert('提示',result.data,'info');
+					}
+				});
+			}
+		});
+
+	}
+</script>
