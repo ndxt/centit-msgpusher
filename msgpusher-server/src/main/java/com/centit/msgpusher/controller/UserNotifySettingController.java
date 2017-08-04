@@ -1,29 +1,26 @@
 package com.centit.msgpusher.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.centit.framework.core.common.JsonResultUtils;
+import com.centit.framework.core.common.ResponseMapData;
+import com.centit.framework.core.controller.BaseController;
+import com.centit.framework.core.dao.PageDesc;
 import com.centit.msgpusher.po.UserNotifySetting;
+import com.centit.msgpusher.service.UserNotifySettingManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import java.io.Serializable;
-import java.util.Map;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
-import com.centit.msgpusher.service.UserNotifySettingManager;
-	
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.alibaba.fastjson.JSONArray;
-import com.centit.framework.core.controller.BaseController;
-import com.centit.framework.core.dao.PageDesc;
-import com.centit.framework.core.common.JsonResultUtils;
-import com.centit.framework.core.common.ResponseData;
+import java.io.Serializable;
+import java.util.Map;
 /**
  * UserNotifySetting  Controller.
  * create by scaffold 2017-04-07 
@@ -64,7 +61,7 @@ public class UserNotifySettingController  extends BaseController {
             return;
         }
         
-        ResponseData resData = new ResponseData();
+        ResponseMapData resData = new ResponseMapData();
         resData.addResponseData(OBJLIST, listObjects);
         resData.addResponseData(PAGE_DESC, pageDesc);
 
@@ -96,8 +93,9 @@ public class UserNotifySettingController  extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.POST})
     public void createUserNotifySetting(@RequestBody @Valid UserNotifySetting userNotifySetting, HttpServletResponse response) {
-    	Serializable pk = userNotifySettingMag.saveNewObject(userNotifySetting);
-        JsonResultUtils.writeSingleDataJson(pk,response);
+    	userNotifySettingMag.saveNewObject(userNotifySetting);
+        JsonResultUtils.writeSingleDataJson(
+                userNotifySetting.getUserSettingId(),response);
     }
 
     /**

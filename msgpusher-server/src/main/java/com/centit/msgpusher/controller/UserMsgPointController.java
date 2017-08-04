@@ -1,30 +1,27 @@
 package com.centit.msgpusher.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.centit.framework.core.common.JsonResultUtils;
+import com.centit.framework.core.common.ResponseMapData;
+import com.centit.framework.core.controller.BaseController;
+import com.centit.framework.core.dao.PageDesc;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.po.UserMsgPointId;
+import com.centit.msgpusher.service.UserMsgPointManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import java.io.Serializable;
-import java.util.Map;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
-import com.centit.msgpusher.service.UserMsgPointManager;
-	
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.alibaba.fastjson.JSONArray;
-import com.centit.framework.core.controller.BaseController;
-import com.centit.framework.core.dao.PageDesc;
-import com.centit.framework.core.common.JsonResultUtils;
-import com.centit.framework.core.common.ResponseData;
+import java.io.Serializable;
+import java.util.Map;
 /**
  * UserMsgPoint  Controller.
  * create by scaffold 2017-04-07 
@@ -64,8 +61,8 @@ public class UserMsgPointController  extends BaseController {
             JsonResultUtils.writeSingleDataJson(listObjects, response);
             return;
         }
-        
-        ResponseData resData = new ResponseData();
+
+        ResponseMapData resData = new ResponseMapData();
         resData.addResponseData(OBJLIST, listObjects);
         resData.addResponseData(PAGE_DESC, pageDesc);
 
@@ -98,8 +95,8 @@ public class UserMsgPointController  extends BaseController {
      */
     @RequestMapping(method = {RequestMethod.POST})
     public void createUserMsgPoint(@RequestBody @Valid UserMsgPoint userMsgPoint, HttpServletResponse response) {
-    	Serializable pk = userMsgPointMag.saveNewObject(userMsgPoint);
-        JsonResultUtils.writeSingleDataJson(pk,response);
+    	userMsgPointMag.saveNewObject(userMsgPoint);
+        JsonResultUtils.writeSingleDataJson(userMsgPoint.getCid(),response);
     }
 
     /**
