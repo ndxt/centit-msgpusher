@@ -1,8 +1,8 @@
 package com.centit.msgpusher.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
+import com.centit.framework.core.dao.DictionaryMapUtils;
 import com.centit.framework.core.dao.PageDesc;
-import com.centit.framework.hibernate.dao.SysDaoOptUtils;
 import com.centit.framework.hibernate.service.BaseEntityManagerImpl;
 import com.centit.msgpusher.dao.UserMsgPointDao;
 import com.centit.msgpusher.po.UserMsgPoint;
@@ -51,9 +51,9 @@ public class UserMsgPointManagerImpl
 	public JSONArray listUserMsgPointsAsJson(
             String[] fields,
             Map<String, Object> filterMap, PageDesc pageDesc){
-			
-		return SysDaoOptUtils.listObjectsAsJson(baseDao, fields, UserMsgPoint.class,
-    			filterMap, pageDesc);
+
+		return DictionaryMapUtils.objectsToJSONArray(
+				baseDao.listObjects(filterMap, pageDesc), fields);
 	}
 
 	@Override

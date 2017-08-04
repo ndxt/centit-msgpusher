@@ -2,9 +2,9 @@ package com.centit.msgpusher.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.centit.framework.core.dao.DictionaryMapUtils;
 import com.centit.framework.core.dao.PageDesc;
 import com.centit.framework.hibernate.dao.DatabaseOptUtils;
-import com.centit.framework.hibernate.dao.SysDaoOptUtils;
 import com.centit.framework.hibernate.service.BaseEntityManagerImpl;
 import com.centit.msgpusher.dao.MessageDeliveryDao;
 import com.centit.msgpusher.dao.UserMsgPointDao;
@@ -17,6 +17,7 @@ import com.centit.msgpusher.service.MessageDeliveryManager;
 import com.centit.msgpusher.service.MsgPusherCenter;
 import com.centit.support.algorithm.DatetimeOpt;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 import java.util.*;
-import org.slf4j.Logger;
 
 
 /**
@@ -72,8 +72,8 @@ public class MessageDeliveryManagerImpl
             String[] fields,
             Map<String, Object> filterMap, PageDesc pageDesc){
 			
-		return SysDaoOptUtils.listObjectsAsJson(baseDao, fields, MessageDelivery.class,
-    			filterMap, pageDesc);
+		return DictionaryMapUtils.objectsToJSONArray(
+				baseDao.listObjects(filterMap, pageDesc), fields);
 	}
 
 	/**

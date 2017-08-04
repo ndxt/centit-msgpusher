@@ -4,10 +4,10 @@ import java.util.*;
 
 import com.alibaba.fastjson.JSONArray;
 import com.centit.framework.core.dao.CodeBook;
+import com.centit.framework.core.dao.DictionaryMapUtils;
 import com.centit.framework.core.dao.PageDesc;
 import com.centit.framework.hibernate.dao.BaseDaoImpl;
 import com.centit.framework.hibernate.dao.DatabaseOptUtils;
-import com.centit.framework.hibernate.dao.SysDaoOptUtils;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.support.algorithm.DatetimeOpt;
 import com.centit.support.database.QueryAndNamedParams;
@@ -99,10 +99,9 @@ public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,java.lang.St
 						+ " [ :begin | and h.createTime > :begin ]"
 						+ " [ :end | and h.createTime < :end ]";
 		QueryAndNamedParams qap = QueryUtils.translateQuery(queryStatement,queryParamsMap);
-		JSONArray dataList = SysDaoOptUtils.listObjectsByHqlAsJson(baseDao,
-				qap.getQuery(), qap.getParams(),
-				null,
-				pageDesc);
+		JSONArray dataList = DictionaryMapUtils.objectsToJSONArray(
+					DatabaseOptUtils.findObjectsByHql(baseDao,
+							qap.getQuery(), qap.getParams(),pageDesc));
 		return dataList;
 	}
 

@@ -1,8 +1,8 @@
 package com.centit.msgpusher.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
+import com.centit.framework.core.dao.DictionaryMapUtils;
 import com.centit.framework.core.dao.PageDesc;
-import com.centit.framework.hibernate.dao.SysDaoOptUtils;
 import com.centit.framework.hibernate.service.BaseEntityManagerImpl;
 import com.centit.msgpusher.dao.UserNotifySettingDao;
 import com.centit.msgpusher.po.UserNotifySetting;
@@ -51,9 +51,9 @@ public class UserNotifySettingManagerImpl
 	public JSONArray listUserNotifySettingsAsJson(
             String[] fields,
             Map<String, Object> filterMap, PageDesc pageDesc){
-			
-		return SysDaoOptUtils.listObjectsAsJson(baseDao, fields, UserNotifySetting.class,
-    			filterMap, pageDesc);
+
+		return DictionaryMapUtils.objectsToJSONArray(
+				baseDao.listObjects(filterMap, pageDesc), fields);
 	}
 
 }
