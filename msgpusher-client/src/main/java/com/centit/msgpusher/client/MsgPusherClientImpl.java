@@ -1,9 +1,7 @@
 package com.centit.msgpusher.client;
 
-import com.alibaba.fastjson.JSONObject;
 import com.centit.framework.appclient.AppSession;
-import com.centit.framework.core.common.ResponseData;
-import com.centit.framework.core.common.ResponseJSON;
+import com.centit.framework.common.ResponseJSON;
 import com.centit.msgpusher.client.po.MessageDelivery;
 import com.centit.msgpusher.client.po.PushResult;
 import com.centit.msgpusher.client.po.UserMsgPoint;

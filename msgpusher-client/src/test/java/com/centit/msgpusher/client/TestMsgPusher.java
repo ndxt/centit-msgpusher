@@ -1,7 +1,7 @@
 package com.centit.msgpusher.client;
 
 import com.alibaba.fastjson.JSON;
-import com.centit.framework.core.common.ResponseJSON;
+import com.centit.framework.common.ResponseJSON;
 import com.centit.msgpusher.client.po.PushResult;
 import com.centit.support.network.SendMailExecutor;
 
@@ -44,9 +44,9 @@ public class TestMsgPusher {
     }
 
     public static boolean sendEmail() {
-        SendMailExecutor executor = new SendMailExecutor();
-        executor.setMailServer("MAILBAK.centit.com","zou_wy","centit.1");
-        return executor.sendEmail("634077293@qq.com","zou_wy@centit.com","hello","nihao");
+        //SendMailExecutor executor = new SendMailExecutor();
+        SendMailExecutor.setMailServer("MAILBAK.centit.com","zou_wy","centit.1");
+        return SendMailExecutor.sendEmail("634077293@qq.com","zou_wy@centit.com","hello","nihao");
     }
 
 }
