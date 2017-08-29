@@ -1,10 +1,11 @@
 package com.centit.msgpusher.service;
 
-import java.util.Map;
 import com.alibaba.fastjson.JSONArray;
 import com.centit.framework.core.dao.PageDesc;
 import com.centit.framework.hibernate.service.BaseEntityManager;
 import com.centit.msgpusher.po.UserNotifySetting;
+
+import java.util.Map;
 
 /**
  * UserNotifySetting  Service.
@@ -13,7 +14,7 @@ import com.centit.msgpusher.po.UserNotifySetting;
  * 用户通知接受参数设置用户设置 自己接收 通知的方式。   
 */
 
-public interface UserNotifySettingManager extends BaseEntityManager<UserNotifySetting,java.lang.String>
+public interface UserNotifySettingManager extends BaseEntityManager<UserNotifySetting,String>
 {
 	
 	JSONArray listUserNotifySettingsAsJson(
