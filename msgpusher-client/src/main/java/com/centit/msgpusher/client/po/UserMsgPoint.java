@@ -65,14 +65,14 @@ public class UserMsgPoint implements java.io.Serializable {
 	}
 
 
-	/** minimal constructor */
+	// minimal constructor
 	public UserMsgPoint(String osId,String userCode) {
 
 		this.userCode = userCode;
 		this.osId = osId;
 	}
 
-	/** full constructor */
+
 	public UserMsgPoint(String osId,String userCode, String userName, String deviceType,
 						String deviceId, String osVersion, String channelId,
 						String wxToken, String mobilePhone, String emailAddress) {

@@ -46,10 +46,10 @@ public class UserMsgPointController  extends BaseController {
     /**
      * 查询所有   用户消息接收端口信息  列表
      *
-     * @param field    json中只保存需要的属性名
-     * @param request  {@link HttpServletRequest}
-     * @param response {@link HttpServletResponse}
-     * @return {data:[]}
+     * @param field json中只保存需要的属性名
+     * @param pageDesc 分页
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
      */
     @RequestMapping(method = RequestMethod.GET)
     public void list(String[] field, PageDesc pageDesc, HttpServletRequest request, HttpServletResponse response) {
@@ -68,15 +68,13 @@ public class UserMsgPointController  extends BaseController {
 
         JsonResultUtils.writeResponseDataAsJson(resData, response);
     }
-    
+
     /**
-     * 查询单个  用户消息接收端口信息 
-	
-	 * @param userCode  User_Code
-	 * @param osId  OS_ID
+     * 查询单个  用户消息接收端口信息
      *
-     * @param response    {@link HttpServletResponse}
-     * @return {data:{}}
+     * @param userCode 用户编号
+     * @param osId 系统ID
+     * @param response HttpServletResponse
      */
     @RequestMapping(value = "/{userCode}/{osId}", method = {RequestMethod.GET})
     public void getUserMsgPoint(@PathVariable String userCode,@PathVariable String osId, HttpServletResponse response) {
@@ -86,12 +84,11 @@ public class UserMsgPointController  extends BaseController {
     	
         JsonResultUtils.writeSingleDataJson(userMsgPoint, response);
     }
-    
+
     /**
      * 新增 用户消息接收端口信息
-     *
-     * @param userMsgPoint  {@link UserMsgPoint}
-     * @return
+     * @param userMsgPoint 用户消息接收端口信息
+     * @param response HttpServletResponse
      */
     @RequestMapping(method = {RequestMethod.POST})
     public void createUserMsgPoint(@RequestBody @Valid UserMsgPoint userMsgPoint, HttpServletResponse response) {
@@ -100,10 +97,10 @@ public class UserMsgPointController  extends BaseController {
     }
 
     /**
-     * 删除单个  用户消息接收端口信息 
-	
-	 * @param userCode  User_Code
-	 * @param osId  OS_ID
+     * 删除单个  用户消息接收端口信息
+     * @param userCode 用户消息接收端口信息
+     * @param osId 系统ID
+     * @param response HttpServletResponse
      */
     @RequestMapping(value = "/{userCode}/{osId}", method = {RequestMethod.DELETE})
     public void deleteUserMsgPoint(@PathVariable String userCode,@PathVariable String osId, HttpServletResponse response) {
@@ -111,15 +108,14 @@ public class UserMsgPointController  extends BaseController {
     	userMsgPointMag.deleteObjectById(new UserMsgPointId(  userCode, osId) );
     	
         JsonResultUtils.writeBlankJson(response);
-    } 
-    
+    }
+
     /**
-     * 新增或保存 用户消息接收端口信息 
-    
-	 * @param userCode  User_Code
-	 * @param osId  OS_ID
-	 * @param userMsgPoint  {@link UserMsgPoint}
-     * @param response    {@link HttpServletResponse}
+     * 新增或保存 用户消息接收端口信息
+     * @param userCode 用户编号
+     * @param osId 系统ID
+     * @param userMsgPoint 用户消息接收端口信息
+     * @param response HttpServletResponse
      */
     @RequestMapping(value = "/{userCode}/{osId}", method = {RequestMethod.PUT})
     public void updateUserMsgPoint(@PathVariable String userCode,@PathVariable String osId, 

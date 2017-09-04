@@ -85,7 +85,7 @@ public class MessageDelivery implements java.io.Serializable {
         this.msgType= "message";
         this.msgExpireSeconds= DEFALUT_MSG_EXPIRES;
     }
-        /** minimal constructor */
+
 	public MessageDelivery(
                 Long msgId
                 ,String  msgReceiver,String  msgContent,String  optId) {
@@ -98,7 +98,7 @@ public class MessageDelivery implements java.io.Serializable {
         this.optId= optId;
     }
 
-/** full constructor */
+
 	public MessageDelivery(
                 Long msgId
                 ,String  msgSender,String  pushType,String  msgReceiver,String  msgType,String  msgSubject,

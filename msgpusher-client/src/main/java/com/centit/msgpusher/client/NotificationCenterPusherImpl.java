@@ -22,9 +22,9 @@ public class NotificationCenterPusherImpl
     /**
      * 注册新的发送消息通知
      *
-     * @param sendType
-     * @param sender
-     * @return
+     * @param sendType 发送类型
+     * @param sender 发送人
+     * @return 响应
      */
     @Override
     public NotificationCenter registerMessageSender(String sendType, MessageSender sender) {
@@ -34,8 +34,8 @@ public class NotificationCenterPusherImpl
     /**
      * 设置默认的发送通知内部
      *
-     * @param sendType
-     * @return
+     * @param sendType 发送类型
+     * @return 发送人
      */
     @Override
     public MessageSender setDefaultSendType(String sendType) {
@@ -76,7 +76,7 @@ public class NotificationCenterPusherImpl
      * @param msgContent 消息内容
      * @param optId      关联的业务编号
      * @param optMethod  管理的操作
-     * @param optTag     业务主键 ，复合主键用URL方式对的格式 a=v1&b=v2
+     * @param optTag     业务主键 ，复合主键用URL方式对的格式 a等于v1 且 b等于v2
      * @return "OK" 表示成功，其他的为错误信息
      */
     @Override
@@ -92,7 +92,7 @@ public class NotificationCenterPusherImpl
      * @param msgContent 消息内容
      * @param optId      关联的业务编号
      * @param optMethod  管理的操作
-     * @param optTag     业务主键 ，复合主键用URL方式对的格式 a=v1&b=v2
+     * @param optTag     业务主键 ，复合主键用URL方式对的格式 a等于v1 且 b等于v2
      * @param noticeType 指定发送类别
      * @return "OK" 表示成功，其他的为错误信息
      */

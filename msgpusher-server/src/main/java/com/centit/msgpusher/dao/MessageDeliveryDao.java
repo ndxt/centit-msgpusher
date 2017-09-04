@@ -16,10 +16,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
-
-
-
-
 /**
  * MessageDeliveryDao  Repository.
  * create by scaffold 2017-04-07 
@@ -74,7 +70,8 @@ public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,java.lang.St
 
 		/**
 		 * 定时推送时根据推送类型查询当前需要推送的消息
-		 * @return
+		 * @param pageDesc 分页
+		 * @return list集合
 		 */
 	public List<MessageDelivery> listMsgNoPush(PageDesc pageDesc){
 		Date currentDate = DatetimeOpt.currentUtilDate();
@@ -87,7 +84,10 @@ public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,java.lang.St
 
 		/**
 		 * 查询出所有定时推送的消息记录
-		 * @return
+		 * @param baseDao baseDao
+		 * @param queryParamsMap queryParamsMap
+		 * @param pageDesc 分页
+		 * @return JSONArray
 		 */
 	public JSONArray listPlanPushMsg(BaseDaoImpl baseDao, Map<String, Object> queryParamsMap, PageDesc pageDesc){
 		String queryStatement =
@@ -107,7 +107,9 @@ public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,java.lang.St
 
 		/**
 		 * 查询登录用户推送失败的消息
-		 * @return
+		 * @param userCode 用户编号
+		 * @param osId 系统ID
+		 * @return list集合
 		 */
 		public List<MessageDelivery> listPushAgain(String userCode,String osId){
 			Date currentDate = DatetimeOpt.currentUtilDate();

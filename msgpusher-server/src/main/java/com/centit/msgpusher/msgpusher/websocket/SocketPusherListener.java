@@ -23,6 +23,9 @@ public class SocketPusherListener {
 
     /**
      * 连接建立成功调用的方法
+     * @param session session
+     * @param osId 系统ID
+     * @param userCode 用户编号
      */
     @OnOpen
     public void onOpen(Session session,
@@ -33,6 +36,7 @@ public class SocketPusherListener {
 
     /**
      * 连接关闭调用的方法
+     * @param session session
      */
     @OnClose
     public void onClose(Session session) {
@@ -41,6 +45,8 @@ public class SocketPusherListener {
 
     /**
      * 收到客户端消息后调用的方法
+     * @param message 消息
+     * @param session session
      */
     @OnMessage
     public void onMessage(String message, Session session) {
@@ -50,7 +56,7 @@ public class SocketPusherListener {
     /**
      * 发生错误时调用
      *
-     * @param error
+     * @param error 错误异常
      */
     @OnError
     public void onError(Throwable error) {

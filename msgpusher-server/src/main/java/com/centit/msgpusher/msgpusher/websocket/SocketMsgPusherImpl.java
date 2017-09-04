@@ -105,7 +105,7 @@ public class SocketMsgPusherImpl implements SocketMsgPusher {
     /**
      * 登出服务
      *
-     * @param session
+     * @param session session
      */
     @Override
     public void signOutUser(Session session) {

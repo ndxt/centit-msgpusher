@@ -74,15 +74,13 @@ public class UserMsgPoint implements java.io.Serializable {
 	@Length(max = 100, message = "字段长度不能大于{max}")
 	private String  emailAddress;
 	// Constructors
-	/** default constructor */
 	public UserMsgPoint() {
 	}
-	/** minimal constructor */
+
 	public UserMsgPoint(UserMsgPointId id) {
 		this.cid = id;
 	}
 
-/** full constructor */
 	public UserMsgPoint(UserMsgPointId id , String userName, String deviceType, String deviceId, String osVersion, String channelId, String wxToken, String mobilePhone, String emailAddress) {
 		this.cid = id;
         this.userName = userName;
@@ -126,7 +124,6 @@ public class UserMsgPoint implements java.io.Serializable {
 			this.cid = new UserMsgPointId();
 		this.cid.setOsId(osId);
 	}
-
 
 	// Property accessors
 

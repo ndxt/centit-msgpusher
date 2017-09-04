@@ -141,38 +141,32 @@ public class MessageDelivery implements java.io.Serializable {
 	private String  optMethod;
 	/**
 	 * 业务操作业务标记 一般用于关联到业务主体
-	 * key1=value1&key2=value2
+	 * key1等于value1 且 key2等于value2
 	 */
 	@Column(name = "OPT_TAG")
 	@Length(max = 1000, message = "字段长度不能大于{max}")
 	private String  optTag;
 
 	// Constructors
-	/** default constructor */
 	public MessageDelivery() {
 		this.msgType= "message";
 	}
-	/** minimal constructor */
+
 	public MessageDelivery(
 		String msgId
 		,String  msgReceiver,String  msgContent,String  optId) {
-
 		this.msgType= "message";
 		this.msgId = msgId;		
-	
-		this.msgReceiver= msgReceiver; 
+		this.msgReceiver= msgReceiver;
 		this.msgContent= msgContent; 
 		this.optId= optId; 		
 	}
 
-/** full constructor */
 	public MessageDelivery(
 	 String msgId
 	,String  msgSender,String  pushType,String  msgReceiver,String  msgType,String  msgSubject,String  msgContent,String  relUrl,String  noticeTypes,String  pushState,String  pushResult,Date  planPushTime,Date  pushTime,Date  validPeriod,String  osId,String  optId,String  optMethod,String  optTag) {
 	
-	
-		this.msgId = msgId;		
-	
+		this.msgId = msgId;
 		this.msgSender= msgSender;
 		this.pushType= pushType;
 		this.msgReceiver= msgReceiver;

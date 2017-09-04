@@ -45,10 +45,10 @@ public class UserNotifySettingController  extends BaseController {
     /**
      * 查询所有   用户通知接受参数设置  列表
      *
-     * @param field    json中只保存需要的属性名
-     * @param request  {@link HttpServletRequest}
-     * @param response {@link HttpServletResponse}
-     * @return {data:[]}
+     * @param field  json中只保存需要的属性名
+     * @param pageDesc 分页
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
      */
     @RequestMapping(method = RequestMethod.GET)
     public void list(String[] field, PageDesc pageDesc, HttpServletRequest request, HttpServletResponse response) {
@@ -72,9 +72,7 @@ public class UserNotifySettingController  extends BaseController {
      * 查询单个  用户通知接受参数设置 
 	
 	 * @param userSettingId  USER_SETTING_ID
-     *
-     * @param response    {@link HttpServletResponse}
-     * @return {data:{}}
+     * @param response  HttpServletResponse
      */
     @RequestMapping(value = "/{userSettingId}", method = {RequestMethod.GET})
     public void getUserNotifySetting(@PathVariable String userSettingId, HttpServletResponse response) {
@@ -88,8 +86,8 @@ public class UserNotifySettingController  extends BaseController {
     /**
      * 新增 用户通知接受参数设置
      *
-     * @param userNotifySetting  {@link UserNotifySetting}
-     * @return
+     * @param userNotifySetting UserNotifySetting
+     * @param response  HttpServletResponse
      */
     @RequestMapping(method = {RequestMethod.POST})
     public void createUserNotifySetting(@RequestBody @Valid UserNotifySetting userNotifySetting, HttpServletResponse response) {
@@ -102,6 +100,7 @@ public class UserNotifySettingController  extends BaseController {
      * 删除单个  用户通知接受参数设置 
 	
 	 * @param userSettingId  USER_SETTING_ID
+     * @param response  HttpServletResponse
      */
     @RequestMapping(value = "/{userSettingId}", method = {RequestMethod.DELETE})
     public void deleteUserNotifySetting(@PathVariable String userSettingId, HttpServletResponse response) {

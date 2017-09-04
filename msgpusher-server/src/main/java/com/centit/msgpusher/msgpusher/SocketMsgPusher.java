@@ -10,21 +10,22 @@ public interface SocketMsgPusher extends MsgPusher {
 
     /**
      * 登录
-     * @param userCode
-     * @param session
+     * @param osId 系统ID
+     * @param userCode 用户编号
+     * @param session session
      */
     void signInUser(String osId, String userCode, Session session);
 
     /**
      * 登出服务
-     * @param session
+     * @param session session
      */
     void signOutUser(Session session);
 
     /**
      * 接受消息，并对消息进行处理
-     * @param session
-     * @param jsonMessage
+     * @param session session
+     * @param jsonMessage jsonMessage
      */
     void recvMessage(Session session, String jsonMessage);
 

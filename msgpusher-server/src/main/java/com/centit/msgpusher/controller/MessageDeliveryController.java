@@ -90,12 +90,14 @@ public class MessageDeliveryController  extends BaseController {
 
 	/**
 	 * 需要有一下函数
-	 * <p>
+	 *
 	 * 1. 注册用户信息（用户登录后 在这个服务上注册 用户的设备信息， 如果是移动端 注册用户的channel id）
 	 * 2. 推送消息
 	 * 3. 广播消息
-	 * <p>
 	 * 4. 查看消息状态
+	 * @param request HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @throws IOException IOException
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public void registerUserMsgPoint(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -174,7 +176,10 @@ public class MessageDeliveryController  extends BaseController {
 
 	/**
 	 * 查询出所有定时推送的消息记录
-	 * @return
+	 * @param request HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @param pageDesc 分页
+	 * @throws IOException IOException
 	 */
 	@RequestMapping(value="/listAllPlanPush", method = RequestMethod.GET)
 	public void listAllPlanPush(HttpServletRequest request, HttpServletResponse response,PageDesc pageDesc) throws IOException {
@@ -198,8 +203,10 @@ public class MessageDeliveryController  extends BaseController {
 
 	/**
 	 * 取消定时发送
-	 * @param msgId
-	 * @return
+	 * @param request HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @param msgId 消息ID
+	 * @throws IOException IOException
 	 */
 	@RequestMapping(value="/cancelPlanPush", method = RequestMethod.POST)
 	public void cancelPlanPush(HttpServletRequest request, HttpServletResponse response,@RequestParam("msgId" ) String msgId) throws IOException {

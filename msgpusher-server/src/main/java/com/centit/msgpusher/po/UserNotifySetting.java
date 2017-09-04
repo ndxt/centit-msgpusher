@@ -66,10 +66,9 @@ public class UserNotifySetting implements java.io.Serializable {
 	private String  notifyTypes;
 
 	// Constructors
-	/** default constructor */
 	public UserNotifySetting() {
 	}
-	/** minimal constructor */
+
 	public UserNotifySetting(
 		String userSettingId		
 		,String  optId) {
@@ -80,14 +79,11 @@ public class UserNotifySetting implements java.io.Serializable {
 		this.optId= optId; 		
 	}
 
-/** full constructor */
 	public UserNotifySetting(
 	 String userSettingId		
 	,String  userCode,String  osId,String  optId,String  notifyTypes) {
 	
-	
-		this.userSettingId = userSettingId;		
-	
+		this.userSettingId = userSettingId;
 		this.userCode= userCode;
 		this.osId= osId;
 		this.optId= optId;

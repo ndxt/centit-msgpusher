@@ -30,16 +30,13 @@ public class UserMsgPointId implements java.io.Serializable {
 	private String osId;
 
 	// Constructors
-	/** default constructor */
 	public UserMsgPointId() {
 	}
-	/** full constructor */
 	public UserMsgPointId(String osId,String userCode) {
 		this.userCode = userCode;
 		this.osId = osId;	
 	}
 
-  
 	public String getUserCode() {
 		return this.userCode;
 	}
@@ -55,7 +52,6 @@ public class UserMsgPointId implements java.io.Serializable {
 	public void setOsId(String osId) {
 		this.osId = osId;
 	}
-
 
 	public boolean equals(Object other) {
 		if ((this == other))

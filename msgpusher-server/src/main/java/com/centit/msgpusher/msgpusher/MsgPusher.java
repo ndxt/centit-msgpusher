@@ -12,7 +12,7 @@ public interface MsgPusher {
      * @param msg     发送的消息
      * @param receiver   接收人内部用户编码
      * @return MSGID 表示成功， null 和空 其他的为错误信息
-     * @throws Exception
+     * @throws Exception Exception
      */
     PushResult pushMessage(MessageDelivery msg, UserMsgPoint receiver) throws Exception;
 
@@ -22,6 +22,7 @@ public interface MsgPusher {
     /** 广播发送信息
      * @param msg     发送的消息
      * @return MSGID 表示成功， null 和空 其他的为错误信息
+     * @throws Exception Exception
      */
     PushResult pushMsgToAll(MessageDelivery msg) throws Exception;
 

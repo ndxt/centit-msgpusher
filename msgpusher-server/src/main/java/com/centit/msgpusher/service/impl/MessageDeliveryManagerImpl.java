@@ -78,7 +78,7 @@ public class MessageDeliveryManagerImpl
 
 	/**
 	 * 点对点推送消息的方法
-	 * @param msg
+	 * @param msg 消息
 	 * @return 返回消息ID
 	 */
 	@Override
@@ -144,7 +144,7 @@ public class MessageDeliveryManagerImpl
 	/**
 	 * 消息广播
 	 *
-	 * @param msg
+	 * @param msg 消息
 	 * @return 返回消息ID
 	 */
 	@Override
@@ -202,8 +202,8 @@ public class MessageDeliveryManagerImpl
 
 	/**
 	 * 时间向后推n天，n未负值表示向前推
-	 * @param time
-	 * @param n
+	 * @param time 时间
+	 * @param n int
 	 * @return
 	 */
 	private Date changeDate(Date time,int n){
@@ -215,8 +215,8 @@ public class MessageDeliveryManagerImpl
 
 	/**
 	 * 保存推送失败原因
-	 * @param errorReason
-	 * @param msg
+	 * @param errorReason 错误原因
+	 * @param msg 消息
 	 * @return
 	 */
 	private PushResult saveErrorPushResult(String errorReason,MessageDelivery msg){
@@ -237,7 +237,7 @@ public class MessageDeliveryManagerImpl
 
 	/**
 	 * 这个维护型作业可以直接调用 delete 语句
-	 * @return
+	 *
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -265,10 +265,11 @@ public class MessageDeliveryManagerImpl
 	}
 
 
-
 	/**
 	 * 查询出所有定时推送的消息记录
-	 * @return
+	 * @param queryParamsMap 查询参数
+	 * @param pageDesc 分页
+	 * @return JSONArray
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -281,8 +282,8 @@ public class MessageDeliveryManagerImpl
 
 	/**
 	 * 取消定时发送
-	 * @param msgId
-	 * @return
+	 * @param msgId 消息ID
+	 * @return String
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -310,7 +311,7 @@ public class MessageDeliveryManagerImpl
 
 	/**
 	 * 定时推送任务
-	 * @return
+	 *
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)

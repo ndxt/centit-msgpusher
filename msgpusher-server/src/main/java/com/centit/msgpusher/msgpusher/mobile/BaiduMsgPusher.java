@@ -88,8 +88,8 @@ public abstract class BaiduMsgPusher implements MsgPusher {
 	 * @param msg     发送的消息
 	 * @param receiver   接收人内部用户编码
 	 * @return MSGID 表示成功， null 和空 其他的为错误信息
-	 * @throws PushServerException
-	 * @throws PushClientException
+	 * @throws PushServerException PushServerException
+	 * @throws PushClientException PushClientException
 	 */
     @Override
     public PushResult pushMessage(MessageDelivery msg, UserMsgPoint receiver)throws PushClientException, PushServerException{
