@@ -1,6 +1,6 @@
 package com.centit.msgpusher.config;
 
-import com.centit.framework.hibernate.config.DataSourceConfig;
+import com.centit.framework.core.config.DataSourceConfig;
 import com.centit.framework.staticsystem.config.StaticSystemBeanConfig;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
