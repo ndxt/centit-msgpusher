@@ -1,13 +1,14 @@
 package com.centit.msgpusher.service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 import com.alibaba.fastjson.JSONArray;
 import com.centit.framework.core.dao.PageDesc;
 import com.centit.framework.hibernate.service.BaseEntityManager;
 import com.centit.msgpusher.msgpusher.PushResult;
 import com.centit.msgpusher.po.MessageDelivery;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * MessageDelivery  Service.
@@ -16,7 +17,7 @@ import com.centit.msgpusher.po.MessageDelivery;
  * 消息推送null   
 */
 
-public interface MessageDeliveryManager extends BaseEntityManager<MessageDelivery,java.lang.String>
+public interface MessageDeliveryManager extends BaseEntityManager<MessageDelivery,String>
 {
 
 	JSONArray listMessageDeliverysAsJson(
