@@ -32,7 +32,7 @@ import java.io.IOException;
 
 
 @Controller
-@RequestMapping("/test")
+@RequestMapping("/testMsgPush")
 public class TestMsgPushController extends BaseController {
 	private static final Log log = LogFactory.getLog(TestMsgPushController.class);
 

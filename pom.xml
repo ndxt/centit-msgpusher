@@ -5,14 +5,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <centit.msgpusher.version>0.0.3-SNAPSHOT</centit.msgpusher.version>
+        <centit.msgpusher.version>0.0.4-SNAPSHOT</centit.msgpusher.version>
         <jdk.version>1.8</jdk.version>
 
-        <centit.framework.version>4.0.1-SNAPSHOT</centit.framework.version>
-        <centit.persistence.version>1.0-SNAPSHOT</centit.persistence.version>
+        <centit.framework.version>4.0.4-SNAPSHOT</centit.framework.version>
+        <centit.persistence.version>1.0.2-SNAPSHOT</centit.persistence.version>
         <centit.ui.version>3.0.1-SNAPSHOT</centit.ui.version>
+        <spring.version>4.3.12.RELEASE</spring.version>
 
-        <spring.version>4.3.9.RELEASE</spring.version>
         <quartz.version>2.3.0</quartz.version>
         <ojdbc6.version>11.2.0.4</ojdbc6.version>
         <junit.version>4.12</junit.version>
@@ -25,7 +25,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.centit.product</groupId>
     <artifactId>centit-msgpusher</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.4-SNAPSHOT</version>
 
     <name>com.centit.product:centit-msgpusher</name>
     <packaging>pom</packaging>
@@ -155,7 +155,7 @@
 -->
             <!-- GPG自动签名的插件 -->
 
-            <plugin>
+          <!--  <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>1.6</version>
@@ -168,12 +168,12 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
 
             <!-- sonatype release :
                 mvn nexus-staging:release -->
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <version>1.6.8</version>
@@ -184,7 +184,7 @@
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
-
+-->
         </plugins>
     </build>
 </project>
