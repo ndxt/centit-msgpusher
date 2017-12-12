@@ -76,6 +76,7 @@
     <modules>
         <module>msgpusher-server</module>
         <module>msgpusher-client</module>
+        <module>msgpusher-utils</module>
     </modules>
 
     <!-- mvn deploy -DpomFile=pom.xml -->
