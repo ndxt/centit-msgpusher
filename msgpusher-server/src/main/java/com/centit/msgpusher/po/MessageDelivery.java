@@ -154,18 +154,18 @@ public class MessageDelivery implements java.io.Serializable {
 
 	public MessageDelivery(
 		String msgId
-		,String  msgReceiver,String  msgContent,String  optId) {
+		,String  msgReceiver,String  msgContent,String optId){
 		this.msgType= "message";
-		this.msgId = msgId;		
+		this.msgId = msgId;
 		this.msgReceiver= msgReceiver;
 		this.msgContent= msgContent; 
-		this.optId= optId; 		
+		this.optId= optId;
 	}
 
 	public MessageDelivery(
-	 String msgId
-	,String  msgSender,String  pushType,String  msgReceiver,String  msgType,String  msgSubject,String  msgContent,String  relUrl,String  noticeTypes,String  pushState,String  pushResult,Date  planPushTime,Date  pushTime,Date  validPeriod,String  osId,String  optId,String  optMethod,String  optTag) {
-	
+		 String msgId
+		,String  msgSender,String  pushType,String  msgReceiver,String  msgType,String  msgSubject,String  msgContent,String  relUrl,String  noticeTypes,String  pushState,String  pushResult,Date  planPushTime,Date  pushTime,Date  validPeriod,String  osId,String  optId,String  optMethod,String  optTag) {
+
 		this.msgId = msgId;
 		this.msgSender= msgSender;
 		this.pushType= pushType;

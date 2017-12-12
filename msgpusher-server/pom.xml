@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.centit.product</groupId>
         <artifactId>centit-msgpusher</artifactId>
-        <version>0.0.3-SNAPSHOT</version>
+        <version>0.0.4-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>msgpusher-server</artifactId>
@@ -15,6 +15,12 @@
     <description>消息推送服务器，对百度推送，短信推送，websocket推送进行封装</description>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.centit.product</groupId>
+            <artifactId>msgpusher-utils</artifactId>
+            <version>${centit.msgpusher.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.centit.framework</groupId>
@@ -34,11 +40,6 @@
             <version>${centit.framework.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-websocket</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>com.baidu.yun</groupId>
