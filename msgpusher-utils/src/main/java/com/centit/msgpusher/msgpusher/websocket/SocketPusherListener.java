@@ -1,6 +1,5 @@
 package com.centit.msgpusher.msgpusher.websocket;
 
-import com.centit.msgpusher.msgpusher.SocketMsgPusher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.server.standard.SpringConfigurator;

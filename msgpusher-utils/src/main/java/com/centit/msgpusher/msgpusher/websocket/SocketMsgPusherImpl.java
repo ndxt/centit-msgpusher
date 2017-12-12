@@ -2,7 +2,6 @@ package com.centit.msgpusher.msgpusher.websocket;
 
 import com.alibaba.fastjson.JSON;
 import com.centit.msgpusher.msgpusher.PushResult;
-import com.centit.msgpusher.msgpusher.SocketMsgPusher;
 import com.centit.msgpusher.msgpusher.po.IPushMessage;
 import com.centit.msgpusher.msgpusher.po.IPushMsgPoint;
 import org.slf4j.Logger;
@@ -92,7 +91,7 @@ public class SocketMsgPusherImpl implements SocketMsgPusher {
 
     @Override
     public void signInUser(String osId, String userCode, Session session) {
-        Session oldSession = getSessionByUserCode(userCode);
+        //Session oldSession = getSessionByUserCode(userCode);
         userCodeToSession.put(osId + "_" + userCode, session);
         sessionToUserCode.put(session,osId + "_" + userCode);
     }

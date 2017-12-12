@@ -1,4 +1,6 @@
-package com.centit.msgpusher.msgpusher;
+package com.centit.msgpusher.msgpusher.websocket;
+
+import com.centit.msgpusher.msgpusher.MsgPusher;
 
 import javax.websocket.Session;
 

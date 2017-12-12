@@ -11,6 +11,6 @@ public interface MsgPushConfig {
 
     OSMsgPushInfo getOSConfig(String osId);
 
-    public List<OSMsgPushInfo> getOsConfig();
+    List<OSMsgPushInfo> getOsConfig();
 
 }
