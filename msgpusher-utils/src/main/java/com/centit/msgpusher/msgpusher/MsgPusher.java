@@ -1,7 +1,7 @@
 package com.centit.msgpusher.msgpusher;
 
-import com.centit.msgpusher.po.MessageDelivery;
-import com.centit.msgpusher.po.UserMsgPoint;
+import com.centit.msgpusher.msgpusher.po.IPushMessage;
+import com.centit.msgpusher.msgpusher.po.IPushMsgPoint;
 
 /**
  * Created by codefan on 17-4-6.
@@ -14,7 +14,7 @@ public interface MsgPusher {
      * @return MSGID 表示成功， null 和空 其他的为错误信息
      * @throws Exception Exception
      */
-    PushResult pushMessage(MessageDelivery msg, UserMsgPoint receiver) throws Exception;
+    PushResult pushMessage(IPushMessage msg, IPushMsgPoint receiver) throws Exception;
 
 
 
@@ -24,7 +24,7 @@ public interface MsgPusher {
      * @return MSGID 表示成功， null 和空 其他的为错误信息
      * @throws Exception Exception
      */
-    PushResult pushMsgToAll(MessageDelivery msg) throws Exception;
+    PushResult pushMsgToAll(IPushMessage msg) throws Exception;
 
 
 }

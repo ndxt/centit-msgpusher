@@ -8,6 +8,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.centit.msgpusher.msgpusher.po.IPushMsgPoint;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -20,7 +21,7 @@ import org.hibernate.validator.constraints.NotBlank;
 */
 @Entity
 @Table(name = "F_USER_MSG_POINT")
-public class UserMsgPoint implements java.io.Serializable {
+public class UserMsgPoint implements IPushMsgPoint, java.io.Serializable {
 	private static final long serialVersionUID =  1L;
 
 	@EmbeddedId

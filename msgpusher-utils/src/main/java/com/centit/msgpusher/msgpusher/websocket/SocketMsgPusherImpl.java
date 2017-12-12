@@ -3,14 +3,12 @@ package com.centit.msgpusher.msgpusher.websocket;
 import com.alibaba.fastjson.JSON;
 import com.centit.msgpusher.msgpusher.PushResult;
 import com.centit.msgpusher.msgpusher.SocketMsgPusher;
-import com.centit.msgpusher.po.MessageDelivery;
-import com.centit.msgpusher.po.UserMsgPoint;
-import com.centit.msgpusher.service.MessageDeliveryManager;
+import com.centit.msgpusher.msgpusher.po.IPushMessage;
+import com.centit.msgpusher.msgpusher.po.IPushMsgPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import javax.websocket.Session;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,9 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Service("socketMsgPusher")
 public class SocketMsgPusherImpl implements SocketMsgPusher {
-
-    @Resource
-    private MessageDeliveryManager messageDeliveryManager;
 
     private static final Logger logger = LoggerFactory.getLogger(SocketMsgPusherImpl.class);
 
@@ -41,7 +36,7 @@ public class SocketMsgPusherImpl implements SocketMsgPusher {
     }
 
     @Override
-    public PushResult pushMessage(MessageDelivery msg, UserMsgPoint receiver) throws Exception {
+    public PushResult pushMessage(IPushMessage msg, IPushMsgPoint receiver) throws Exception {
         PushResult pushResult = new PushResult();
         Map<String,String> pcMap =new HashMap<>();
         String osId = msg.getOsId();
@@ -67,7 +62,7 @@ public class SocketMsgPusherImpl implements SocketMsgPusher {
 
 
     @Override
-    public PushResult pushMsgToAll(MessageDelivery msg) throws Exception {
+    public PushResult pushMsgToAll(IPushMessage msg) throws Exception {
         PushResult pushResult = new PushResult();
         Map<String,String> pcMap =new HashMap<>();
         //int succeed = 0;

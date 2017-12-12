@@ -30,12 +30,12 @@ import java.util.*;
 
 
 /**
- * MessageDelivery  Service.
+ * IPushMessage  Service.
  * create by scaffold 2017-04-07 
  * @author codefan@sina.com
  * 消息推送null   
 */
-@Service
+@Service("messageDeliveryManager")
 public class MessageDeliveryManagerImpl 
 		extends BaseEntityManagerImpl<MessageDelivery,java.lang.String,MessageDeliveryDao>
 	implements MessageDeliveryManager{
@@ -243,10 +243,10 @@ public class MessageDeliveryManagerImpl
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteRecords() {
 		Date validDate = new Date(new Date().getTime()-validtyPeriod*86400000L);
-		String hql = "delete from MessageDelivery m where m.pushTime<=?";
+		String hql = "delete from IPushMessage m where m.pushTime<=?";
 		DatabaseOptUtils.doExecuteHql(messageDeliveryDao,
 				hql,new Object[]{validDate});
-		/*List<MessageDelivery> msgList = messageDeliveryDao.listObjects(hql,new Object[]{validDate});
+		/*List<IPushMessage> msgList = messageDeliveryDao.listObjects(hql,new Object[]{validDate});
 		JSONObject obj = new JSONObject();
 		int deleteSum = msgList.length();
 		if(msgList.isEmpty()){
@@ -259,7 +259,7 @@ public class MessageDeliveryManagerImpl
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public List<MessageDelivery> viewRecords(String osId, String optId, Date pushTimeStart, Date pushTimeEnd) {
-		String hql = "from MessageDelivery m where m.osId=? and m.optId=? and m.pushTime>? and m.pushTime<=?";
+		String hql = "from IPushMessage m where m.osId=? and m.optId=? and m.pushTime>? and m.pushTime<=?";
 		List<MessageDelivery> msgList = messageDeliveryDao.listObjects(hql,new Object[]{osId, optId, pushTimeStart, pushTimeEnd});
 		return msgList;
 	}

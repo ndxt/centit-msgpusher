@@ -75,7 +75,7 @@ public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,java.lang.St
 		 */
 	public List<MessageDelivery> listMsgNoPush(PageDesc pageDesc){
 		Date currentDate = DatetimeOpt.currentUtilDate();
-		return this.listObjects("From MessageDelivery f " +
+		return this.listObjects("From IPushMessage f " +
 				"where f.pushState='0' " +
 						"and f.planPushTime < ? and (f.validPeriod is null or f.validPeriod > ?) ",
 				new Object[]{currentDate,currentDate},pageDesc);
@@ -92,7 +92,7 @@ public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,java.lang.St
 	public JSONArray listPlanPushMsg(BaseDaoImpl baseDao, Map<String, Object> queryParamsMap, PageDesc pageDesc){
 		String queryStatement =
 				"select h.msgSender, h.msgReceiver, h.pushType, h.pushState,h.planPushTime,h.pushTime,h.msgId"
-						+" from MessageDelivery h WHERE 1=1 "
+						+" from IPushMessage h WHERE 1=1 "
 						+ " [ :osId | and h.osId = :osId ]"
 						+ " [ :optId | and h.optId = :optId ]"
 						+ " [ :pushState | and h.pushState = :pushState ]"
@@ -113,7 +113,7 @@ public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,java.lang.St
 		 */
 		public List<MessageDelivery> listPushAgain(String userCode,String osId){
 			Date currentDate = DatetimeOpt.currentUtilDate();
-			String hql = "From MessageDelivery f " +
+			String hql = "From IPushMessage f " +
 					"WHERE f.osId =? AND f.msgReceiver=? AND f.pushState='2' " +
 						"AND  f.planPushTime < ? and (f.validPeriod is null or f.validPeriod > ?) ";
 			List<MessageDelivery> msgList = this.listObjects(hql,

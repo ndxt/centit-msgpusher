@@ -16,9 +16,8 @@ import com.centit.msgpusher.common.OSMsgPushInfo;
 import com.centit.msgpusher.common.OptMsgPushInfo;
 import com.centit.msgpusher.msgpusher.MsgPusher;
 import com.centit.msgpusher.msgpusher.PushResult;
-import com.centit.msgpusher.po.MessageDelivery;
-import com.centit.msgpusher.po.UserMsgPoint;
-import com.centit.support.network.UrlOptUtils;
+import com.centit.msgpusher.msgpusher.po.IPushMessage;
+import com.centit.msgpusher.msgpusher.po.IPushMsgPoint;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.Resource;
@@ -49,7 +48,7 @@ public abstract class BaiduMsgPusher implements MsgPusher {
 	@Resource
 	private MsgPushConfig msgPushConfig;
 
-	private String makePkgContent(MessageDelivery msg){
+	private String makePkgContent(IPushMessage msg){
 		OSMsgPushInfo osConfig = msgPushConfig.getOSConfig(msg.getOsId());
 		Map<String, String> optKeyValue = new HashMap<>();
 		StringBuilder pkgContent = new StringBuilder("#Intent;component=");
@@ -92,7 +91,7 @@ public abstract class BaiduMsgPusher implements MsgPusher {
 	 * @throws PushClientException PushClientException
 	 */
     @Override
-    public PushResult pushMessage(MessageDelivery msg, UserMsgPoint receiver)throws PushClientException, PushServerException{
+    public PushResult pushMessage(IPushMessage msg, IPushMsgPoint receiver)throws PushClientException, PushServerException{
 		PushResult pushResult = new PushResult();
 		Map<String,String> map = new HashMap<>();
 		String msgId = null;

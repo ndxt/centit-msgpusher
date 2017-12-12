@@ -1,7 +1,7 @@
 package com.centit.msgpusher.msgpusher;
 
-import com.centit.msgpusher.po.MessageDelivery;
-import com.centit.msgpusher.po.UserMsgPoint;
+import com.centit.msgpusher.msgpusher.po.IPushMessage;
+import com.centit.msgpusher.msgpusher.po.IPushMsgPoint;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,12 +12,12 @@ public class SMSMsgPusher implements MsgPusher {
 
 
     @Override
-    public PushResult pushMessage(MessageDelivery msg, UserMsgPoint receiver) throws Exception {
+    public PushResult pushMessage(IPushMessage msg, IPushMsgPoint receiver) throws Exception {
         return null;
     }
 
     @Override
-    public PushResult pushMsgToAll(MessageDelivery msg) throws Exception {
+    public PushResult pushMsgToAll(IPushMessage msg) throws Exception {
         return null;
     }
 }

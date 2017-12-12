@@ -9,7 +9,7 @@ import com.centit.msgpusher.po.UserMsgPointId;
 import java.util.Map;
 
 /**
- * UserMsgPoint  Service.
+ * IPushMsgPoint  Service.
  * create by scaffold 2017-04-07 
  * @author codefan@sina.com
  * 用户消息接收端口信息用户设置 自己接收 通知的方式。   

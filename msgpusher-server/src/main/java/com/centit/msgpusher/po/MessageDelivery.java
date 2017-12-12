@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 import javax.validation.constraints.NotNull;
 
+import com.centit.msgpusher.msgpusher.po.IPushMessage;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -19,7 +20,7 @@ import org.hibernate.validator.constraints.NotBlank;
 */
 @Entity
 @Table(name = "F_MESSAGE_DELIVERY")
-public class MessageDelivery implements java.io.Serializable {
+public class MessageDelivery implements IPushMessage, java.io.Serializable {
 	private static final long serialVersionUID =  1L;
 
 	public static final String NOTICE_TYPE_APP = "A";

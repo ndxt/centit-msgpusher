@@ -22,6 +22,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.centit.support</groupId>
+            <artifactId>centit-utils</artifactId>
+            <version>${centit.commons.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>javax.websocket</groupId>
             <artifactId>javax.websocket-api</artifactId>
             <version>${websocket-api.version}</version>

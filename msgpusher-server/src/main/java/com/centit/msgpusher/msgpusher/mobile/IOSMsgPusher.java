@@ -1,12 +1,5 @@
 package com.centit.msgpusher.msgpusher.mobile;
 
-import com.baidu.yun.push.model.PushMsgToSingleDeviceRequest;
-import com.baidu.yun.push.model.PushMsgToSingleDeviceResponse;
-import com.centit.msgpusher.msgpusher.PushResult;
-import com.centit.msgpusher.po.MessageDelivery;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import com.alibaba.fastjson.JSONObject;
 import com.baidu.yun.core.log.YunLogEvent;
 import com.baidu.yun.core.log.YunLogHandler;
@@ -18,6 +11,10 @@ import com.baidu.yun.push.exception.PushServerException;
 import com.baidu.yun.push.model.PushMsgToAllRequest;
 import com.baidu.yun.push.model.PushMsgToAllResponse;
 import com.centit.msgpusher.msgpusher.MsgPusher;
+import com.centit.msgpusher.msgpusher.PushResult;
+import com.centit.msgpusher.msgpusher.po.IPushMessage;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +40,7 @@ public class IOSMsgPusher extends BaiduMsgPusher implements MsgPusher
 	 * @return MSGID 表示成功， null 和空 其他的为错误信息
 	 */
 	@Override
-	public PushResult pushMsgToAll(MessageDelivery msg) throws PushClientException, PushServerException{
+	public PushResult pushMsgToAll(IPushMessage msg) throws PushClientException, PushServerException{
 			PushResult pushResult = new PushResult();
 			Map<String,String> iosMap = new HashMap<>();
 			String msgId = null;

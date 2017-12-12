@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * MessageDelivery  Service.
+ * IPushMessage  Service.
  * create by scaffold 2017-04-07 
  * @author codefan@sina.com
  * 消息推送null   

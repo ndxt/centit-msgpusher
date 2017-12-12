@@ -1,15 +1,6 @@
 package com.centit.msgpusher.msgpusher.mobile;
 
 import com.alibaba.fastjson.JSON;
-import com.centit.msgpusher.common.MsgPushConfig;
-import com.centit.msgpusher.common.OSMsgPushInfo;
-import com.centit.msgpusher.common.OptMsgPushInfo;
-import com.centit.msgpusher.msgpusher.PushResult;
-import com.centit.msgpusher.po.MessageDelivery;
-import com.centit.support.network.UrlOptUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import com.alibaba.fastjson.JSONObject;
 import com.baidu.yun.core.log.YunLogEvent;
 import com.baidu.yun.core.log.YunLogHandler;
@@ -20,7 +11,14 @@ import com.baidu.yun.push.exception.PushClientException;
 import com.baidu.yun.push.exception.PushServerException;
 import com.baidu.yun.push.model.PushMsgToAllRequest;
 import com.baidu.yun.push.model.PushMsgToAllResponse;
+import com.centit.msgpusher.common.MsgPushConfig;
+import com.centit.msgpusher.common.OSMsgPushInfo;
+import com.centit.msgpusher.common.OptMsgPushInfo;
 import com.centit.msgpusher.msgpusher.MsgPusher;
+import com.centit.msgpusher.msgpusher.PushResult;
+import com.centit.msgpusher.msgpusher.po.IPushMessage;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
@@ -45,7 +43,7 @@ public class AndroidMsgPusher extends BaiduMsgPusher implements MsgPusher
 	private MsgPushConfig msgPushConfig;
 
 
-	private String makePkgContent(MessageDelivery msg){
+	private String makePkgContent(IPushMessage msg){
 		OSMsgPushInfo osConfig = msgPushConfig.getOSConfig(msg.getOsId());
 		Map<String, String> optKeyValue = new HashMap<>();
 		StringBuilder pkgContent = new StringBuilder("#Intent;component=");
@@ -84,7 +82,7 @@ public class AndroidMsgPusher extends BaiduMsgPusher implements MsgPusher
 	 * @return MSGID 表示成功， null 和空 其他的为错误信息
 	 */
 	@Override
-	public PushResult pushMsgToAll(MessageDelivery msg) throws PushClientException, PushServerException{
+	public PushResult pushMsgToAll(IPushMessage msg) throws PushClientException, PushServerException{
 			PushResult pushResult = new PushResult();
 			Map<String,String> androidMap = new HashMap<>();
 			String msgId = null;

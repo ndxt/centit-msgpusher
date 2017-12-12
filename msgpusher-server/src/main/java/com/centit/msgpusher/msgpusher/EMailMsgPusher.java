@@ -1,9 +1,7 @@
 package com.centit.msgpusher.msgpusher;
 
-import com.alibaba.fastjson.JSONObject;
-import com.centit.framework.components.CodeRepositoryUtil;
-import com.centit.msgpusher.po.MessageDelivery;
-import com.centit.msgpusher.po.UserMsgPoint;
+import com.centit.msgpusher.msgpusher.po.IPushMessage;
+import com.centit.msgpusher.msgpusher.po.IPushMsgPoint;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.MultiPartEmail;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +27,7 @@ public class EMailMsgPusher implements MsgPusher {
 
 
     @Override
-    public PushResult pushMessage(MessageDelivery msg, UserMsgPoint receiver) throws Exception {
+    public PushResult pushMessage(IPushMessage msg, IPushMsgPoint receiver) throws Exception {
         PushResult pushResult = new PushResult();
         Map<String,String> emailMap =new HashMap<>();
         String result = "OK";
@@ -71,7 +69,7 @@ public class EMailMsgPusher implements MsgPusher {
     }
 
     @Override
-    public PushResult pushMsgToAll(MessageDelivery msg) throws Exception {
+    public PushResult pushMsgToAll(IPushMessage msg) throws Exception {
         PushResult pushResult = new PushResult();
         Map<String,String> emailMap =new HashMap<>();
         List<String> receiversList = new ArrayList<>();

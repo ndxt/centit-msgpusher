@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * MessageDelivery  Controller.
+ * IPushMessage  Controller.
  * create by scaffold 2017-04-07 
  * @author codefan@sina.com
  * 消息推送null   

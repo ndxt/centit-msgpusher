@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * MessageDelivery  Controller.
+ * IPushMessage  Controller.
  * create by scaffold 2017-04-07 
  * @author codefan@sina.com
  * 消息推送null   
