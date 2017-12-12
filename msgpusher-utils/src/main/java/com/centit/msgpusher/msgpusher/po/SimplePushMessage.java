@@ -14,23 +14,20 @@ public class SimplePushMessage implements IPushMessage {
         this.msgSender = "system";
     }
 
-    public SimplePushMessage(String msgReceiver, String msgContent){
-        this.msgSender = "system";
-        this.msgReceiver = msgReceiver;
+    public SimplePushMessage(String msgSender, String msgContent){
+        this.msgSender = msgSender;
         this.msgContent = msgContent;
     }
 
-    public SimplePushMessage(String msgReceiver,String msgSubject, String msgContent){
-        this.msgSender = "system";
-        this.msgReceiver = msgReceiver;
+    public SimplePushMessage(String msgSender,String msgSubject, String msgContent){
+        this.msgSender = msgSender;
         this.msgSubject = msgSubject;
         this.msgContent = msgContent;
     }
 
-    public SimplePushMessage(String msgReceiver,
+    public SimplePushMessage(String msgSender,
                              String msgSubject, String msgContent,String relUrl){
-        this.msgSender = "system";
-        this.msgReceiver = msgReceiver;
+        this.msgSender = msgSender;
         this.msgSubject = msgSubject;
         this.msgContent = msgContent;
         this.relUrl = relUrl;
