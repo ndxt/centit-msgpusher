@@ -11,15 +11,23 @@ import java.util.Date;
 
 public class SimplePushMessage implements IPushMessage {
     public SimplePushMessage(){
+        this.msgType = "msg";
         this.msgSender = "system";
+    }
+    public SimplePushMessage(String msgContent){
+        this.msgType = "msg";
+        this.msgSender = "system";
+        this.msgContent = msgContent;
     }
 
     public SimplePushMessage(String msgSender, String msgContent){
+        this.msgType = "msg";
         this.msgSender = msgSender;
         this.msgContent = msgContent;
     }
 
     public SimplePushMessage(String msgSender,String msgSubject, String msgContent){
+        this.msgType = "msg";
         this.msgSender = msgSender;
         this.msgSubject = msgSubject;
         this.msgContent = msgContent;
@@ -38,6 +46,10 @@ public class SimplePushMessage implements IPushMessage {
      * 收件人 null
      */
     private String  msgReceiver;
+    /**
+     * 消息类型
+     */
+    private String  msgType;
     /**
      * 主题 null
      */
@@ -80,9 +92,13 @@ public class SimplePushMessage implements IPushMessage {
         return msgReceiver;
     }
 
+    public void setMsgType(String msgType) {
+        this.msgType = msgType;
+    }
+
     @Override
     public String getMsgType() {
-        return null;
+        return this.msgType;
     }
 
     public void setMsgReceiver(String msgReceiver) {

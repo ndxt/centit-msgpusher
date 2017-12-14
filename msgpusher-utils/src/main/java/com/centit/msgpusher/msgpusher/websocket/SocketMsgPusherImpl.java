@@ -39,7 +39,7 @@ public class SocketMsgPusherImpl implements SocketMsgPusher {
         PushResult pushResult = new PushResult();
         Map<String,String> pcMap =new HashMap<>();
         String osId = msg.getOsId();
-        String userCode = msg.getMsgReceiver();
+        String userCode = receiver.getUserCode();// msg.getMsgReceiver();
         String user = osId + "_" + userCode;
         String contentText = msg.getMsgContent();
         //String viewUrl = msg.getRelUrl();
