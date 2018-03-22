@@ -1,19 +1,19 @@
 package com.centit.msgpusher.msgpusher.po;
 
-import java.util.Date;
-
 /**
  * create by scaffold 2017-04-10 
  * @author codefan@sina.com
  
-  消息推送null   
+  消息推送
 */
-
+@SuppressWarnings("unused")
 public class SimplePushMessage implements IPushMessage {
+
     public SimplePushMessage(){
         this.msgType = "msg";
         this.msgSender = "system";
     }
+
     public SimplePushMessage(String msgContent){
         this.msgType = "msg";
         this.msgSender = "system";
