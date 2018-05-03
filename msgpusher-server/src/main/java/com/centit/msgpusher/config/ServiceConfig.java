@@ -1,16 +1,43 @@
 package com.centit.msgpusher.config;
 
-import com.centit.framework.core.config.DataSourceConfig;
-import com.centit.framework.staticsystem.config.StaticSystemBeanConfig;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import com.centit.framework.components.impl.NotificationCenterImpl;
+import com.centit.framework.components.impl.TextOperationLogWriterImpl;
+import com.centit.framework.hibernate.config.HibernateConfig;
+import com.centit.framework.ip.app.config.IPAppSystemBeanConfig;
+import com.centit.framework.model.adapter.NotificationCenter;
+import com.centit.framework.model.adapter.OperationLogWriter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.*;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
 @EnableScheduling
 @ComponentScan(basePackages = {"com.centit.*"})
-@Import({StaticSystemBeanConfig.class, DataSourceConfig.class})
+@Import({IPAppSystemBeanConfig.class, HibernateConfig.class})
 public class ServiceConfig {
 
+    @Value("${app.home:./}")
+    private String appHome;
+
+    @Bean
+    public NotificationCenter notificationCenter() {
+        NotificationCenterImpl notificationCenter = new NotificationCenterImpl();
+        notificationCenter.initMsgSenders();
+        //notificationCenter.registerMessageSender("innerMsg",innerMessageManager);
+        return notificationCenter;
+    }
+
+    @Bean
+    @Lazy(value = false)
+    public OperationLogWriter operationLogWriter() {
+        TextOperationLogWriterImpl operationLog = new TextOperationLogWriterImpl();
+        operationLog.setOptLogHomePath(appHome+"/logs");
+        operationLog.init();
+        return operationLog;
+    }
+
+    @Bean
+    public InstantiationServiceBeanPostProcessor instantiationServiceBeanPostProcessor() {
+        return new InstantiationServiceBeanPostProcessor();
+    }
 }

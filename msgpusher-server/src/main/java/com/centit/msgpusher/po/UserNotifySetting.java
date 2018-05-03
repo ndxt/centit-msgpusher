@@ -1,21 +1,10 @@
 package com.centit.msgpusher.po;
 
-import javax.persistence.Column;
-
-
-import javax.persistence.Id;
-
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import javax.persistence.GeneratedValue;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.persistence.*;
 
 /**
  * create by scaffold 2017-04-10 
@@ -27,9 +16,6 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name = "F_USER_NOTIFY_SETTING")
 public class UserNotifySetting implements java.io.Serializable {
 	private static final long serialVersionUID =  1L;
-
-
-
 	/**
 	 * 用户设定编号 null 
 	 */

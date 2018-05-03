@@ -1,16 +1,12 @@
 package com.centit.msgpusher.po;
 
-import javax.persistence.Column;
-
-import javax.persistence.EmbeddedId;
-
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import com.centit.msgpusher.msgpusher.po.IPushMsgPoint;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 
 /**

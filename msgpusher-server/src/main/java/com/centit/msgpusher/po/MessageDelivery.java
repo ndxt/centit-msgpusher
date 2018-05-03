@@ -1,15 +1,12 @@
 package com.centit.msgpusher.po;
 
-import java.util.Date;
-import javax.persistence.*;
-
-
-import javax.validation.constraints.NotNull;
-
 import com.centit.msgpusher.msgpusher.po.IPushMessage;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+
+import javax.persistence.*;
+import java.util.Date;
 
 
 /**
