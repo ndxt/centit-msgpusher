@@ -19,7 +19,7 @@
         <dependency>
             <groupId>com.centit.product</groupId>
             <artifactId>msgpusher-utils</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
