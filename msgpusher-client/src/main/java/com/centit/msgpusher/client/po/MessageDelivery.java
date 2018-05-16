@@ -1,6 +1,8 @@
 package com.centit.msgpusher.client.po;
 
 
+import com.centit.framework.model.basedata.NoticeMessage;
+
 import java.util.Date;
 
 /**
@@ -323,6 +325,19 @@ public class MessageDelivery implements java.io.Serializable {
         this.optId= null;
         this.optMethod= null;
         this.optTag= null;
+        return this;
+    }
+
+    public MessageDelivery copyFromNoticeMessage(NoticeMessage other){
+
+        this.msgType= other.getMsgType();
+        this.msgSubject= other.getMsgSubject();
+        this.msgContent= other.getMsgContent();
+
+        this.optId= other.getOptId();
+        this.optMethod= other.getOptMethod();
+        this.optTag= other.getOptTag();
+
         return this;
     }
 }

@@ -3,6 +3,7 @@ package com.centit.msgpusher.client;
 import com.alibaba.fastjson.JSON;
 import com.centit.framework.model.adapter.MessageSender;
 import com.centit.framework.model.adapter.NotificationCenter;
+import com.centit.framework.model.basedata.NoticeMessage;
 import com.centit.msgpusher.client.po.MessageDelivery;
 import com.centit.msgpusher.client.po.PushResult;
 
@@ -10,7 +11,7 @@ import com.centit.msgpusher.client.po.PushResult;
  * Created by codefan on 17-4-11.
  */
 public class NotificationCenterPusherImpl
-        implements NotificationCenter, MessageSender {
+        implements NotificationCenter {
 
     private String currentOsId;
     private String defaultNoticeType;
@@ -45,71 +46,32 @@ public class NotificationCenterPusherImpl
     /**
      * @param sender     发送人内部用户编码
      * @param receiver   接收人内部用户编码
-     * @param msgSubject 消息主题
-     * @param msgContent 消息内容
+     * @param message 消息主题
      * @return "OK" 表示成功，其他的为错误信息
      */
     @Override
-    public String sendMessage(String sender, String receiver, String msgSubject, String msgContent) {
-        return  sendMessage(sender, receiver, msgSubject,  msgContent,  null,
-                null,  null, defaultNoticeType) ;
+    public String sendMessage(String sender, String receiver, NoticeMessage message) {
+        return sendMessageAppointedType(defaultNoticeType, sender, receiver, message) ;
     }
+
 
     /**
      * @param sender     发送人内部用户编码
      * @param receiver   接收人内部用户编码
-     * @param msgSubject 消息主题
-     * @param msgContent 消息内容
+     * @param message 消息主题
      * @param noticeType 指定发送类别
      * @return "OK" 表示成功，其他的为错误信息
      */
     @Override
-    public String sendMessage(String sender, String receiver, String msgSubject, String msgContent, String noticeType) {
-        return  sendMessage(sender, receiver, msgSubject,  msgContent,  null,
-                null,  null, noticeType) ;
-    }
-
-    /**
-     * @param sender     发送人内部用户编码
-     * @param receiver   接收人内部用户编码
-     * @param msgSubject 消息主题
-     * @param msgContent 消息内容
-     * @param optId      关联的业务编号
-     * @param optMethod  管理的操作
-     * @param optTag     业务主键 ，复合主键用URL方式对的格式 a等于v1 且 b等于v2
-     * @return "OK" 表示成功，其他的为错误信息
-     */
-    @Override
-    public String sendMessage(String sender, String receiver, String msgSubject, String msgContent, String optId, String optMethod, String optTag) {
-        return sendMessage(sender, receiver, msgSubject,  msgContent,  optId,
-                 optMethod,  optTag, defaultNoticeType) ;
-    }
-
-    /**
-     * @param sender     发送人内部用户编码
-     * @param receiver   接收人内部用户编码
-     * @param msgSubject 消息主题
-     * @param msgContent 消息内容
-     * @param optId      关联的业务编号
-     * @param optMethod  管理的操作
-     * @param optTag     业务主键 ，复合主键用URL方式对的格式 a等于v1 且 b等于v2
-     * @param noticeType 指定发送类别
-     * @return "OK" 表示成功，其他的为错误信息
-     */
-    @Override
-    public String sendMessage(String sender, String receiver, String msgSubject, String msgContent, String optId,
-                              String optMethod, String optTag, String noticeType) {
+    public String sendMessageAppointedType(String noticeType, String sender, String receiver, NoticeMessage message) {
 
         MessageDelivery msgdlvry = new MessageDelivery();
-        msgdlvry.setMsgSubject(msgSubject);
-        msgdlvry.setMsgContent(msgContent);
-        msgdlvry.setNoticeTypes(noticeType);
-        msgdlvry.setOptId(optId);
-        msgdlvry.setOptMethod(optMethod);
-        msgdlvry.setOptTag(optTag);
+        msgdlvry.copyFromNoticeMessage(message);
+
         msgdlvry.setOsId(currentOsId);
         msgdlvry.setMsgSender(sender);
         msgdlvry.setMsgReceiver(receiver);
+        msgdlvry.setNoticeTypes(noticeType);
 
         try {
             PushResult jsonStr =jsonStr = msgPusherClient.pushMessage(msgdlvry);
