@@ -17,7 +17,6 @@ import javax.websocket.server.ServerEndpoint;
 public class SocketPusherListener {
 
     @Resource
-    @Autowired
     protected SocketMsgPusher socketMsgPusher;
 
     /**

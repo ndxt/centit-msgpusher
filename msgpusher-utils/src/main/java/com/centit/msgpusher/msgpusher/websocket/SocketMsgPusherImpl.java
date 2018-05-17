@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.websocket.Session;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,8 +31,17 @@ public class SocketMsgPusherImpl implements SocketMsgPusher {
     private static boolean webSockectPushMessage(Session session , String message) {
         if(session==null)
             return false;
-        session.getAsyncRemote().sendText(message);
-        return true;
+        boolean pushOk = true;
+        synchronized (session) {
+            //session.getAsyncRemote().sendText(message);
+            try {
+                session.getBasicRemote().sendText(message);
+            } catch (IOException e) {
+                pushOk=false;
+                logger.info(e.getLocalizedMessage());
+            }
+        }
+        return pushOk;
     }
 
     @Override
