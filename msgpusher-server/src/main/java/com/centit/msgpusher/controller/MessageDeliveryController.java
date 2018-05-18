@@ -6,7 +6,7 @@ import com.centit.framework.common.JsonResultUtils;
 import com.centit.framework.common.ResponseMapData;
 import com.centit.framework.core.controller.BaseController;
 import com.centit.framework.core.dao.PageDesc;
-import com.centit.msgpusher.msgpusher.PushResult;
+import com.centit.msgpusher.commons.PushResult;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.service.MessageDeliveryManager;
@@ -30,9 +30,9 @@ import java.util.Map;
 
 /**
  * IPushMessage  Controller.
- * create by scaffold 2017-04-07 
+ * create by scaffold 2017-04-07
  * @author codefan@sina.com
- * 消息推送null   
+ * 消息推送null
 */
 
 

@@ -2,38 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <parent>
-        <groupId>com.centit.product</groupId>
         <artifactId>centit-msgpusher</artifactId>
+        <groupId>com.centit.product</groupId>
         <version>0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>msgpusher-client</artifactId>
-    <name>com.centit.product:msgpusher-client</name>
+    <artifactId>msgpusher-notification</artifactId>
+    <name>com.centit.product:msgpusher-notification</name>
     <packaging>jar</packaging>
-    <description>消息推送服务器的客户端，并且实现了先腾框架的底层服务接口，
-        可以对框架中的消息服务进行替换。</description>
+    <description>带消息推送的通知中心</description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.centit.product</groupId>
+            <artifactId>msgpusher-utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.centit.framework</groupId>
-            <artifactId>framework-adapter</artifactId>
-        </dependency>
-
-        <!-- test library -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- server runtime library -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <artifactId>framework-core</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -44,6 +34,6 @@
             <systemPath>${env.JAVA_HOME}/lib/tools.jar</systemPath>
             <scope>system</scope>
         </dependency>
-
     </dependencies>
+
 </project>

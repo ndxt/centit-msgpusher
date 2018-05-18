@@ -3,7 +3,7 @@ package com.centit.msgpusher.service;
 import com.alibaba.fastjson.JSONArray;
 import com.centit.framework.core.dao.PageDesc;
 import com.centit.framework.hibernate.service.BaseEntityManager;
-import com.centit.msgpusher.msgpusher.PushResult;
+import com.centit.msgpusher.commons.PushResult;
 import com.centit.msgpusher.po.MessageDelivery;
 
 import java.util.Date;
@@ -12,9 +12,9 @@ import java.util.Map;
 
 /**
  * IPushMessage  Service.
- * create by scaffold 2017-04-07 
+ * create by scaffold 2017-04-07
  * @author codefan@sina.com
- * 消息推送null   
+ * 消息推送null
 */
 
 public interface MessageDeliveryManager extends BaseEntityManager<MessageDelivery,String>

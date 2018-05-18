@@ -12,7 +12,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.centit.product</groupId>
     <artifactId>centit-msgpusher</artifactId>
-    <version>0.1.1805</version>
+    <version>0.1-SNAPSHOT</version>
 
     <name>com.centit.product:centit-msgpusher</name>
     <packaging>pom</packaging>
@@ -27,6 +27,16 @@
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
+
+    <distributionManagement>
+
+        <repository>
+            <id>centit-releases</id>
+            <name>centit-release</name>
+            <url>http://nexus.centit.com:8081/nexus/content/repositories/centit-releases/</url>
+        </repository>
+
+    </distributionManagement>
 
     <developers>
         <developer>
@@ -64,6 +74,9 @@
 
     <modules>
         <module>msgpusher-utils</module>
+        <module>msgpusher-notification</module>
+        <module>msgpusher-client</module>
+        <module>msgpusher-server</module>
     </modules>
 
     <build>

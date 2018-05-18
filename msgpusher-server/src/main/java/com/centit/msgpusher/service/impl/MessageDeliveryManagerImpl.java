@@ -9,7 +9,7 @@ import com.centit.framework.hibernate.service.BaseEntityManagerImpl;
 import com.centit.msgpusher.dao.MessageDeliveryDao;
 import com.centit.msgpusher.dao.UserMsgPointDao;
 import com.centit.msgpusher.dao.UserNotifySettingDao;
-import com.centit.msgpusher.msgpusher.PushResult;
+import com.centit.msgpusher.commons.PushResult;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.po.UserMsgPointId;
@@ -31,19 +31,19 @@ import java.util.*;
 
 /**
  * IPushMessage  Service.
- * create by scaffold 2017-04-07 
+ * create by scaffold 2017-04-07
  * @author codefan@sina.com
- * 消息推送null   
+ * 消息推送null
 */
 @Service("messageDeliveryManager")
-public class MessageDeliveryManagerImpl 
+public class MessageDeliveryManagerImpl
 		extends BaseEntityManagerImpl<MessageDelivery,java.lang.String,MessageDeliveryDao>
 	implements MessageDeliveryManager{
 
 	public static final Logger logger = LoggerFactory.getLogger(MessageDeliveryManagerImpl.class);
 
 
-	@Value("${msgpusher.msg.validtyPeriod}")
+	@Value("${plugins.msg.validtyPeriod}")
 	private int validtyPeriod;
 
 	@Resource(name="msgPusherCenter")
@@ -71,7 +71,7 @@ public class MessageDeliveryManagerImpl
 	public JSONArray listMessageDeliverysAsJson(
             String[] fields,
             Map<String, Object> filterMap, PageDesc pageDesc){
-			
+
 		return DictionaryMapUtils.objectsToJSONArray(
 				baseDao.listObjects(filterMap, pageDesc), fields);
 	}

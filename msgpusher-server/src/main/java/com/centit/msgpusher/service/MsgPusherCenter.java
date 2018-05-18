@@ -1,6 +1,6 @@
 package com.centit.msgpusher.service;
 
-import com.centit.msgpusher.msgpusher.PushResult;
+import com.centit.msgpusher.commons.PushResult;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.msgpusher.po.UserMsgPoint;
 
