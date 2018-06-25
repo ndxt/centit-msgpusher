@@ -18,58 +18,58 @@ import java.io.IOException;
 
 /**
  * IPushMessage  Controller.
- * create by scaffold 2017-04-07 
+ * create by scaffold 2017-04-07
  * @author codefan@sina.com
- * 消息推送null   
+ * 消息推送null
 */
 
 
 @Controller
 @RequestMapping("/testMsgPush")
 public class TestMsgPushController extends BaseController {
-	private static final Log log = LogFactory.getLog(TestMsgPushController.class);
+    private static final Log log = LogFactory.getLog(TestMsgPushController.class);
 
-	@Resource
-	private MessageDeliveryManager messageDeliveryManager;
+    @Resource
+    private MessageDeliveryManager messageDeliveryManager;
 
-	@RequestMapping(value = "/pushmsg/{userCode}", method = RequestMethod.GET)
-	public void testPushMessage(@PathVariable String userCode, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/pushmsg/{userCode}", method = RequestMethod.GET)
+    public void testPushMessage(@PathVariable String userCode, HttpServletResponse response) throws IOException {
 
-		try {
-			MessageDelivery msg = new MessageDelivery();
-			msg.setPushType("A");
-			msg.setMsgSender("system");
-			msg.setMsgType("message");
-			msg.setMsgReceiver(userCode);
-			msg.setMsgSubject("测试消息");
-			msg.setMsgContent("您收到一条测试消息，请点击查看：");
-			msg.setRelUrl("http://www.baidu.com");
-			messageDeliveryManager.pushMessage(msg);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		JsonResultUtils.writeSuccessJson(response);
-	}
+        try {
+            MessageDelivery msg = new MessageDelivery();
+            msg.setPushType("A");
+            msg.setMsgSender("system");
+            msg.setMsgType("message");
+            msg.setMsgReceiver(userCode);
+            msg.setMsgSubject("测试消息");
+            msg.setMsgContent("您收到一条测试消息，请点击查看：");
+            msg.setRelUrl("http://www.baidu.com");
+            messageDeliveryManager.pushMessage(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JsonResultUtils.writeSuccessJson(response);
+    }
 
 
-	@RequestMapping(value = "/push/{msgType}/{userCode}", method = RequestMethod.GET)
-	public void testPushStatus(@PathVariable String msgType,
-							   @PathVariable String userCode,
-							   @RequestParam("content" ) String content,
-							   HttpServletResponse response) throws IOException {
-		MessageDelivery msg = new MessageDelivery();
-		try {
-			msg.setPushType("A");
-			msg.setMsgSender("system");
-			msg.setMsgType(msgType);
-			msg.setMsgReceiver(userCode );
-			msg.setMsgSubject("测试其他类别消息");
-			msg.setMsgContent(content);
-			msg.setRelUrl("http://www.baidu.com");
-			messageDeliveryManager.pushMessage(msg);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		JsonResultUtils.writeSingleDataJson(msg,response);
-	}
+    @RequestMapping(value = "/push/{msgType}/{userCode}", method = RequestMethod.GET)
+    public void testPushStatus(@PathVariable String msgType,
+                               @PathVariable String userCode,
+                               @RequestParam("content" ) String content,
+                               HttpServletResponse response) throws IOException {
+        MessageDelivery msg = new MessageDelivery();
+        try {
+            msg.setPushType("A");
+            msg.setMsgSender("system");
+            msg.setMsgType(msgType);
+            msg.setMsgReceiver(userCode );
+            msg.setMsgSubject("测试其他类别消息");
+            msg.setMsgContent(content);
+            msg.setRelUrl("http://www.baidu.com");
+            messageDeliveryManager.pushMessage(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JsonResultUtils.writeSingleDataJson(msg,response);
+    }
 }

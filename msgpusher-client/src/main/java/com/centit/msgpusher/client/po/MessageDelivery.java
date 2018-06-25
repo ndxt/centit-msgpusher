@@ -82,13 +82,13 @@ public class MessageDelivery implements java.io.Serializable {
 
         // Constructors
         /** default constructor */
-	public MessageDelivery() {
+    public MessageDelivery() {
         this.noticeTypes = "A";
         this.msgType= "message";
         this.msgExpireSeconds= DEFALUT_MSG_EXPIRES;
     }
 
-	public MessageDelivery(
+    public MessageDelivery(
                 Long msgId
                 ,String  msgReceiver,String  msgContent,String  optId) {
         this.noticeTypes ="A";
@@ -101,7 +101,7 @@ public class MessageDelivery implements java.io.Serializable {
     }
 
 
-	public MessageDelivery(
+    public MessageDelivery(
                 Long msgId
                 ,String  msgSender,String  pushType,String  msgReceiver,String  msgType,String  msgSubject,
                 String  msgContent,String  relUrl,String  noticeTypes,

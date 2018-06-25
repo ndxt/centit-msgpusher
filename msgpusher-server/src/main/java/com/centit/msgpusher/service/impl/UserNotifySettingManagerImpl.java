@@ -17,44 +17,44 @@ import java.util.Map;
 
 /**
  * UserNotifySetting  Service.
- * create by scaffold 2017-04-07 
+ * create by scaffold 2017-04-07
  * @author codefan@sina.com
- * 用户通知接受参数设置用户设置 自己接收 通知的方式。   
+ * 用户通知接受参数设置用户设置 自己接收 通知的方式。
 */
 @Service
-public class UserNotifySettingManagerImpl 
-		extends BaseEntityManagerImpl<UserNotifySetting,java.lang.String,UserNotifySettingDao>
-	implements UserNotifySettingManager{
+public class UserNotifySettingManagerImpl
+        extends BaseEntityManagerImpl<UserNotifySetting,java.lang.String,UserNotifySettingDao>
+    implements UserNotifySettingManager{
 
-	//public static final Logger logger = LoggerFactory.getLogger(UserNotifySettingManager.class);
+    //public static final Logger logger = LoggerFactory.getLogger(UserNotifySettingManager.class);
 
-	
-	private UserNotifySettingDao userNotifySettingDao ;
-	
-	@Resource(name = "userNotifySettingDao")
+
+    private UserNotifySettingDao userNotifySettingDao ;
+
+    @Resource(name = "userNotifySettingDao")
     @NotNull
-	public void setUserNotifySettingDao(UserNotifySettingDao baseDao)
-	{
-		this.userNotifySettingDao = baseDao;
-		setBaseDao(this.userNotifySettingDao);
-	}
-	
-/*
- 	@PostConstruct
-    public void init() {
-        
+    public void setUserNotifySettingDao(UserNotifySettingDao baseDao)
+    {
+        this.userNotifySettingDao = baseDao;
+        setBaseDao(this.userNotifySettingDao);
     }
- 	
+
+/*
+     @PostConstruct
+    public void init() {
+
+    }
+
  */
-	@Override
+    @Override
     @Transactional(propagation= Propagation.REQUIRED)
-	public JSONArray listUserNotifySettingsAsJson(
+    public JSONArray listUserNotifySettingsAsJson(
             String[] fields,
             Map<String, Object> filterMap, PageDesc pageDesc){
 
-		return DictionaryMapUtils.objectsToJSONArray(
-				baseDao.listObjects(filterMap, pageDesc), fields);
-	}
+        return DictionaryMapUtils.objectsToJSONArray(
+                baseDao.listObjects(filterMap, pageDesc), fields);
+    }
 
 }
 
