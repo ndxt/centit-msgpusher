@@ -1,6 +1,7 @@
 package com.centit.msgpusher.notification;
 
 import com.centit.framework.components.impl.NotificationCenterImpl;
+import com.centit.framework.components.impl.SimpleNotificationCenterImpl;
 import com.centit.framework.model.basedata.NoticeMessage;
 import com.centit.msgpusher.po.SimplePushMessage;
 import com.centit.msgpusher.po.SimplePushMsgPoint;
@@ -11,14 +12,14 @@ import org.slf4j.LoggerFactory;
 /**
  * 通知中心实现，所有的消息通过此类进行发送，消息中心会通过接收用户设置的消息接收方式自行决定使用哪种消息发送方式
  */
-public class NotificationCenterPlusMsgPusherImpl extends NotificationCenterImpl {
+public class SimpleNotificationCenterPlusMsgPusherImpl extends SimpleNotificationCenterImpl {
 
-    private static final Logger logger = LoggerFactory.getLogger(NotificationCenterPlusMsgPusherImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimpleNotificationCenterPlusMsgPusherImpl.class);
 
     protected SocketMsgPusher socketMsgPusher;
     private boolean useWebSocketPusher;
 
-    public NotificationCenterPlusMsgPusherImpl() {
+    public SimpleNotificationCenterPlusMsgPusherImpl() {
         super();
         socketMsgPusher = null;
         useWebSocketPusher = false;
@@ -33,6 +34,23 @@ public class NotificationCenterPlusMsgPusherImpl extends NotificationCenterImpl 
         this.socketMsgPusher = socketMsgPusher;
     }
 
+    public static void pushMsgBySocket(
+        SocketMsgPusher socketMsgPusher,
+        String sender, String receiver, NoticeMessage message){
+        try {
+            SimplePushMessage pushMessage = new SimplePushMessage(sender,message.getMsgSubject(), message.getMsgContent());
+            pushMessage.setMsgType( message.getMsgType());
+            pushMessage.setMsgReceiver(receiver);
+            pushMessage.setOptId(message.getOptId());
+            pushMessage.setOptMethod(message.getOptMethod());
+            pushMessage.setOptTag(message.getOptTag());
+
+            socketMsgPusher.pushMessage(pushMessage,
+                new SimplePushMsgPoint(receiver));
+        } catch (Exception e) {
+            logger.error(e.getLocalizedMessage());
+        }
+    }
     /**
      * 根据用户设定的方式发送消息
      * @param sender     发送人内部用户编码
@@ -46,7 +64,7 @@ public class NotificationCenterPlusMsgPusherImpl extends NotificationCenterImpl 
 
         if(useWebSocketPusher && socketMsgPusher!=null){
             SimpleNotificationCenterPlusMsgPusherImpl.pushMsgBySocket(
-                socketMsgPusher,sender,  receiver,  message);
+                socketMsgPusher, sender,  receiver,  message);
         }
 
         return returnText;
@@ -70,6 +88,7 @@ public class NotificationCenterPlusMsgPusherImpl extends NotificationCenterImpl 
             SimpleNotificationCenterPlusMsgPusherImpl.pushMsgBySocket(
                 socketMsgPusher, sender,  receiver,  message);
         }
+
         return returnText;
     }
 

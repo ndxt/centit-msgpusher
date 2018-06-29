@@ -127,7 +127,7 @@
 
             <!-- GPG自动签名的插件 -->
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>1.6</version>
@@ -140,7 +140,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
 
             <!-- sonatype release :
                 mvn nexus-staging:release -->
