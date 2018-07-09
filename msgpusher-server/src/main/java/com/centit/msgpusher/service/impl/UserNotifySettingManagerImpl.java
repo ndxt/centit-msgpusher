@@ -3,7 +3,8 @@ package com.centit.msgpusher.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.centit.framework.core.dao.DictionaryMapUtils;
 import com.centit.framework.core.dao.PageDesc;
-import com.centit.framework.hibernate.service.BaseEntityManagerImpl;
+import com.centit.framework.core.dao.QueryParameterPrepare;
+import com.centit.framework.jdbc.service.BaseEntityManagerImpl;
 import com.centit.msgpusher.dao.UserNotifySettingDao;
 import com.centit.msgpusher.po.UserNotifySetting;
 import com.centit.msgpusher.service.UserNotifySettingManager;
@@ -23,7 +24,7 @@ import java.util.Map;
 */
 @Service
 public class UserNotifySettingManagerImpl
-        extends BaseEntityManagerImpl<UserNotifySetting,java.lang.String,UserNotifySettingDao>
+        extends BaseEntityManagerImpl<UserNotifySetting,String,UserNotifySettingDao>
     implements UserNotifySettingManager{
 
     //public static final Logger logger = LoggerFactory.getLogger(UserNotifySettingManager.class);
@@ -53,7 +54,9 @@ public class UserNotifySettingManagerImpl
             Map<String, Object> filterMap, PageDesc pageDesc){
 
         return DictionaryMapUtils.objectsToJSONArray(
-                baseDao.listObjects(filterMap, pageDesc), fields);
+            baseDao.pageQuery(QueryParameterPrepare.makeMybatisOrderByParam(
+                QueryParameterPrepare.prepPageParams(filterMap,pageDesc,
+                    baseDao.pageCount(filterMap)),UserNotifySetting.class)), fields);
     }
 
 }

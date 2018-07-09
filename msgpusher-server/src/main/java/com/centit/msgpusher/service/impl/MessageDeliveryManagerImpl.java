@@ -4,12 +4,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.centit.framework.core.dao.DictionaryMapUtils;
 import com.centit.framework.core.dao.PageDesc;
-import com.centit.framework.hibernate.dao.DatabaseOptUtils;
-import com.centit.framework.hibernate.service.BaseEntityManagerImpl;
+import com.centit.framework.core.dao.QueryParameterPrepare;
+import com.centit.framework.jdbc.dao.DatabaseOptUtils;
+import com.centit.framework.jdbc.service.BaseEntityManagerImpl;
+import com.centit.msgpusher.commons.PushResult;
 import com.centit.msgpusher.dao.MessageDeliveryDao;
 import com.centit.msgpusher.dao.UserMsgPointDao;
 import com.centit.msgpusher.dao.UserNotifySettingDao;
-import com.centit.msgpusher.commons.PushResult;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.po.UserMsgPointId;
@@ -37,13 +38,13 @@ import java.util.*;
 */
 @Service("messageDeliveryManager")
 public class MessageDeliveryManagerImpl
-        extends BaseEntityManagerImpl<MessageDelivery,java.lang.String,MessageDeliveryDao>
+        extends BaseEntityManagerImpl<MessageDelivery,String,MessageDeliveryDao>
     implements MessageDeliveryManager{
 
     public static final Logger logger = LoggerFactory.getLogger(MessageDeliveryManagerImpl.class);
 
 
-    @Value("${plugins.msg.validtyPeriod}")
+    @Value("${plugins.msg.validtyPeriod:1}")
     private int validtyPeriod;
 
     @Resource(name="msgPusherCenter")
@@ -73,7 +74,9 @@ public class MessageDeliveryManagerImpl
             Map<String, Object> filterMap, PageDesc pageDesc){
 
         return DictionaryMapUtils.objectsToJSONArray(
-                baseDao.listObjects(filterMap, pageDesc), fields);
+        messageDeliveryDao.pageQuery(QueryParameterPrepare.makeMybatisOrderByParam(
+            QueryParameterPrepare.prepPageParams(filterMap,pageDesc,
+                messageDeliveryDao.pageCount(filterMap)),MessageDelivery.class)), fields);
     }
 
     /**
@@ -122,8 +125,9 @@ public class MessageDeliveryManagerImpl
             return saveErrorPushResult("推送方式不支持",msg);
         }
         msg.setPushState(pushResult.getPushState());
-        if (!StringUtils.isBlank(pushResult.getMsgId()))
+        if (!StringUtils.isBlank(pushResult.getMsgId())) {
             json.put(MessageDelivery.NOTICE_TYPE_APP, pushResult.getMsgId());
+        }
         for (Map.Entry<String, String> entry : pushResult.getMap().entrySet()) {
             json.put(entry.getKey(),entry.getValue());
         }
@@ -136,7 +140,7 @@ public class MessageDeliveryManagerImpl
         if (StringUtils.isBlank(msg.getMsgId())){
             messageDeliveryDao.saveNewObject(msg);
         }else{
-            messageDeliveryDao.saveObject(msg);
+            messageDeliveryDao.updateObject(msg);
         }
         return pushResult;
     }
@@ -179,10 +183,12 @@ public class MessageDeliveryManagerImpl
         }
         msg.setPushState(pushResult.getPushState());
 
-        if (!StringUtils.isBlank(pushResult.getMsgId()))
+        if (!StringUtils.isBlank(pushResult.getMsgId())) {
             json.put("android", pushResult.getMsgId());
-        if (!StringUtils.isBlank(pushResult.getMsgId2()))
+        }
+        if (!StringUtils.isBlank(pushResult.getMsgId2())) {
             json.put("ios", pushResult.getMsgId2());
+        }
         for (Map.Entry<String, String> entry : pushResult.getMap().entrySet()) {
             json.put(entry.getKey(),entry.getValue());
         }
@@ -195,7 +201,7 @@ public class MessageDeliveryManagerImpl
         if (StringUtils.isBlank(msg.getMsgId())){
             messageDeliveryDao.saveNewObject(msg);
         }else{
-            messageDeliveryDao.saveObject(msg);
+            messageDeliveryDao.updateObject(msg);
         }
         return pushResult;
     }
@@ -209,7 +215,7 @@ public class MessageDeliveryManagerImpl
     private Date changeDate(Date time,int n){
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(time);
-        calendar.add(calendar.DATE, n);//把日期往后增加一天.整数往后推,负数往前移动
+        calendar.add(Calendar.DATE, n);//把日期往后增加一天.整数往后推,负数往前移动
         return calendar.getTime();
     }
 
@@ -242,9 +248,9 @@ public class MessageDeliveryManagerImpl
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteRecords() {
-        Date validDate = new Date(new Date().getTime()-validtyPeriod*86400000L);
+        Date validDate = new Date(System.currentTimeMillis()-validtyPeriod*86400000L);
         String hql = "delete from IPushMessage m where m.pushTime<=?";
-        DatabaseOptUtils.doExecuteHql(messageDeliveryDao,
+        DatabaseOptUtils.doExecuteSql(messageDeliveryDao,
                 hql,new Object[]{validDate});
         /*List<IPushMessage> msgList = messageDeliveryDao.listObjects(hql,new Object[]{validDate});
         JSONObject obj = new JSONObject();
@@ -259,8 +265,8 @@ public class MessageDeliveryManagerImpl
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public List<MessageDelivery> viewRecords(String osId, String optId, Date pushTimeStart, Date pushTimeEnd) {
-        String hql = "from IPushMessage m where m.osId=? and m.optId=? and m.pushTime>? and m.pushTime<=?";
-        List<MessageDelivery> msgList = messageDeliveryDao.listObjects(hql,new Object[]{osId, optId, pushTimeStart, pushTimeEnd});
+        String hql = "where osId=? and optId=? and pushTime>? and pushTime<=?";
+        List<MessageDelivery> msgList = messageDeliveryDao.listObjectsByFilter(hql,new Object[]{osId, optId, pushTimeStart, pushTimeEnd});
         return msgList;
     }
 
