@@ -1,7 +1,5 @@
 package com.centit.msgpusher.po;
 
-import com.centit.msgpusher.po.IPushMessage;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -31,8 +29,6 @@ public class MessageDelivery implements IPushMessage, java.io.Serializable {
      */
     @Id
     @Column(name = "MSG_ID")
-    @GeneratedValue(generator = "assignedGenerator")
-    @GenericGenerator(name = "assignedGenerator", strategy = "uuid")
     private String  msgId;
 
     /**
@@ -184,7 +180,7 @@ public class MessageDelivery implements IPushMessage, java.io.Serializable {
         this.optTag= optTag;
     }
 
-
+    @Override
     public Integer getMsgExpireSeconds() {
         return this.msgExpireSeconds;
     }
@@ -203,6 +199,7 @@ public class MessageDelivery implements IPushMessage, java.io.Serializable {
     }
     // Property accessors
 
+    @Override
     public String getMsgSender() {
         return this.msgSender;
     }
@@ -219,6 +216,7 @@ public class MessageDelivery implements IPushMessage, java.io.Serializable {
         this.pushType = pushType;
     }
 
+    @Override
     public String getMsgReceiver() {
         return this.msgReceiver;
     }
@@ -227,6 +225,7 @@ public class MessageDelivery implements IPushMessage, java.io.Serializable {
         this.msgReceiver = msgReceiver;
     }
 
+    @Override
     public String getMsgType() {
         return this.msgType;
     }
@@ -235,6 +234,7 @@ public class MessageDelivery implements IPushMessage, java.io.Serializable {
         this.msgType = msgType;
     }
 
+    @Override
     public String getMsgSubject() {
         return this.msgSubject;
     }
@@ -243,6 +243,7 @@ public class MessageDelivery implements IPushMessage, java.io.Serializable {
         this.msgSubject = msgSubject;
     }
 
+    @Override
     public String getMsgContent() {
         return this.msgContent;
     }
@@ -251,6 +252,7 @@ public class MessageDelivery implements IPushMessage, java.io.Serializable {
         this.msgContent = msgContent;
     }
 
+    @Override
     public String getRelUrl() {
         return this.relUrl;
     }
@@ -307,6 +309,7 @@ public class MessageDelivery implements IPushMessage, java.io.Serializable {
         this.validPeriod = validPeriod;
     }
 
+    @Override
     public String getOsId() {
         return this.osId;
     }
@@ -315,6 +318,7 @@ public class MessageDelivery implements IPushMessage, java.io.Serializable {
         this.osId = osId;
     }
 
+    @Override
     public String getOptId() {
         return this.optId;
     }
@@ -323,6 +327,7 @@ public class MessageDelivery implements IPushMessage, java.io.Serializable {
         this.optId = optId;
     }
 
+    @Override
     public String getOptMethod() {
         return this.optMethod;
     }
@@ -331,6 +336,7 @@ public class MessageDelivery implements IPushMessage, java.io.Serializable {
         this.optMethod = optMethod;
     }
 
+    @Override
     public String getOptTag() {
         return this.optTag;
     }
@@ -368,43 +374,60 @@ public class MessageDelivery implements IPushMessage, java.io.Serializable {
 
     public MessageDelivery copyNotNullProperty(MessageDelivery other){
 
-    if( other.getMsgId() != null)
-        this.setMsgId(other.getMsgId());
-
-        if( other.getMsgSender() != null)
-            this.msgSender= other.getMsgSender();
-        if( other.getPushType() != null)
-            this.pushType= other.getPushType();
-        if( other.getMsgReceiver() != null)
-            this.msgReceiver= other.getMsgReceiver();
-        if( other.getMsgType() != null)
-            this.msgType= other.getMsgType();
-        if( other.getMsgSubject() != null)
-            this.msgSubject= other.getMsgSubject();
-        if( other.getMsgContent() != null)
-            this.msgContent= other.getMsgContent();
-        if( other.getRelUrl() != null)
-            this.relUrl= other.getRelUrl();
-        if( other.getNoticeTypes() != null)
-            this.noticeTypes= other.getNoticeTypes();
-        if( other.getPushState() != null)
-            this.pushState= other.getPushState();
-        if( other.getPushResult() != null)
-            this.pushResult= other.getPushResult();
-        if( other.getPlanPushTime() != null)
-            this.planPushTime= other.getPlanPushTime();
-        if( other.getPushTime() != null)
-            this.pushTime= other.getPushTime();
-        if( other.getValidPeriod() != null)
-            this.validPeriod= other.getValidPeriod();
-        if( other.getOsId() != null)
-            this.osId= other.getOsId();
-        if( other.getOptId() != null)
-            this.optId= other.getOptId();
-        if( other.getOptMethod() != null)
-            this.optMethod= other.getOptMethod();
-        if( other.getOptTag() != null)
-            this.optTag= other.getOptTag();
+        if( other.getMsgId() != null) {
+            this.setMsgId(other.getMsgId());
+        }
+        if( other.getMsgSender() != null) {
+            this.msgSender = other.getMsgSender();
+        }
+        if( other.getPushType() != null) {
+            this.pushType = other.getPushType();
+        }
+        if( other.getMsgReceiver() != null) {
+            this.msgReceiver = other.getMsgReceiver();
+        }
+        if( other.getMsgType() != null) {
+            this.msgType = other.getMsgType();
+        }
+        if( other.getMsgSubject() != null) {
+            this.msgSubject = other.getMsgSubject();
+        }
+        if( other.getMsgContent() != null) {
+            this.msgContent = other.getMsgContent();
+        }
+        if( other.getRelUrl() != null) {
+            this.relUrl = other.getRelUrl();
+        }
+        if( other.getNoticeTypes() != null) {
+            this.noticeTypes = other.getNoticeTypes();
+        }
+        if( other.getPushState() != null) {
+            this.pushState = other.getPushState();
+        }
+        if( other.getPushResult() != null) {
+            this.pushResult = other.getPushResult();
+        }
+        if( other.getPlanPushTime() != null) {
+            this.planPushTime = other.getPlanPushTime();
+        }
+        if( other.getPushTime() != null) {
+            this.pushTime = other.getPushTime();
+        }
+        if( other.getValidPeriod() != null) {
+            this.validPeriod = other.getValidPeriod();
+        }
+        if( other.getOsId() != null) {
+            this.osId = other.getOsId();
+        }
+        if( other.getOptId() != null) {
+            this.optId = other.getOptId();
+        }
+        if( other.getOptMethod() != null) {
+            this.optMethod = other.getOptMethod();
+        }
+        if( other.getOptTag() != null) {
+            this.optTag = other.getOptTag();
+        }
 
         return this;
     }

@@ -121,17 +121,21 @@ public class UserNotifySetting implements java.io.Serializable {
 
     public UserNotifySetting copyNotNullProperty(UserNotifySetting other){
 
-    if( other.getUserSettingId() != null)
-        this.setUserSettingId(other.getUserSettingId());
-
-        if( other.getUserCode() != null)
-            this.userCode= other.getUserCode();
-        if( other.getOsId() != null)
-            this.osId= other.getOsId();
-        if( other.getOptId() != null)
-            this.optId= other.getOptId();
-        if( other.getNotifyTypes() != null)
-            this.notifyTypes= other.getNotifyTypes();
+        if( other.getUserSettingId() != null) {
+            this.setUserSettingId(other.getUserSettingId());
+        }
+        if( other.getUserCode() != null) {
+            this.userCode = other.getUserCode();
+        }
+        if( other.getOsId() != null) {
+            this.osId = other.getOsId();
+        }
+        if( other.getOptId() != null) {
+            this.optId = other.getOptId();
+        }
+        if( other.getNotifyTypes() != null) {
+            this.notifyTypes = other.getNotifyTypes();
+        }
 
         return this;
     }

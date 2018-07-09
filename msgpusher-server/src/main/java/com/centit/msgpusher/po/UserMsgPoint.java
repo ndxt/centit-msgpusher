@@ -1,6 +1,5 @@
 package com.centit.msgpusher.po;
 
-import com.centit.msgpusher.po.IPushMsgPoint;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
@@ -98,32 +97,39 @@ public class UserMsgPoint implements IPushMsgPoint, java.io.Serializable {
         this.cid = id;
     }
 
+    @Override
     public String getUserCode() {
-        if(this.cid==null)
+        if(this.cid==null) {
             this.cid = new UserMsgPointId();
+        }
         return this.cid.getUserCode();
     }
 
     public void setUserCode(String userCode) {
-        if(this.cid==null)
+        if(this.cid==null) {
             this.cid = new UserMsgPointId();
+        }
         this.cid.setUserCode(userCode);
     }
 
+    @Override
     public String getOsId() {
-        if(this.cid==null)
+        if(this.cid==null) {
             this.cid = new UserMsgPointId();
+        }
         return this.cid.getOsId();
     }
 
     public void setOsId(String osId) {
-        if(this.cid==null)
+        if(this.cid==null) {
             this.cid = new UserMsgPointId();
+        }
         this.cid.setOsId(osId);
     }
 
     // Property accessors
 
+    @Override
     public String getUserName() {
         return userName;
     }
@@ -132,6 +138,7 @@ public class UserMsgPoint implements IPushMsgPoint, java.io.Serializable {
         this.userName = userName;
     }
 
+    @Override
     public String getEmailAddress() {
         return this.emailAddress;
     }
@@ -140,6 +147,7 @@ public class UserMsgPoint implements IPushMsgPoint, java.io.Serializable {
         this.emailAddress = emailAddress;
     }
 
+    @Override
     public String getDeviceType() {
         return this.deviceType;
     }
@@ -164,6 +172,7 @@ public class UserMsgPoint implements IPushMsgPoint, java.io.Serializable {
         this.osVersion = osVersion;
     }
 
+    @Override
     public String getChannelId() {
         return this.channelId;
     }
@@ -207,27 +216,37 @@ public class UserMsgPoint implements IPushMsgPoint, java.io.Serializable {
 
     public UserMsgPoint copyNotNullProperty(UserMsgPoint other){
 
-        if( other.getUserCode() != null)
+        if( other.getUserCode() != null) {
             this.setUserCode(other.getUserCode());
-        if( other.getOsId() != null)
+        }
+        if( other.getOsId() != null) {
             this.setOsId(other.getOsId());
-        if( other.getUserName() != null)
+        }
+        if( other.getUserName() != null) {
             this.userName = other.getUserName();
+        }
 
-        if( other.getDeviceType() != null)
-            this.deviceType= other.getDeviceType();
-        if( other.getDeviceId() != null)
-            this.deviceId= other.getDeviceId();
-        if( other.getOsVersion() != null)
-            this.osVersion= other.getOsVersion();
-        if( other.getChannelId() != null)
-            this.channelId= other.getChannelId();
-        if( other.getWxToken() != null)
-            this.wxToken= other.getWxToken();
-        if( other.getMobilePhone() != null)
-            this.mobilePhone= other.getMobilePhone();
-        if( other.getEmailAddress() != null)
+        if( other.getDeviceType() != null) {
+            this.deviceType = other.getDeviceType();
+        }
+        if( other.getDeviceId() != null) {
+            this.deviceId = other.getDeviceId();
+        }
+        if( other.getOsVersion() != null) {
+            this.osVersion = other.getOsVersion();
+        }
+        if( other.getChannelId() != null) {
+            this.channelId = other.getChannelId();
+        }
+        if( other.getWxToken() != null) {
+            this.wxToken = other.getWxToken();
+        }
+        if( other.getMobilePhone() != null) {
+            this.mobilePhone = other.getMobilePhone();
+        }
+        if( other.getEmailAddress() != null) {
             this.emailAddress = other.getEmailAddress();
+        }
 
         return this;
     }

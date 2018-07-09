@@ -2,12 +2,11 @@ package com.centit.msgpusher.dao;
 
 import com.alibaba.fastjson.JSONArray;
 import com.centit.framework.core.dao.CodeBook;
-import com.centit.framework.core.dao.DictionaryMapUtils;
-import com.centit.framework.core.dao.PageDesc;
-import com.centit.framework.hibernate.dao.BaseDaoImpl;
-import com.centit.framework.hibernate.dao.DatabaseOptUtils;
+import com.centit.framework.jdbc.dao.BaseDaoImpl;
+import com.centit.framework.jdbc.dao.DatabaseOptUtils;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.support.algorithm.DatetimeOpt;
+import com.centit.support.database.utils.PageDesc;
 import com.centit.support.database.utils.QueryAndNamedParams;
 import com.centit.support.database.utils.QueryUtils;
 import org.apache.commons.logging.Log;
@@ -25,10 +24,8 @@ import java.util.Map;
  * @author codefan@sina.com
  * 消息推送null
 */
-
 @Repository
-public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,java.lang.String>
-    {
+public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,String>{
 
     public static final Log log = LogFactory.getLog(MessageDeliveryDao.class);
 
@@ -62,10 +59,12 @@ public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,java.lang.St
      */
     public List<MessageDelivery> listMsgNoPush(PageDesc pageDesc){
         Date currentDate = DatetimeOpt.currentUtilDate();
-        return this.listObjects("From MessageDelivery f " +
+        /*return this.listObjects("From MessageDelivery f " +
                 "where f.pushState='0' " +
                         "and f.planPushTime < ? and (f.validPeriod is null or f.validPeriod > ?) ",
-                new Object[]{currentDate,currentDate},pageDesc);
+                new Object[]{currentDate,currentDate},pageDesc);*/
+        return listObjectsByFilter("where f.pushState='0' and f.planPushTime < ? and (f.validPeriod is null or f.validPeriod > ?) ",
+            new Object[]{currentDate, currentDate});
     }
 
     /**
@@ -85,10 +84,10 @@ public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,java.lang.St
                         + " [ :begin | and h.createTime > :begin ]"
                         + " [ :end | and h.createTime < :end ]";
         QueryAndNamedParams qap = QueryUtils.translateQuery(queryStatement,queryParamsMap);
-        JSONArray dataList = DictionaryMapUtils.objectsToJSONArray(
-                    DatabaseOptUtils.findObjectsByHql(baseDao,
-                            qap.getQuery(), qap.getParams(),pageDesc));
-        return dataList;
+        /*JSONArray dataList = DictionaryMapUtils.objectsToJSONArray(
+                    OrmDaoUtils.queryObjectsByNamedParamsSql(baseDao,
+                            qap.getQuery(), qap.getParams(),pageDesc));*/
+        return DatabaseOptUtils.listObjectsBySqlAsJson(this, qap.getQuery(), qap.getParams(), pageDesc);
     }
 
     /**
@@ -99,12 +98,13 @@ public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,java.lang.St
      */
     public List<MessageDelivery> listPushAgain(String userCode,String osId){
         Date currentDate = DatetimeOpt.currentUtilDate();
-        String hql = "From MessageDelivery f " +
+        /*String hql = "From MessageDelivery f " +
                 "WHERE f.osId =? AND f.msgReceiver=? AND f.pushState='2' " +
-                    "AND  f.planPushTime < ? and (f.validPeriod is null or f.validPeriod > ?) ";
-        List<MessageDelivery> msgList = this.listObjects(hql,
-                new Object[]{osId, userCode, currentDate,currentDate});
-        return msgList;
+                    "AND  f.planPushTime < ? and (f.validPeriod is null or f.validPeriod > ?) ";*/
+        /*List<MessageDelivery> msgList = this.listObjects(hql,
+                new Object[]{osId, userCode, currentDate,currentDate});*/
+        return listObjectsByFilter("WHERE f.osId =? AND f.msgReceiver=? AND f.pushState='2' AND  f.planPushTime < ? " +
+            "and (f.validPeriod is null or f.validPeriod > ?)", new Object[]{osId, userCode, currentDate, currentDate});
     }
 
 }
