@@ -63,7 +63,7 @@ public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,String>{
                 "where f.pushState='0' " +
                         "and f.planPushTime < ? and (f.validPeriod is null or f.validPeriod > ?) ",
                 new Object[]{currentDate,currentDate},pageDesc);*/
-        return listObjectsByFilter("where pushState='0' and planPushTime < ? and (validPeriod is null or validPeriod > ?) ",
+        return listObjectsByFilter("where PUSH_STATE='0' and PLAN_PUSH_TIME < ? and (VALID_PERIOD is null or VALID_PERIOD > ?) ",
             new Object[]{currentDate, currentDate});
     }
 
@@ -103,8 +103,8 @@ public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,String>{
                     "AND  f.planPushTime < ? and (f.validPeriod is null or f.validPeriod > ?) ";*/
         /*List<MessageDelivery> msgList = this.listObjects(hql,
                 new Object[]{osId, userCode, currentDate,currentDate});*/
-        return listObjectsByFilter("WHERE osId =? AND msgReceiver=? AND pushState='2' AND  planPushTime < ? " +
-            "and (validPeriod is null or validPeriod > ?)", new Object[]{osId, userCode, currentDate, currentDate});
+        return listObjectsByFilter("WHERE OS_ID =? AND MSG_RECEIVER=? AND PUSH_STATE='2' AND  PLAN_PUSH_TIME < ? " +
+            "and (VALID_PERIOD is null or VALID_PERIOD > ?)", new Object[]{osId, userCode, currentDate, currentDate});
     }
 
 }
