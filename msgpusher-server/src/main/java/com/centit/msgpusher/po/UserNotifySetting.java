@@ -1,5 +1,7 @@
 package com.centit.msgpusher.po;
 
+import com.centit.support.database.orm.GeneratorType;
+import com.centit.support.database.orm.ValueGenerator;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -23,6 +25,7 @@ public class UserNotifySetting implements java.io.Serializable {
      */
     @Id
     @Column(name = "USER_SETTING_ID")
+    @ValueGenerator(strategy = GeneratorType.UUID)
     private String userSettingId;
 
     /**
