@@ -149,7 +149,7 @@ public class MsgPusherClientImpl implements MsgPusherClient {
     }
 
     public String userNotifySetting(CloseableHttpClient httpClient, UserNotifySetting notifySetting) throws Exception {
-        String jsonStr = HttpExecutor.jsonPost(httpClient, appSession.completeQueryUrl("/msgdlvry/userNotifySetting"), notifySetting);
+        String jsonStr = HttpExecutor.jsonPost(httpClient, appSession.completeQueryUrl("/notifysetting"), notifySetting);
         return jsonStr;
     }
 
