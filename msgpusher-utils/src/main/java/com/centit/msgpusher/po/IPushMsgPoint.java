@@ -11,13 +11,38 @@ public interface IPushMsgPoint {
 
     String getOsId();
 
+    /**
+     * 用户代码
+     */
     String getUserCode();
 
+    /**
+     * 用户名
+     */
     String getUserName();
 
+    /**
+     * 移动设备类型
+     */
     String getDeviceType();
 
+    /**
+     * 设备标识码
+     */
+    String getChannelId();
+
+    /**
+     * 邮箱
+     */
     String getEmailAddress();
 
-    String getChannelId();
+    /**
+     * 手机号
+     */
+    String getMobilePhone();
+
+    /**
+     * 微信
+     */
+    String getWxToken();
 }
