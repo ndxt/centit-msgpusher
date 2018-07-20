@@ -3,7 +3,8 @@ package com.centit.msgpusher.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.centit.framework.core.dao.DictionaryMapUtils;
 import com.centit.framework.core.dao.PageDesc;
-import com.centit.framework.hibernate.service.BaseEntityManagerImpl;
+import com.centit.framework.core.dao.QueryParameterPrepare;
+import com.centit.framework.jdbc.service.BaseEntityManagerImpl;
 import com.centit.msgpusher.dao.UserMsgPointDao;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.po.UserMsgPointId;
@@ -53,7 +54,9 @@ public class UserMsgPointManagerImpl
             Map<String, Object> filterMap, PageDesc pageDesc){
 
         return DictionaryMapUtils.objectsToJSONArray(
-                baseDao.listObjects(filterMap, pageDesc), fields);
+            baseDao.pageQuery(QueryParameterPrepare.makeMybatisOrderByParam(
+                QueryParameterPrepare.prepPageParams(filterMap,pageDesc,
+                    baseDao.pageCount(filterMap)),UserMsgPoint.class)), fields);
     }
 
     @Override

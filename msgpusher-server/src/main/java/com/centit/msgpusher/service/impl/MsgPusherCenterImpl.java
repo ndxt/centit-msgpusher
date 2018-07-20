@@ -84,8 +84,9 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
                     resultMap.put(noticeTypeArray[i], pushResultTemp); //存储不同推送方式的返回信息
                 }
             }
-            if (resultMap.size() == 0)
+            if (resultMap.size() == 0) {
                 return null;
+            }
             String appPushState = null;
             String eMailPushState = null;
             for (Map.Entry<String, PushResult> entry : resultMap.entrySet()) {
@@ -140,8 +141,9 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
                 map.put(noticeTypeArray[i],pushResultTemp);//存储不同推送方式的返回信息
             }
         }
-        if (map.size() == 0)
+        if (map.size() == 0) {
             return null;
+        }
         String appPushState = null;
         String eMailPushState = null;
         for (Map.Entry<String,PushResult> entry : map.entrySet()) {

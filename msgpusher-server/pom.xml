@@ -49,12 +49,12 @@
 
         <dependency>
             <groupId>com.centit.framework</groupId>
-            <artifactId>centit-persistence-hibernate</artifactId>
+            <artifactId>centit-persistence-jdbc</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.centit.framework</groupId>
-            <artifactId>centit-persistence-hibernate-config</artifactId>
+            <artifactId>centit-persistence-jdbc-config</artifactId>
         </dependency>
 
         <dependency>

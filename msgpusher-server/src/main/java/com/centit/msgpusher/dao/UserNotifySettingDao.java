@@ -1,7 +1,7 @@
 package com.centit.msgpusher.dao;
 
 import com.centit.framework.core.dao.CodeBook;
-import com.centit.framework.hibernate.dao.BaseDaoImpl;
+import com.centit.framework.jdbc.dao.BaseDaoImpl;
 import com.centit.msgpusher.po.UserNotifySetting;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,7 +20,7 @@ import java.util.Map;
 */
 
 @Repository
-public class UserNotifySettingDao extends BaseDaoImpl<UserNotifySetting,java.lang.String>
+public class UserNotifySettingDao extends BaseDaoImpl<UserNotifySetting,String>
     {
 
     public static final Log log = LogFactory.getLog(UserNotifySettingDao.class);

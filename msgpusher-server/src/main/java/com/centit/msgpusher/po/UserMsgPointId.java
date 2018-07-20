@@ -54,13 +54,17 @@ public class UserMsgPointId implements java.io.Serializable {
         this.osId = osId;
     }
 
+    @Override
     public boolean equals(Object other) {
-        if ((this == other))
+        if ((this == other)) {
             return true;
-        if ((other == null))
+        }
+        if ((other == null)) {
             return false;
-        if (!(other instanceof UserMsgPointId))
+        }
+        if (!(other instanceof UserMsgPointId)) {
             return false;
+        }
 
         UserMsgPointId castOther = (UserMsgPointId) other;
         boolean ret = true;
@@ -76,6 +80,7 @@ public class UserMsgPointId implements java.io.Serializable {
         return ret;
     }
 
+    @Override
     public int hashCode() {
         int result = 17;
 

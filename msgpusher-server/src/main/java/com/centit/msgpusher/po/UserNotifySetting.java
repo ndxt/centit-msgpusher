@@ -1,10 +1,14 @@
 package com.centit.msgpusher.po;
 
-import org.hibernate.annotations.GenericGenerator;
+import com.centit.support.database.orm.GeneratorType;
+import com.centit.support.database.orm.ValueGenerator;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * create by scaffold 2017-04-10
@@ -21,8 +25,7 @@ public class UserNotifySetting implements java.io.Serializable {
      */
     @Id
     @Column(name = "USER_SETTING_ID")
-    @GeneratedValue(generator = "assignedGenerator")
-    @GenericGenerator(name = "assignedGenerator", strategy = "assigned")
+    @ValueGenerator(strategy = GeneratorType.UUID)
     private String userSettingId;
 
     /**
@@ -135,17 +138,21 @@ public class UserNotifySetting implements java.io.Serializable {
 
     public UserNotifySetting copyNotNullProperty(UserNotifySetting other){
 
-    if( other.getUserSettingId() != null)
-        this.setUserSettingId(other.getUserSettingId());
-
-        if( other.getUserCode() != null)
-            this.userCode= other.getUserCode();
-        if( other.getOsId() != null)
-            this.osId= other.getOsId();
-        if( other.getOptId() != null)
-            this.optId= other.getOptId();
-        if( other.getNotifyTypes() != null)
-            this.notifyTypes= other.getNotifyTypes();
+        if( other.getUserSettingId() != null) {
+            this.setUserSettingId(other.getUserSettingId());
+        }
+        if( other.getUserCode() != null) {
+            this.userCode = other.getUserCode();
+        }
+        if( other.getOsId() != null) {
+            this.osId = other.getOsId();
+        }
+        if( other.getOptId() != null) {
+            this.optId = other.getOptId();
+        }
+        if( other.getNotifyTypes() != null) {
+            this.notifyTypes = other.getNotifyTypes();
+        }
 
         return this;
     }

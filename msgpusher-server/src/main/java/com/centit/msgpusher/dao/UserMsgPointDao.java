@@ -1,14 +1,16 @@
 package com.centit.msgpusher.dao;
 
 import com.centit.framework.core.dao.CodeBook;
-import com.centit.framework.hibernate.dao.BaseDaoImpl;
-import com.centit.framework.hibernate.dao.DatabaseOptUtils;
+import com.centit.framework.jdbc.dao.BaseDaoImpl;
+import com.centit.framework.jdbc.dao.DatabaseOptUtils;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.po.UserMsgPointId;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,9 +48,15 @@ public class UserMsgPointDao extends BaseDaoImpl<UserMsgPoint,UserMsgPointId>
 
     public List<String> listAllEmailAddress(){
         String sql = " SELECT f.EMAIL_ADDRESS FROM f_user_msg_point f WHERE f.EMAIL_ADDRESS IS NOT NULL ";
-        List<Object[]> l = (List<Object[]>) DatabaseOptUtils.findObjectsBySql(this, sql);
-        if(l==null)
+        List<Object[]> l = null;
+        try {
+            l = (List<Object[]>) DatabaseOptUtils.getScalarObjectQuery(this, sql);
+        }catch (IOException | SQLException e){
+            log.error("查询邮件地址出错！");
+        }
+        if(l==null) {
             return null;
+        }
         List<String> list = new ArrayList<>();
         for (int i = 0;i<l.size();i++){
             String address = l.get(i).toString();

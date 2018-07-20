@@ -54,4 +54,13 @@ public class SimplePushMsgPoint implements IPushMsgPoint {
         return null;
     }
 
+    @Override
+    public String getMobilePhone() {
+        return null;
+    }
+
+    @Override
+    public String getWxToken() {
+        return null;
+    }
 }
