@@ -7,6 +7,7 @@ import com.centit.msgpusher.client.po.PushResult;
 import com.centit.msgpusher.client.po.UserMsgPoint;
 import com.centit.msgpusher.client.po.UserNotifySetting;
 import com.centit.support.network.HttpExecutor;
+import com.centit.support.network.HttpExecutorContext;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 /**
@@ -30,7 +31,7 @@ public class MsgPusherClientImpl implements MsgPusherClient {
     }
 
     public CloseableHttpClient getHttpClient() throws Exception {
-        return appSession.getHttpClient();
+        return appSession.allocHttpClient();
     }
 
     public void releaseHttpClient(CloseableHttpClient httpClient) {
@@ -38,7 +39,7 @@ public class MsgPusherClientImpl implements MsgPusherClient {
     }
 
     public PushResult pushMessage(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception {
-        String jsonStr = HttpExecutor.jsonPost(httpClient, appSession.completeQueryUrl("/msgdlvry/push"), msgdlvry);
+        String jsonStr = HttpExecutor.jsonPost(HttpExecutorContext.create(httpClient), appSession.completeQueryUrl("/msgdlvry/push"), msgdlvry);
 //        String jsonStr = HttpExecutor.formPost(httpClient, appSession.completeQueryUrl("/msgdlvry/push"), msgdlvry);
         return ResponseJSON.valueOfJson(jsonStr).getDataAsObject(PushResult.class);
 
@@ -71,7 +72,9 @@ public class MsgPusherClientImpl implements MsgPusherClient {
     }
 
     public PushResult pushMsgToAll(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception {
-        String jsonStr = HttpExecutor.jsonPost(httpClient, appSession.completeQueryUrl("/msgdlvry/pushall"), msgdlvry);
+        String jsonStr = HttpExecutor.jsonPost(
+            HttpExecutorContext.create(httpClient),
+            appSession.completeQueryUrl("/msgdlvry/pushall"), msgdlvry);
         /*String jsonStr = HttpExecutor.formPost(httpClient, appSession.completeQueryUrl("/msgdlvry/pushall"), msgdlvry);*/
         return ResponseJSON.valueOfJson(jsonStr).getDataAsObject(PushResult.class);
     }
@@ -103,7 +106,7 @@ public class MsgPusherClientImpl implements MsgPusherClient {
 
 
     public String registerUser(CloseableHttpClient httpClient, UserMsgPoint msgPoint) throws Exception {
-        String jsonStr = HttpExecutor.jsonPost(httpClient, appSession.completeQueryUrl("/msgdlvry/register"), msgPoint);
+        String jsonStr = HttpExecutor.jsonPost(HttpExecutorContext.create(httpClient), appSession.completeQueryUrl("/msgdlvry/register"), msgPoint);
         return jsonStr;
     }
 
@@ -149,7 +152,7 @@ public class MsgPusherClientImpl implements MsgPusherClient {
     }
 
     public String userNotifySetting(CloseableHttpClient httpClient, UserNotifySetting notifySetting) throws Exception {
-        String jsonStr = HttpExecutor.jsonPost(httpClient, appSession.completeQueryUrl("/msgdlvry/userNotifySetting"), notifySetting);
+        String jsonStr = HttpExecutor.jsonPost(HttpExecutorContext.create(httpClient), appSession.completeQueryUrl("/msgdlvry/userNotifySetting"), notifySetting);
         return jsonStr;
     }
 
