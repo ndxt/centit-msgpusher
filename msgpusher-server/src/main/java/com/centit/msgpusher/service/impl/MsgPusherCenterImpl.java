@@ -171,6 +171,7 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
                     eMailPushState = eMailPushResult.getPushState();
                     pushResult.setPushState(eMailPushState);
                     break;
+                default:
             }
         }
         if (!StringUtils.equals(appPushState,eMailPushState)){

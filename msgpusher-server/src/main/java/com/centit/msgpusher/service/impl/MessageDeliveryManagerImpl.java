@@ -163,7 +163,7 @@ public class MessageDeliveryManagerImpl
         Date planPushTime = msg.getPlanPushTime();
         msg.setPushType("1");//群发
         //如果指定为定时发送且发送时间大于当前时间则直接保存不发送
-        if(planPushTime != null || planPushTime.after(DatetimeOpt.currentUtilDate())){
+        if(planPushTime != null && planPushTime.after(DatetimeOpt.currentUtilDate())){
             msg.setPushState("0");
             messageDeliveryDao.saveNewObject(msg);
             return pushResult;
