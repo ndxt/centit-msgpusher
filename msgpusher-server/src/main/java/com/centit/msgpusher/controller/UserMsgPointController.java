@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.centit.framework.common.JsonResultUtils;
 import com.centit.framework.common.ResponseMapData;
 import com.centit.framework.core.controller.BaseController;
-import com.centit.framework.core.dao.PageDesc;
+import com.centit.support.database.utils.PageDesc;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.po.UserMsgPointId;
 import com.centit.msgpusher.service.UserMsgPointManager;

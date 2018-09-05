@@ -3,7 +3,7 @@ package com.centit.msgpusher.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.centit.framework.core.dao.DictionaryMapUtils;
-import com.centit.framework.core.dao.PageDesc;
+import com.centit.support.database.utils.PageDesc;
 import com.centit.framework.core.dao.QueryParameterPrepare;
 import com.centit.framework.jdbc.dao.DatabaseOptUtils;
 import com.centit.framework.jdbc.service.BaseEntityManagerImpl;

@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.centit.framework.common.JsonResultUtils;
 import com.centit.framework.common.ResponseMapData;
 import com.centit.framework.core.controller.BaseController;
-import com.centit.framework.core.dao.PageDesc;
+import com.centit.support.database.utils.PageDesc;
 import com.centit.msgpusher.commons.PushResult;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.msgpusher.po.UserMsgPoint;
