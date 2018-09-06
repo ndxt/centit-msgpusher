@@ -1,6 +1,5 @@
 package com.centit.msgpusher.notification;
 
-import com.centit.framework.components.impl.NotificationCenterImpl;
 import com.centit.framework.components.impl.SimpleNotificationCenterImpl;
 import com.centit.framework.model.basedata.NoticeMessage;
 import com.centit.msgpusher.po.SimplePushMessage;
