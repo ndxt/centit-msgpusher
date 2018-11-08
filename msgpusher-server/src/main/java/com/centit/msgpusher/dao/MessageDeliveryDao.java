@@ -87,7 +87,8 @@ public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,String>{
         /*JSONArray dataList = DictionaryMapUtils.objectsToJSONArray(
                     OrmDaoUtils.queryObjectsByNamedParamsSql(baseDao,
                             qap.getQuery(), qap.getParams(),pageDesc));*/
-        return DatabaseOptUtils.listObjectsBySqlAsJson(this, qap.getQuery(), qap.getParams(), pageDesc);
+        return DatabaseOptUtils.listObjectsByNamedSqlAsJson(
+            this, qap.getQuery(), qap.getParams(), pageDesc);
     }
 
     /**
