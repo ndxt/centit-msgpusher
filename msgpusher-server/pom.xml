@@ -63,6 +63,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.baidu.yun</groupId>
             <artifactId>bccs-api</artifactId>
             <version>${baidu.bccs-api.version}</version>

@@ -1,9 +1,8 @@
 package com.centit.msgpusher.client;
 
 import com.alibaba.fastjson.JSON;
-import com.centit.framework.common.ResponseJSON;
+import com.centit.framework.appclient.HttpReceiveJSON;
 import com.centit.msgpusher.client.po.PushResult;
-import com.centit.support.network.SendMailExecutor;
 
 /**
  * Created by codefan on 17-4-11.
@@ -34,19 +33,13 @@ public class TestMsgPusher {
 
     public static void register(MsgPusherClientImpl client) throws Exception {
         String jsonStr = client.registerUser("001","osId", "deviceId", "deviceType", "channelId");
-        ResponseJSON resJson = ResponseJSON.valueOfJson(jsonStr);
+        HttpReceiveJSON resJson = HttpReceiveJSON.valueOfJson(jsonStr);
         System.out.print("result:"+ JSON.toJSONString(resJson));
     }
 
     public static void pushMessage(MsgPusherClientImpl client) throws Exception {
         PushResult jsonStr = client.pushAppMessage("001", "test", "testContent","df","zou_wy","centit.1");
         System.out.print("result:"+ JSON.toJSONString(jsonStr));
-    }
-
-    public static boolean sendEmail() {
-        //SendMailExecutor executor = new SendMailExecutor();
-        SendMailExecutor.setMailServer("MAILBAK.centit.com","zou_wy","centit.1");
-        return SendMailExecutor.sendEmail("634077293@qq.com","zou_wy@centit.com","hello","nihao");
     }
 
 }

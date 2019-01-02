@@ -1,7 +1,7 @@
 package com.centit.msgpusher.client;
 
 import com.centit.framework.appclient.AppSession;
-import com.centit.framework.common.ResponseJSON;
+import com.centit.framework.appclient.HttpReceiveJSON;
 import com.centit.msgpusher.client.po.MessageDelivery;
 import com.centit.msgpusher.client.po.PushResult;
 import com.centit.msgpusher.client.po.UserMsgPoint;
@@ -41,7 +41,7 @@ public class MsgPusherClientImpl implements MsgPusherClient {
     public PushResult pushMessage(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception {
         String jsonStr = HttpExecutor.jsonPost(HttpExecutorContext.create(httpClient), appSession.completeQueryUrl("/msgdlvry/push"), msgdlvry);
 //        String jsonStr = HttpExecutor.formPost(httpClient, appSession.completeQueryUrl("/msgdlvry/push"), msgdlvry);
-        return ResponseJSON.valueOfJson(jsonStr).getDataAsObject(PushResult.class);
+        return HttpReceiveJSON.valueOfJson(jsonStr).getDataAsObject(PushResult.class);
 
     }
 
@@ -76,7 +76,7 @@ public class MsgPusherClientImpl implements MsgPusherClient {
             HttpExecutorContext.create(httpClient),
             appSession.completeQueryUrl("/msgdlvry/pushall"), msgdlvry);
         /*String jsonStr = HttpExecutor.formPost(httpClient, appSession.completeQueryUrl("/msgdlvry/pushall"), msgdlvry);*/
-        return ResponseJSON.valueOfJson(jsonStr).getDataAsObject(PushResult.class);
+        return HttpReceiveJSON.valueOfJson(jsonStr).getDataAsObject(PushResult.class);
     }
 
     public PushResult pushMsgToAll(MessageDelivery msgdlvry) throws Exception {

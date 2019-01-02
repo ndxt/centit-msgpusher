@@ -27,7 +27,6 @@ public class EMailMsgPusher implements MsgPusher {
     @Value("${EmailServerHostPwd}")
     public String  emailServerHostPwd;
 
-
     @Override
     public PushResult pushMessage(IPushMessage msg, IPushMsgPoint receiver) throws Exception {
         PushResult pushResult = new PushResult();
