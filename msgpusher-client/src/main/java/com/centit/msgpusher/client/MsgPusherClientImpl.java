@@ -53,12 +53,10 @@ public class MsgPusherClientImpl implements MsgPusherClient {
     }
 
     public PushResult pushAppMessage(String userCode, String title, String message, String osId, String optId, String msgSender) throws Exception {
-        PushResult jsonStr = pushMessage(userCode, title, message, "A", osId, optId, msgSender);
-        return jsonStr;
+        return pushMessage(userCode, title, message, "A", osId, optId, msgSender);
     }
 
     public PushResult pushMessage(String userCode, String title, String message, String noticeTypes, String osId, String optId, String msgSender) throws Exception {
-
         MessageDelivery msgdlvry = new MessageDelivery();
         msgdlvry.setMsgReceiver(userCode);
         msgdlvry.setMsgSubject(title);
@@ -67,8 +65,7 @@ public class MsgPusherClientImpl implements MsgPusherClient {
         msgdlvry.setNoticeTypes(noticeTypes);
         msgdlvry.setOptId(optId);
         msgdlvry.setMsgSender(msgSender);
-        PushResult jsonStr = pushMessage(msgdlvry);
-        return jsonStr;
+        return pushMessage(msgdlvry);
     }
 
     public PushResult pushMsgToAll(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception {
@@ -87,9 +84,7 @@ public class MsgPusherClientImpl implements MsgPusherClient {
     }
 
     public PushResult pushAppMsgToAll(String title , String message, String osId, String optId, String msgSender) throws Exception {
-
-        PushResult jsonStr = pushMsgToAll(title, message, "A", osId, optId, msgSender);
-        return jsonStr;
+        return pushMsgToAll(title, message, "A", osId, optId, msgSender);
     }
 
     public PushResult pushMsgToAll(String title , String message, String noticeTypes, String osId, String optId, String msgSender) throws Exception {
@@ -100,14 +95,13 @@ public class MsgPusherClientImpl implements MsgPusherClient {
         msgdlvry.setOptId(optId);
         msgdlvry.setOsId(osId);
         msgdlvry.setMsgSender(msgSender);
-        PushResult jsonStr = pushMsgToAll(msgdlvry);
-        return jsonStr;
+        return pushMsgToAll(msgdlvry);
     }
 
 
     public String registerUser(CloseableHttpClient httpClient, UserMsgPoint msgPoint) throws Exception {
-        String jsonStr = HttpExecutor.jsonPost(HttpExecutorContext.create(httpClient), appSession.completeQueryUrl("/msgdlvry/register"), msgPoint);
-        return jsonStr;
+        return HttpExecutor.jsonPost(HttpExecutorContext.create(httpClient),
+            appSession.completeQueryUrl("/msgdlvry/register"), msgPoint);
     }
 
     public String registerUser(UserMsgPoint msgPoint)throws Exception {
@@ -122,15 +116,12 @@ public class MsgPusherClientImpl implements MsgPusherClient {
         msgPoint.setDeviceId(deviceId);
         msgPoint.setDeviceType(deviceType);
         msgPoint.setChannelId(channelId);
-        String jsonStr = registerUser(msgPoint);
-        return jsonStr;
+        return registerUser(msgPoint);
     }
 
     public String registerUser(String userCode, String osId) throws Exception{
         UserMsgPoint msgPoint = new UserMsgPoint(osId, userCode);
-
-        String jsonStr = registerUser(msgPoint);
-        return jsonStr;
+        return registerUser(msgPoint);
     }
 
     public String registerUserEmail(String userCode, String osId, String emailAddress) throws Exception{
@@ -152,8 +143,7 @@ public class MsgPusherClientImpl implements MsgPusherClient {
     }
 
     public String userNotifySetting(CloseableHttpClient httpClient, UserNotifySetting notifySetting) throws Exception {
-        String jsonStr = HttpExecutor.jsonPost(HttpExecutorContext.create(httpClient), appSession.completeQueryUrl("/notifysetting"), notifySetting);
-        return jsonStr;
+        return HttpExecutor.jsonPost(HttpExecutorContext.create(httpClient), appSession.completeQueryUrl("/notifysetting"), notifySetting);
     }
 
     public String userNotifySetting(UserNotifySetting notifySetting) throws Exception {

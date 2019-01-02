@@ -1,14 +1,10 @@
 package com.centit.msgpusher.client;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.centit.framework.appclient.AppSession;
 import com.centit.framework.model.adapter.MessageSender;
 import com.centit.framework.model.basedata.NoticeMessage;
 import com.centit.msgpusher.client.po.MessageDelivery;
 import com.centit.msgpusher.client.po.PushResult;
-import com.centit.support.network.HttpExecutor;
-import org.apache.http.impl.client.CloseableHttpClient;
 
 /**
  * Created by codefan on 17-4-11.
