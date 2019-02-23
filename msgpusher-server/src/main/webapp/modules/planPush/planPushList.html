@@ -47,7 +47,7 @@
 
 		</div>
 
-		<table id="dg" url="service/msgdlvry/listAllPlanPush"
+		<table id="dg" url="msgpusher/msgdlvry/listAllPlanPush"
 			   width="98%"
 			   bottom="0"
 			   search=".search"
@@ -89,7 +89,7 @@
 		if (row){
 			$.messager.confirm('Confirm','确定取消发送嘛?',function(r){
 				if (r){
-					$.post('http://localhost:8084/message-delivery/service/msgdlvry/cancelPlanPush',{msgId:row.msgId},function(result){
+					$.post('http://localhost:8084/message-delivery/msgpusher/msgdlvry/cancelPlanPush',{msgId:row.msgId},function(result){
 						debugger;
 						if (result.message == 'OK'){
 							$('#dg').datagrid('reload');    // reload the  data

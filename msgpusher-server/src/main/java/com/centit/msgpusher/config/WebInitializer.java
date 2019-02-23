@@ -34,9 +34,9 @@ public class WebInitializer implements WebApplicationInitializer {
     private void initializeSpringMvcConfig(ServletContext servletContext) {
         AnnotationConfigWebApplicationContext contextSer = new AnnotationConfigWebApplicationContext();
         contextSer.register(NormalSpringMvcConfig.class);
-        ServletRegistration.Dynamic service  = servletContext.addServlet("service", new DispatcherServlet(contextSer));
-        service.addMapping("/service/*");
-        service.setLoadOnStartup(1);
-        service.setAsyncSupported(true);
+        ServletRegistration.Dynamic msgpusher  = servletContext.addServlet("msgpusher", new DispatcherServlet(contextSer));
+        msgpusher.addMapping("/msgpusher/*");
+        msgpusher.setLoadOnStartup(1);
+        msgpusher.setAsyncSupported(true);
     }
 }

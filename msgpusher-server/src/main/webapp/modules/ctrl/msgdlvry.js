@@ -11,9 +11,9 @@ define(function(require) {
 		var i;
 		//各类参数
 		var osId,optId,owner;
-		var osIdUrl = 'service/files/optids/';
-		var optIdUrl = 'service/files/owner/';
-		var watchDetailUrl = "service/files/";
+		var osIdUrl = 'msgpusher/files/optids/';
+		var optIdUrl = 'msgpusher/files/owner/';
+		var watchDetailUrl = "msgpusher/files/";
 		//第一层下拉框
 		this.selectOss;
 		//第二层
@@ -118,6 +118,6 @@ define(function(require) {
 		}
 
 	});
-	
+
 	return FileAccessLog;
 });
