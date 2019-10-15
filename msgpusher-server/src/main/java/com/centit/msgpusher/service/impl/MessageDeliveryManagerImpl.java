@@ -72,11 +72,8 @@ public class MessageDeliveryManagerImpl
     public JSONArray listMessageDeliverysAsJson(
             String[] fields,
             Map<String, Object> filterMap, PageDesc pageDesc){
-
-        return DictionaryMapUtils.objectsToJSONArray(
-        messageDeliveryDao.pageQuery(QueryParameterPrepare.makeMybatisOrderByParam(
-            QueryParameterPrepare.prepPageParams(filterMap,pageDesc,
-                messageDeliveryDao.pageCount(filterMap)),MessageDelivery.class)), fields);
+        return DictionaryMapUtils.mapJsonArray( messageDeliveryDao.listObjectsPartFieldAsJson(
+            filterMap, fields, pageDesc),MessageDelivery.class);
     }
 
     /**
