@@ -1,6 +1,5 @@
 package com.centit.msgpusher.websocket;
 
-import org.springframework.stereotype.Service;
 import org.springframework.web.socket.server.standard.SpringConfigurator;
 
 import javax.annotation.Resource;
@@ -11,8 +10,9 @@ import javax.websocket.server.ServerEndpoint;
 /**
  * Created by codefan on 17-5-19.
  */
+//@Service 这个在 spring boot中是必须的，在web 容器（tomcat）的war包中不需要，
+// 所以去掉然后在spring boot的配置类中添加这个bean的创建方法
 @ServerEndpoint(value="/pusher/{osId}/{userCode}" ,configurator = SpringConfigurator.class)
-@Service
 public class SocketPusherListener {
 
     @Resource
