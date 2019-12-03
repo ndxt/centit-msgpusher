@@ -1,9 +1,9 @@
 package com.centit.msgpusher.service.impl;
 
-import com.centit.msgpusher.dao.MessageDeliveryDao;
-import com.centit.msgpusher.dao.UserNotifySettingDao;
 import com.centit.msgpusher.commons.MsgPusher;
 import com.centit.msgpusher.commons.PushResult;
+import com.centit.msgpusher.dao.MessageDeliveryDao;
+import com.centit.msgpusher.dao.UserNotifySettingDao;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.service.MessageDeliveryManager;

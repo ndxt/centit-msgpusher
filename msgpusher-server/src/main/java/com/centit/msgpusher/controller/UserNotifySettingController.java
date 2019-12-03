@@ -4,9 +4,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.centit.framework.common.JsonResultUtils;
 import com.centit.framework.common.ResponseMapData;
 import com.centit.framework.core.controller.BaseController;
-import com.centit.support.database.utils.PageDesc;
 import com.centit.msgpusher.po.UserNotifySetting;
 import com.centit.msgpusher.service.UserNotifySettingManager;
+import com.centit.support.database.utils.PageDesc;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -51,7 +51,7 @@ public class UserNotifySettingController  extends BaseController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public void list(String[] field, PageDesc pageDesc, HttpServletRequest request, HttpServletResponse response) {
-        Map<String, Object> searchColumn = convertSearchColumn(request);
+        Map<String, Object> searchColumn = collectRequestParameters(request);
 
         JSONArray listObjects = userNotifySettingMag.listUserNotifySettingsAsJson(field,searchColumn, pageDesc);
 

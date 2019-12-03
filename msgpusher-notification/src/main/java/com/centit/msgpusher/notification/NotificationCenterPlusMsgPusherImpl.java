@@ -2,8 +2,6 @@ package com.centit.msgpusher.notification;
 
 import com.centit.framework.components.impl.NotificationCenterImpl;
 import com.centit.framework.model.basedata.NoticeMessage;
-import com.centit.msgpusher.po.SimplePushMessage;
-import com.centit.msgpusher.po.SimplePushMsgPoint;
 import com.centit.msgpusher.websocket.SocketMsgPusher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -56,7 +56,7 @@ public class TestMsgPushController extends BaseController {
     public void testPushStatus(@PathVariable String msgType,
                                @PathVariable String userCode,
                                @RequestParam("content" ) String content,
-                               HttpServletResponse response) throws IOException {
+                               HttpServletResponse response) {
         MessageDelivery msg = new MessageDelivery();
         try {
             msg.setPushType("A");

@@ -1,10 +1,10 @@
 package com.centit.msgpusher.service;
 
 import com.alibaba.fastjson.JSONArray;
-import com.centit.support.database.utils.PageDesc;
 import com.centit.framework.jdbc.service.BaseEntityManager;
 import com.centit.msgpusher.commons.PushResult;
 import com.centit.msgpusher.po.MessageDelivery;
+import com.centit.support.database.utils.PageDesc;
 
 import java.util.Date;
 import java.util.List;

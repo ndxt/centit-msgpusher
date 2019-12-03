@@ -5,13 +5,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.centit.framework.common.JsonResultUtils;
 import com.centit.framework.common.ResponseMapData;
 import com.centit.framework.core.controller.BaseController;
-import com.centit.support.database.utils.PageDesc;
 import com.centit.msgpusher.commons.PushResult;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.service.MessageDeliveryManager;
 import com.centit.msgpusher.service.UserMsgPointManager;
 import com.centit.support.algorithm.DatetimeOpt;
+import com.centit.support.database.utils.PageDesc;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -159,9 +159,8 @@ public class MessageDeliveryController  extends BaseController {
     }
 
     @RequestMapping(value="/view", method=RequestMethod.GET)
-    public void viewRecords(PageDesc pageDesc, HttpServletRequest request, HttpServletResponse response)
-            throws IOException, java.text.ParseException {
-        Map<String, Object> queryParamsMap = convertSearchColumn(request);
+    public void viewRecords(PageDesc pageDesc, HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> queryParamsMap = collectRequestParameters(request);
         JSONArray listObjects = messageDeliveryManager.listMessageDeliverysAsJson(
                 null,queryParamsMap, pageDesc);
         ResponseMapData resData = new ResponseMapData();
@@ -171,7 +170,6 @@ public class MessageDeliveryController  extends BaseController {
         JsonResultUtils.writeResponseDataAsJson(resData, response);
 
     }
-
 
     /**
      * 查询出所有定时推送的消息记录

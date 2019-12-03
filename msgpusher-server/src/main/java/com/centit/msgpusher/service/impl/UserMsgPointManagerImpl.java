@@ -2,14 +2,12 @@ package com.centit.msgpusher.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.centit.framework.core.dao.DictionaryMapUtils;
-import com.centit.msgpusher.po.MessageDelivery;
-import com.centit.support.database.utils.PageDesc;
-import com.centit.framework.core.dao.QueryParameterPrepare;
 import com.centit.framework.jdbc.service.BaseEntityManagerImpl;
 import com.centit.msgpusher.dao.UserMsgPointDao;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.po.UserMsgPointId;
 import com.centit.msgpusher.service.UserMsgPointManager;
+import com.centit.support.database.utils.PageDesc;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

@@ -4,10 +4,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.centit.framework.common.JsonResultUtils;
 import com.centit.framework.common.ResponseMapData;
 import com.centit.framework.core.controller.BaseController;
-import com.centit.support.database.utils.PageDesc;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.po.UserMsgPointId;
 import com.centit.msgpusher.service.UserMsgPointManager;
+import com.centit.support.database.utils.PageDesc;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -52,7 +52,7 @@ public class UserMsgPointController  extends BaseController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public void list(String[] field, PageDesc pageDesc, HttpServletRequest request, HttpServletResponse response) {
-        Map<String, Object> searchColumn = convertSearchColumn(request);
+        Map<String, Object> searchColumn = collectRequestParameters(request);
 
         JSONArray listObjects = userMsgPointMag.listUserMsgPointsAsJson(field,searchColumn, pageDesc);
 
@@ -119,12 +119,8 @@ public class UserMsgPointController  extends BaseController {
     @RequestMapping(value = "/{userCode}/{osId}", method = {RequestMethod.PUT})
     public void updateUserMsgPoint(@PathVariable String userCode,@PathVariable String osId,
         @RequestBody @Valid UserMsgPoint userMsgPoint, HttpServletResponse response) {
-
-
         UserMsgPoint dbUserMsgPoint =
-                userMsgPointMag.getObjectById(new UserMsgPointId(  userCode, osId) );
-
-
+                userMsgPointMag.getObjectById(new UserMsgPointId(userCode, osId));
 
         if (null != userMsgPoint) {
             dbUserMsgPoint .copy(userMsgPoint);
