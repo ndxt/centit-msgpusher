@@ -1,10 +1,10 @@
 package com.centit.msgpusher.notification;
 
+import com.centit.framework.common.ResponseData;
 import com.centit.framework.components.impl.SimpleNotificationCenterImpl;
+import com.centit.framework.model.adapter.MessageSender;
 import com.centit.framework.model.basedata.NoticeMessage;
-import com.centit.msgpusher.po.SimplePushMessage;
-import com.centit.msgpusher.po.SimplePushMsgPoint;
-import com.centit.msgpusher.websocket.SocketMsgPusher;
+import com.centit.support.common.DoubleAspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,41 +15,21 @@ public class SimpleNotificationCenterPlusMsgPusherImpl extends SimpleNotificatio
 
     private static final Logger logger = LoggerFactory.getLogger(SimpleNotificationCenterPlusMsgPusherImpl.class);
 
-    protected SocketMsgPusher socketMsgPusher;
-    private boolean useWebSocketPusher;
+    protected MessageSender msgPusher;
+    private boolean useMsgPusher;
 
     public SimpleNotificationCenterPlusMsgPusherImpl() {
         super();
-        socketMsgPusher = null;
-        useWebSocketPusher = false;
+        msgPusher = null;
+        useMsgPusher = false;
 
     }
 
-    public void setUseWebSocketPusher(boolean useWebSocketPusher) {
-        this.useWebSocketPusher = useWebSocketPusher;
+    public void setMsgPusher(MessageSender msgPusher) {
+        this.msgPusher = msgPusher;
+        this.useMsgPusher = this.msgPusher!=null;
     }
 
-    public void setSocketMsgPusher(SocketMsgPusher socketMsgPusher) {
-        this.socketMsgPusher = socketMsgPusher;
-    }
-
-    public static void pushMsgBySocket(
-        SocketMsgPusher socketMsgPusher,
-        String sender, String receiver, NoticeMessage message){
-        try {
-            SimplePushMessage pushMessage = new SimplePushMessage(sender,message.getMsgSubject(), message.getMsgContent());
-            pushMessage.setMsgType( message.getMsgType());
-            pushMessage.setMsgReceiver(receiver);
-            pushMessage.setOptId(message.getOptId());
-            pushMessage.setOptMethod(message.getOptMethod());
-            pushMessage.setOptTag(message.getOptTag());
-
-            socketMsgPusher.pushMessage(pushMessage,
-                new SimplePushMsgPoint(receiver));
-        } catch (Exception e) {
-            logger.error(e.getLocalizedMessage());
-        }
-    }
     /**
      * 根据用户设定的方式发送消息
      * @param sender     发送人内部用户编码
@@ -58,18 +38,13 @@ public class SimpleNotificationCenterPlusMsgPusherImpl extends SimpleNotificatio
      * @return 结果
      */
     @Override
-    public String sendMessage(String sender, String receiver, NoticeMessage message) {
-        String returnText = super.sendMessage(sender,  receiver,  message);
-
-        if(useWebSocketPusher && socketMsgPusher!=null){
-            SimpleNotificationCenterPlusMsgPusherImpl.pushMsgBySocket(
-                socketMsgPusher, sender,  receiver,  message);
+    public ResponseData sendMessage(String sender, String receiver, NoticeMessage message) {
+        ResponseData returnText = super.sendMessage(sender,  receiver,  message);
+        if(useMsgPusher){
+            msgPusher.sendMessage(sender, receiver, message);
         }
-
         return returnText;
     }
-
-
 
     /**
      * 发送指定类别的消息
@@ -80,15 +55,25 @@ public class SimpleNotificationCenterPlusMsgPusherImpl extends SimpleNotificatio
      * @return 结果
      */
     @Override
-    public String sendMessageAppointedType(String noticeType, String sender, String receiver, NoticeMessage message) {
-        String returnText = super.sendMessageAppointedType(noticeType, sender,  receiver,  message);
-
-        if(useWebSocketPusher && socketMsgPusher!=null){
-            SimpleNotificationCenterPlusMsgPusherImpl.pushMsgBySocket(
-                socketMsgPusher, sender,  receiver,  message);
+    public ResponseData sendMessageAppointedType(String noticeType, String sender, String receiver, NoticeMessage message) {
+        ResponseData returnText = super.sendMessageAppointedType(noticeType, sender,  receiver,  message);
+        if(useMsgPusher){
+            msgPusher.sendMessage(sender, receiver, message);
         }
-
         return returnText;
     }
 
+    /**
+     * 广播信息
+     *
+     * @param sender     发送人内部用户编码
+     * @param message    消息主体
+     * @param userInline DoubleAspec.ON 在线用户  OFF 离线用户 BOTH 所有用户
+     * @return 默认没有实现
+     */
+    @Override
+    public ResponseData broadcastMessage(String sender, NoticeMessage message, DoubleAspect userInline) {
+        if(!useMsgPusher) return ResponseData.errorResponse;
+        return msgPusher.broadcastMessage(sender, message, userInline);
+    }
 }

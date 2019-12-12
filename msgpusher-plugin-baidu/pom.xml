@@ -9,25 +9,25 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>msgpusher-notification</artifactId>
-    <name>com.centit.product:msgpusher-notification</name>
-    <packaging>jar</packaging>
-    <description>带消息推送的通知中心</description>
-
+    <artifactId>msgpusher-plugin-baidu</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.centit.framework</groupId>
-            <artifactId>framework-core</artifactId>
+            <artifactId>framework-adapter</artifactId>
             <optional>true</optional>
         </dependency>
 
         <dependency>
-            <groupId>com.sun</groupId>
-            <artifactId>tools</artifactId>
-            <version>${jdk.version}</version>
-            <systemPath>${env.JAVA_HOME}/lib/tools.jar</systemPath>
-            <scope>system</scope>
+            <groupId>com.baidu.yun</groupId>
+            <artifactId>bccs-api</artifactId>
+            <version>${baidu.bccs-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.2</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
-
 </project>
