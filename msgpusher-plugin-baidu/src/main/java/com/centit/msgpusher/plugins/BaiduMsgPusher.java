@@ -11,14 +11,12 @@ import com.baidu.yun.push.exception.PushClientException;
 import com.baidu.yun.push.exception.PushServerException;
 import com.baidu.yun.push.model.PushMsgToSingleDeviceRequest;
 import com.baidu.yun.push.model.PushMsgToSingleDeviceResponse;
+import com.centit.framework.model.adapter.MessageSender;
 import com.centit.framework.model.basedata.NoticeMessage;
-import com.centit.msgpusher.adapter.MsgPusher;
 import com.centit.msgpusher.po.IPushMessage;
 import com.centit.msgpusher.po.IPushMsgPoint;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
 
-import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -29,7 +27,7 @@ import java.util.Map;
  * Created by codefan on 17-4-6.
  * 对百度推送进行封装
  */
-public class BaiduMsgPusher implements MsgPusher {
+public class BaiduMsgPusher implements MessageSender {
     @Setter
     private String androidApiKey;
     @Setter

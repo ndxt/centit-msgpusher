@@ -73,11 +73,11 @@
     </scm>
 
     <modules>
-        <module>msgpusher-notification</module>
         <module>msgpusher-client</module>
         <module>msgpusher-plugin-websocker</module>
         <module>msgpusher-plugin-jpush</module>
         <module>msgpusher-plugin-baidu</module>
+        <module>msgpusher-plugin-email</module>
         <module>msgpusher-server-module</module>
     </modules>
 
