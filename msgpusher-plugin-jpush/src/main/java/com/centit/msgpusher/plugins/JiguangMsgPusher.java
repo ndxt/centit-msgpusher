@@ -63,8 +63,6 @@ public class JiguangMsgPusher implements MessageSender {
             pushResult.error==null? "ok!" : pushResult.error.getMessage());
     }
 
-
-
     private PushPayload.Builder buildPayload(String sender,  NoticeMessage noticeMessage){
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("pushTime", DatetimeOpt.currentDatetime());// new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));

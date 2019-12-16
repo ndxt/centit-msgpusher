@@ -14,8 +14,8 @@ import com.centit.msgpusher.service.UserMsgPointManager;
 import com.centit.support.algorithm.DatetimeOpt;
 import com.centit.support.database.utils.PageDesc;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,7 +40,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/msgdlvry")
 public class MessageDeliveryController  extends BaseController {
-    private static final Log log = LogFactory.getLog(MessageDeliveryController.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(MessageDeliveryController.class);
 
     @Resource
     private MessageDeliveryManager messageDeliveryManager;
@@ -123,30 +124,29 @@ public class MessageDeliveryController  extends BaseController {
         try {
             return messageDeliveryManager.pushMessage(msg);
         } catch (Exception e) {
-            logger.
+            logger.error(e.getMessage(), e);
+            return  ResponseData.makeErrorMessage(e.getMessage());
         }
-        JsonResultUtils.writeSingleDataJson(result,response);
     }
 
 
     @RequestMapping(value = "/pushall", method = RequestMethod.POST)
-    public void pushMessageToAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @WrapUpResponseBody
+    public ResponseData pushMessageToAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
         MessageDelivery msg = fetchMessageDelivery(request);
-        PushResult result = null;
         if(msg==null){
-            JsonResultUtils.writeErrorMessageJson(400,"表单参数错误",response);
-            return;
+            return ResponseData.makeErrorMessage(400,"表单参数错误");
         }
         try {
-            result = messageDeliveryManager.pushMsgToAll(msg);
+            return messageDeliveryManager.pushMsgToAll(msg);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
+            return  ResponseData.makeErrorMessage(e.getMessage());
         }
-        JsonResultUtils.writeSingleDataJson(result,response);
     }
 
     @RequestMapping(value="/delete", method = RequestMethod.POST)
-    public void deleteRecords( HttpServletResponse response) throws IOException {
+    public void deleteRecords( HttpServletResponse response) {
 //        int result = messageDeliveryManager.deleteRecords();
         messageDeliveryManager.deleteRecords();
         JsonResultUtils.writeSingleDataJson("删除了记录。", response);

@@ -1,5 +1,7 @@
 package com.centit.msgpusher.service.impl;
 
+import com.centit.framework.common.ResponseData;
+import com.centit.framework.model.adapter.MessageSender;
 import com.centit.msgpusher.commons.MsgPusher;
 import com.centit.msgpusher.commons.PushResult;
 import com.centit.msgpusher.dao.MessageDeliveryDao;
@@ -23,19 +25,19 @@ import java.util.Map;
 public class MsgPusherCenterImpl implements MsgPusherCenter {
 
     @Resource(name="appMsgPusher")
-    private MsgPusher appPusher;
+    private MessageSender appPusher;
 
     @Resource(name="emailMsgPusher")
-    private MsgPusher emailPusher;
+    private MessageSender emailPusher;
 
     @Resource(name="wxMsgPusher")
-    private MsgPusher wxPusher;
+    private MessageSender wxPusher;
 
     @Resource(name="smsMsgPusher")
-    private MsgPusher smsPusher;
+    private MessageSender smsPusher;
 
     @Resource(name="socketMsgPusher")
-    private MsgPusher socketPusher;
+    private MessageSender socketPusher;
 
     @Resource(name = "userNotifySettingDao")
     private UserNotifySettingDao userNotifySettingDao ;
@@ -47,7 +49,7 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
     @Resource
     private MessageDeliveryManager messageDeliveryManager;
 
-    private Map<String/*pushType*/,MsgPusher> pusherMap;
+    private Map<String/*pushType*/,MessageSender> pusherMap;
 
     @PostConstruct
     public void init(){
@@ -70,9 +72,9 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
      */
 
     @Override
-    public PushResult pushMessage(MessageDelivery msg, UserMsgPoint userMsgPoint)throws Exception{
+    public ResponseData pushMessage(MessageDelivery msg, UserMsgPoint userMsgPoint)throws Exception{
         PushResult pushResult = new PushResult();
-        Map<String,PushResult> resultMap = new HashMap<>();
+        Map<String, ResponseData> resultMap = new HashMap<>();
         Map<String, String> pushMap = new HashMap<>();
         String noticeTypes = msg.getNoticeTypes();
         if (!StringUtils.isBlank(noticeTypes)) {
@@ -80,7 +82,7 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
             //多种发送方式循环发送
             for (int i = 0; i < noticeTypeArray.length; i++) {
                 if (pusherMap.get(noticeTypeArray[i]) != null){
-                    PushResult pushResultTemp = pusherMap.get(noticeTypeArray[i]).pushMessage(msg, userMsgPoint);
+                    ResponseData pushResultTemp = pusherMap.get(noticeTypeArray[i]).pushMessage(msg, userMsgPoint);
                     resultMap.put(noticeTypeArray[i], pushResultTemp); //存储不同推送方式的返回信息
                 }
             }
@@ -128,7 +130,7 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
      * @return MSGID 表示成功， null 和空 其他的为错误信息
      */
     @Override
-    public PushResult pushMsgToAll(MessageDelivery msg) throws Exception{
+    public ResponseData pushMsgToAll(MessageDelivery msg) throws Exception{
         PushResult pushResult = new PushResult();
         String noticeTypes = msg.getNoticeTypes();
         Map<String,PushResult> map = new HashMap<>();
@@ -180,6 +182,5 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
         pushResult.setMap(pushMap);
         return pushResult;
     }
-
 
 }

@@ -1,6 +1,6 @@
 package com.centit.msgpusher.service;
 
-import com.centit.msgpusher.commons.PushResult;
+import com.centit.framework.common.ResponseData;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.msgpusher.po.UserMsgPoint;
 
@@ -18,7 +18,7 @@ public interface MsgPusherCenter  {
      * @throws Exception Exception
      */
 
-    PushResult pushMessage(MessageDelivery msg, UserMsgPoint userMsgPoint) throws Exception;
+    ResponseData pushMessage(MessageDelivery msg, UserMsgPoint userMsgPoint) throws Exception;
 
 
 
@@ -30,5 +30,5 @@ public interface MsgPusherCenter  {
      * @return MSGID 表示成功， null 和空 其他的为错误信息
      * @throws Exception Exception
      */
-    PushResult pushMsgToAll(MessageDelivery msg) throws Exception;
+    ResponseData pushMsgToAll(MessageDelivery msg) throws Exception;
 }
