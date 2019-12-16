@@ -16,13 +16,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.centit.framework</groupId>
-            <artifactId>framework-base-view-easyui</artifactId>
+            <groupId>com.centit.product</groupId>
+            <artifactId>msgpusher-server-module</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.centit.framework</groupId>
-            <artifactId>centit-ip-app</artifactId>
+            <artifactId>framework-base-view-easyui</artifactId>
         </dependency>
 
         <dependency>
@@ -36,16 +37,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.centit.framework</groupId>
-            <artifactId>centit-persistence-jdbc</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.centit.framework</groupId>
             <artifactId>centit-persistence-jdbc-config</artifactId>
         </dependency>
@@ -53,18 +44,6 @@
         <dependency>
             <groupId>com.centit.framework</groupId>
             <artifactId>centit-ip-app-config</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-email</artifactId>
-        </dependency>
-
-
-
-        <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz</artifactId>
         </dependency>
 
         <dependency>
@@ -92,13 +71,6 @@
             <scope>test</scope>
         </dependency>
 
-
-        <!-- server runtime library -->
-        <dependency>
-            <groupId>javax.websocket</groupId>
-            <artifactId>javax.websocket-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
 
         <dependency>
             <groupId>com.sun</groupId>

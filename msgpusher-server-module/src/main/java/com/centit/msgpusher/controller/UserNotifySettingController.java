@@ -51,7 +51,7 @@ public class UserNotifySettingController  extends BaseController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public void list(String[] field, PageDesc pageDesc, HttpServletRequest request, HttpServletResponse response) {
-        Map<String, Object> searchColumn = collectRequestParameters(request);
+        Map<String, Object> searchColumn = BaseController.collectRequestParameters(request);
 
         JSONArray listObjects = userNotifySettingMag.listUserNotifySettingsAsJson(field,searchColumn, pageDesc);
 
@@ -61,8 +61,8 @@ public class UserNotifySettingController  extends BaseController {
         }
 
         ResponseMapData resData = new ResponseMapData();
-        resData.addResponseData(OBJLIST, listObjects);
-        resData.addResponseData(PAGE_DESC, pageDesc);
+        resData.addResponseData(BaseController.OBJLIST, listObjects);
+        resData.addResponseData(BaseController.PAGE_DESC, pageDesc);
 
         JsonResultUtils.writeResponseDataAsJson(resData, response);
     }

@@ -1,46 +1,49 @@
 package com.centit.msgpusher.plugins;
 
-import com.centit.msgpusher.commons.MsgPusher;
-import com.centit.msgpusher.commons.PushResult;
-import com.centit.msgpusher.po.IPushMessage;
-import com.centit.msgpusher.po.IPushMsgPoint;
+import com.centit.framework.common.ResponseData;
+import com.centit.framework.model.adapter.MessageSender;
+import com.centit.framework.model.basedata.NoticeMessage;
+import com.centit.support.common.DoubleAspect;
+import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.MultiPartEmail;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by codefan on 17-4-6.
  */
-@Service("emailMsgPusher")
-public class EMailMsgPusher implements MsgPusher {
+public abstract class EMailMsgPusher implements MessageSender {
 
-    @Value("${EmailServerHost}")
+    @Setter
     public String  emailServerHost;
-    @Value("${EmailServerHostUser}")
+    @Setter
     public String  emailServerHostUser;
-    @Value("${EmailServerHostPwd}")
+    @Setter
     public String  emailServerHostPwd;
 
+    private static final Logger logger = LoggerFactory.getLogger(EMailMsgPusher.class);
+
+    protected abstract String getReceiverEmail(String receiver);
+    protected List<String> listAllUserEmail(){
+        return null;
+    }
+    /**
+     * 发送内部系统消息
+     *
+     * @param sender   发送人内部用户编码
+     * @param receiver 接收人内部用户编码
+     * @param message  消息主体
+     * @return "OK" 表示成功，其他的为错误信息
+     */
     @Override
-    public PushResult pushMessage(IPushMessage msg, IPushMsgPoint receiver) throws Exception {
-        PushResult pushResult = new PushResult();
-        Map<String,String> emailMap =new HashMap<>();
-        String result = "OK";
-        String state = null;
-        String EMailAddress = receiver.getEmailAddress();
-        if (EMailAddress == null || "".equals(EMailAddress)){
-            result = "该用户没有设置注册邮箱";
-            state = "2";
-            pushResult.setPushState(state);
-            emailMap.put("eMail",result);
-            pushResult.setMap(emailMap);
-            return pushResult;
+    public ResponseData sendMessage(String sender, String receiver, NoticeMessage message) {
+        String receiverEmail = getReceiverEmail(receiver);
+        if (receiverEmail == null || "".equals(receiverEmail)){
+            return ResponseData.makeErrorMessage(2, "该用户没有设置注册邮箱");
         }
         MultiPartEmail multMail = new MultiPartEmail();
         // SMTP
@@ -50,32 +53,37 @@ public class EMailMsgPusher implements MsgPusher {
         try {
 //            multMail.setFrom(msg.getMsgSender());
             multMail.setFrom(emailServerHostUser); //管理邮箱
-            multMail.addTo(EMailAddress);
-            multMail.setSubject(msg.getMsgSubject());
-            multMail.setMsg(msg.getMsgContent());
+            multMail.addTo(receiverEmail);
+            multMail.setSubject(message.getMsgSubject());
+            multMail.setMsg(message.getMsgContent());
             multMail.send();
-            state = "0";
-            result = "OK";
-            emailMap.put("eMail",result);
+            return ResponseData.successResponse;
         } catch (EmailException e) {
-            result=e.getMessage();
-            state = "2";
-            emailMap.put("eMail",result);
-            e.printStackTrace();
+            //e.printStackTrace();
+            logger.error(e.getMessage(), e);
+            return ResponseData.makeErrorMessage(2, e.getMessage());
         }
-        pushResult.setPushState(state);
-        pushResult.setMap(emailMap);
-//        pushResult.setEMailRet(result);
-        return pushResult;
     }
 
+    /**
+     * 广播信息
+     *
+     * @param sender     发送人内部用户编码
+     * @param message    消息主体
+     * @param userInline DoubleAspec.ON 在线用户  OFF 离线用户 BOTH 所有用户
+     * @return 默认没有实现
+     */
     @Override
-    public PushResult pushMsgToAll(IPushMessage msg) throws Exception {
-        PushResult pushResult = new PushResult();
-        Map<String,String> emailMap =new HashMap<>();
-        List<String> receiversList = new ArrayList<>();
-        String result = "OK";
-        String state = null;
+    public ResponseData broadcastMessage(String sender, NoticeMessage message, DoubleAspect userInline) {
+
+        /*if(DoubleAspect.NONE.sameAspect(userInline)){
+            return ResponseData.successResponse;
+        }*/
+
+        List<String> receiversList = listAllUserEmail();
+        if(receiversList==null || receiversList.isEmpty()){
+            return ResponseData.successResponse;
+        }
         int successNo = 0;
         int failNo = 0;
         int totalNo = receiversList.size();
@@ -84,40 +92,27 @@ public class EMailMsgPusher implements MsgPusher {
         // SMTP
         multMail.setHostName(emailServerHost);
         // 需要提供公用的消息用户名和密码
-        multMail.setAuthentication(emailServerHostUser,emailServerHostPwd);
+        multMail.setAuthentication(emailServerHostUser, emailServerHostPwd);
 
-        for (String EMailAddress:receiversList){
-            if (EMailAddress == null || "".equals(EMailAddress)){
-                result = "该用户没有设置注册邮箱";
-                state = "2";
-                pushResult.setPushState(state);
-                emailMap.put("eMail",result);
-            }else{
+        for (String email: receiversList){
+            if (StringUtils.isNotBlank(email)) {
                 try {
                     multMail.setFrom(emailServerHostUser); //管理邮箱
-                    multMail.addTo(EMailAddress);
-                    multMail.setSubject(msg.getMsgSubject());
-                    multMail.setMsg(msg.getMsgContent());
+                    multMail.addTo(email);
+                    multMail.setSubject(message.getMsgSubject());
+                    multMail.setMsg(message.getMsgContent());
                     multMail.send();
                     successNo++;
-                    state = "1";
-//                    result = "OK";
-//                    emailMap.put("eMail",result);
                 } catch (EmailException e) {
-                    result=e.getMessage();
-                    failNo++;
-                    state = "2";
-//                    emailMap.put("eMail",result);
-//                    e.printStackTrace();
+                    failNo ++;
+                    logger.error(e.getMessage(), e);
                 }
             }
 
         }
-        emailMap.put("eMail","total:"+totalNo+";OK:"+successNo+"Fail:"+failNo);
-        pushResult.setPushState(state);
-        pushResult.setMap(emailMap);
-//        pushResult.setEMailRet(result);
-        return null;
+        return ResponseData.makeErrorMessage(failNo==0?0:(successNo==0?1:2),
+           "total:"+totalNo+";success:"+successNo+"Fail:"+failNo);
     }
+
 }
 

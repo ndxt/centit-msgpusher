@@ -2,6 +2,7 @@ package com.centit.msgpusher.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.centit.framework.common.ResponseData;
 import com.centit.framework.core.dao.DictionaryMapUtils;
 import com.centit.framework.jdbc.dao.DatabaseOptUtils;
 import com.centit.framework.jdbc.service.BaseEntityManagerImpl;
@@ -82,7 +83,7 @@ public class MessageDeliveryManagerImpl
      */
     @Override
     @Transactional(propagation= Propagation.REQUIRED)
-    public PushResult pushMessage(MessageDelivery msg){
+    public ResponseData pushMessage(MessageDelivery msg){
         PushResult pushResult = new PushResult();
         if(msg.getMsgExpireSeconds() == null || msg.getMsgExpireSeconds() == 0){
             msg.setMsgExpireSeconds(3600 * 5);//消息默认过期时间
@@ -149,7 +150,7 @@ public class MessageDeliveryManagerImpl
      */
     @Override
     @Transactional(propagation= Propagation.REQUIRED)
-    public PushResult pushMsgToAll(MessageDelivery msg){
+    public ResponseData pushMsgToAll(MessageDelivery msg){
         String notifyType = msg.getNoticeTypes();
         PushResult pushResult = new PushResult();
         if(msg.getMsgExpireSeconds() == null || msg.getMsgExpireSeconds() == 0){
@@ -221,7 +222,7 @@ public class MessageDeliveryManagerImpl
      * @param msg 消息
      * @return
      */
-    private PushResult saveErrorPushResult(String errorReason,MessageDelivery msg){
+    private ResponseData saveErrorPushResult(String errorReason,MessageDelivery msg){
         JSONObject json = new JSONObject();
         PushResult pushResult = new PushResult();
         Map<String,String> resultMap = new HashMap<>();
@@ -298,7 +299,7 @@ public class MessageDeliveryManagerImpl
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public PushResult pushAgain(String userCode,String osId) {
+    public ResponseData pushAgain(String userCode,String osId) {
         PushResult result = new PushResult();
         List<MessageDelivery> msgList = messageDeliveryDao.listPushAgain(userCode,osId);
         for (MessageDelivery msg:msgList){

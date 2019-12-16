@@ -1,8 +1,8 @@
 package com.centit.msgpusher.service;
 
 import com.alibaba.fastjson.JSONArray;
+import com.centit.framework.common.ResponseData;
 import com.centit.framework.jdbc.service.BaseEntityManager;
-import com.centit.msgpusher.commons.PushResult;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.support.database.utils.PageDesc;
 
@@ -31,7 +31,7 @@ public interface MessageDeliveryManager extends BaseEntityManager<MessageDeliver
      * @return 返回消息ID
      * @throws Exception Exception
      */
-    PushResult pushMessage(MessageDelivery msg)throws Exception;
+    ResponseData pushMessage(MessageDelivery msg)throws Exception;
 
     /**
      * 消息广播
@@ -39,7 +39,7 @@ public interface MessageDeliveryManager extends BaseEntityManager<MessageDeliver
      * @return 返回消息ID
      * @throws Exception Exception
      */
-    PushResult pushMsgToAll(MessageDelivery msg) throws Exception;
+    ResponseData pushMsgToAll(MessageDelivery msg) throws Exception;
 
 
     void deleteRecords();
@@ -62,7 +62,7 @@ public interface MessageDeliveryManager extends BaseEntityManager<MessageDeliver
      */
     String changePushState(String msgId);
 
-    PushResult pushAgain(String userCode,String osId);
+    ResponseData pushAgain(String userCode,String osId);
 
     /**
      * 定时推送任务

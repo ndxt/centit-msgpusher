@@ -3,9 +3,10 @@ package com.centit.msgpusher.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.centit.framework.common.JsonResultUtils;
+import com.centit.framework.common.ResponseData;
 import com.centit.framework.common.ResponseMapData;
 import com.centit.framework.core.controller.BaseController;
-import com.centit.msgpusher.commons.PushResult;
+import com.centit.framework.core.controller.WrapUpResponseBody;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.service.MessageDeliveryManager;
@@ -95,41 +96,34 @@ public class MessageDeliveryController  extends BaseController {
      * 3. 广播消息
      * 4. 查看消息状态
      * @param request HttpServletRequest
-     * @param response HttpServletResponse
      * @throws IOException IOException
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public void registerUserMsgPoint(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @WrapUpResponseBody
+    public ResponseData registerUserMsgPoint(HttpServletRequest request) throws IOException {
         UserMsgPoint userMsgPoint = fetchUserMsgPoint(request);
         if(userMsgPoint==null){
-            JsonResultUtils.writeErrorMessageJson(400,"表单参数错误",response);
-            return;
+            return  ResponseData.makeErrorMessage(400,"表单参数错误");
         }
 //        userMsgPointManager.saveNewObject(userMsgPoint);
         userMsgPointManager.registerUserPoint(userMsgPoint);
         //重新推送消息有效期内推送失败的消息
-        PushResult result = messageDeliveryManager.pushAgain(userMsgPoint.getUserCode(),userMsgPoint.getOsId());
-
-        JsonResultUtils.writeSingleDataJson(userMsgPoint,response);
-
+        return messageDeliveryManager.pushAgain(userMsgPoint.getUserCode(),userMsgPoint.getOsId());
         //TODO 添加 消息推送 PUSH_State='2' and valid_period >= 当前时间
 
     }
 
-
-
     @RequestMapping(value = "/push", method = RequestMethod.POST)
-    public void pushMessage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @WrapUpResponseBody
+    public ResponseData pushMessage(HttpServletRequest request) throws IOException {
         MessageDelivery msg = fetchMessageDelivery(request);
-        PushResult result = null;
         if(msg==null){
-            JsonResultUtils.writeErrorMessageJson(400,"表单参数错误",response);
-            return;
+            return ResponseData.makeErrorMessage(400,"表单参数错误");
         }
         try {
-            result = messageDeliveryManager.pushMessage(msg);
+            return messageDeliveryManager.pushMessage(msg);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.
         }
         JsonResultUtils.writeSingleDataJson(result,response);
     }
@@ -160,12 +154,12 @@ public class MessageDeliveryController  extends BaseController {
 
     @RequestMapping(value="/view", method=RequestMethod.GET)
     public void viewRecords(PageDesc pageDesc, HttpServletRequest request, HttpServletResponse response) {
-        Map<String, Object> queryParamsMap = collectRequestParameters(request);
+        Map<String, Object> queryParamsMap = BaseController.collectRequestParameters(request);
         JSONArray listObjects = messageDeliveryManager.listMessageDeliverysAsJson(
                 null,queryParamsMap, pageDesc);
         ResponseMapData resData = new ResponseMapData();
-        resData.addResponseData(OBJLIST, listObjects);
-        resData.addResponseData(PAGE_DESC, pageDesc);
+        resData.addResponseData(BaseController.OBJLIST, listObjects);
+        resData.addResponseData(BaseController.PAGE_DESC, pageDesc);
 
         JsonResultUtils.writeResponseDataAsJson(resData, response);
 
@@ -193,8 +187,8 @@ public class MessageDeliveryController  extends BaseController {
         map.put("end",end);
         JSONArray listObjects = messageDeliveryManager.listAllPlanPush(map, pageDesc);
         ResponseMapData resData = new ResponseMapData();
-        resData.addResponseData(OBJLIST, listObjects);
-        resData.addResponseData(PAGE_DESC, pageDesc);
+        resData.addResponseData(BaseController.OBJLIST, listObjects);
+        resData.addResponseData(BaseController.PAGE_DESC, pageDesc);
         JsonResultUtils.writeResponseDataAsJson(resData, response);
     }
 
