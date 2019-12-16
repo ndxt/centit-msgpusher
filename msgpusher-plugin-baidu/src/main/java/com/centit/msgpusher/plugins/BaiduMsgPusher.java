@@ -150,10 +150,8 @@ public class BaiduMsgPusher implements MessageSender {
     private ResponseData broadcastAndroid(NoticeMessage message) {
         // 1. get apiKey and secretKey from developer console
         PushKeyPair pair = new PushKeyPair(androidApiKey, androidSecretKey);
-
         // 2. build a BaidupushClient object to access released interfaces
         BaiduPushClient pushClient = new BaiduPushClient(pair,BaiduPushConstants.CHANNEL_REST_URL);
-
         // 3. register a YunLogHandler to get detail interacting information
         // in this request.
         pushClient.setChannelLogHandler((event) -> System.out.println(event.getMessage()));
@@ -191,17 +189,15 @@ public class BaiduMsgPusher implements MessageSender {
     private ResponseData broadcastIOS(NoticeMessage message) {
         // 1. get apiKey and secretKey from developer console
         PushKeyPair pair = new PushKeyPair(iosApiKey, iosSecretKey);
-
         // 2. build a BaidupushClient object to access released interfaces
         BaiduPushClient pushClient = new BaiduPushClient(pair,BaiduPushConstants.CHANNEL_REST_URL);
-
         // 3. register a YunLogHandler to get detail interacting information
         // in this request.
         pushClient.setChannelLogHandler((event) -> System.out.println(event.getMessage()));
         try {
             // 4. specify request arguments
             JSONObject notification = makeMessagePackage("4", message);
-            
+
             PushMsgToAllRequest request = new PushMsgToAllRequest()
                 //.addMsgExpires(msg.getMsgExpireSeconds())
                 .addMessageType(1)// 设置消息类型,0表示透传消息,1表示通知,默认为0.

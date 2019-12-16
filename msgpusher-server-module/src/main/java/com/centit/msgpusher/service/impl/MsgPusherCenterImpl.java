@@ -73,7 +73,7 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
 
     @Override
     public ResponseData pushMessage(MessageDelivery msg, UserMsgPoint userMsgPoint)throws Exception{
-        PushResult pushResult = new PushResult();
+        ResponseData pushResult = ResponseData.makeSuccessResponse();
         Map<String, ResponseData> resultMap = new HashMap<>();
         Map<String, String> pushMap = new HashMap<>();
         String noticeTypes = msg.getNoticeTypes();
@@ -82,7 +82,9 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
             //多种发送方式循环发送
             for (int i = 0; i < noticeTypeArray.length; i++) {
                 if (pusherMap.get(noticeTypeArray[i]) != null){
-                    ResponseData pushResultTemp = pusherMap.get(noticeTypeArray[i]).pushMessage(msg, userMsgPoint);
+                    ResponseData pushResultTemp =
+                        pusherMap.get(noticeTypeArray[i])
+                            .sendMessage(msg, userMsgPoint);
                     resultMap.put(noticeTypeArray[i], pushResultTemp); //存储不同推送方式的返回信息
                 }
             }
