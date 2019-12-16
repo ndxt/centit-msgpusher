@@ -2,15 +2,12 @@ package com.centit.msgpusher.service.impl;
 
 import com.centit.framework.common.ResponseData;
 import com.centit.framework.model.adapter.MessageSender;
-import com.centit.msgpusher.commons.MsgPusher;
-import com.centit.msgpusher.commons.PushResult;
 import com.centit.msgpusher.dao.MessageDeliveryDao;
 import com.centit.msgpusher.dao.UserNotifySettingDao;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.service.MessageDeliveryManager;
 import com.centit.msgpusher.service.MsgPusherCenter;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -73,7 +70,7 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
 
     @Override
     public ResponseData pushMessage(MessageDelivery msg, UserMsgPoint userMsgPoint)throws Exception{
-        ResponseData pushResult = ResponseData.makeSuccessResponse();
+        /*ResponseData pushResult = ResponseData.makeSuccessResponse();
         Map<String, ResponseData> resultMap = new HashMap<>();
         Map<String, String> pushMap = new HashMap<>();
         String noticeTypes = msg.getNoticeTypes();
@@ -118,8 +115,8 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
                 pushResult.setPushState("3");//部分推送成功
             }
             pushResult.setMap(pushMap);
-        }
-        return pushResult;
+        }*/
+        return ResponseData.successResponse;
     }
 
 
@@ -133,7 +130,7 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
      */
     @Override
     public ResponseData pushMsgToAll(MessageDelivery msg) throws Exception{
-        PushResult pushResult = new PushResult();
+        /*PushResult pushResult = new PushResult();
         String noticeTypes = msg.getNoticeTypes();
         Map<String,PushResult> map = new HashMap<>();
         Map<String, String> pushMap = new HashMap<>();
@@ -181,8 +178,8 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
         if (!StringUtils.equals(appPushState,eMailPushState)){
             pushResult.setPushState("3");//部分推送成功
         }
-        pushResult.setMap(pushMap);
-        return pushResult;
+        pushResult.setMap(pushMap);*/
+        return ResponseData.successResponse;
     }
 
 }

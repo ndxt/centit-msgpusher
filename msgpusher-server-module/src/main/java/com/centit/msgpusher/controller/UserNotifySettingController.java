@@ -52,9 +52,7 @@ public class UserNotifySettingController  extends BaseController {
     @RequestMapping(method = RequestMethod.GET)
     public void list(String[] field, PageDesc pageDesc, HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> searchColumn = BaseController.collectRequestParameters(request);
-
         JSONArray listObjects = userNotifySettingMag.listUserNotifySettingsAsJson(field,searchColumn, pageDesc);
-
         if (null == pageDesc) {
             JsonResultUtils.writeSingleDataJson(listObjects, response);
             return;
@@ -105,7 +103,6 @@ public class UserNotifySettingController  extends BaseController {
     public void deleteUserNotifySetting(@PathVariable String userSettingId, HttpServletResponse response) {
 
         userNotifySettingMag.deleteObjectById( userSettingId);
-
         JsonResultUtils.writeBlankJson(response);
     }
 
@@ -119,16 +116,11 @@ public class UserNotifySettingController  extends BaseController {
     @RequestMapping(value = "/{userSettingId}", method = {RequestMethod.PUT})
     public void updateUserNotifySetting(@PathVariable String userSettingId,
         @RequestBody @Valid UserNotifySetting userNotifySetting, HttpServletResponse response) {
-
-
         UserNotifySetting dbUserNotifySetting  =
                 userNotifySettingMag.getObjectById( userSettingId);
 
-
-
         if (null != userNotifySetting) {
-            dbUserNotifySetting .copy(userNotifySetting);
-            userNotifySettingMag.mergeObject(dbUserNotifySetting);
+            userNotifySettingMag.mergeObject(userNotifySetting);
         } else {
             JsonResultUtils.writeErrorMessageJson("当前对象不存在", response);
             return;

@@ -6,18 +6,13 @@ import com.centit.framework.common.ResponseData;
 import com.centit.framework.core.dao.DictionaryMapUtils;
 import com.centit.framework.jdbc.dao.DatabaseOptUtils;
 import com.centit.framework.jdbc.service.BaseEntityManagerImpl;
-import com.centit.msgpusher.commons.PushResult;
 import com.centit.msgpusher.dao.MessageDeliveryDao;
 import com.centit.msgpusher.dao.UserMsgPointDao;
 import com.centit.msgpusher.dao.UserNotifySettingDao;
 import com.centit.msgpusher.po.MessageDelivery;
-import com.centit.msgpusher.po.UserMsgPoint;
-import com.centit.msgpusher.po.UserMsgPointId;
 import com.centit.msgpusher.service.MessageDeliveryManager;
 import com.centit.msgpusher.service.MsgPusherCenter;
-import com.centit.support.algorithm.DatetimeOpt;
 import com.centit.support.database.utils.PageDesc;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -84,7 +79,7 @@ public class MessageDeliveryManagerImpl
     @Override
     @Transactional(propagation= Propagation.REQUIRED)
     public ResponseData pushMessage(MessageDelivery msg){
-        PushResult pushResult = new PushResult();
+        /*PushResult pushResult = new PushResult();
         if(msg.getMsgExpireSeconds() == null || msg.getMsgExpireSeconds() == 0){
             msg.setMsgExpireSeconds(3600 * 5);//消息默认过期时间
         }
@@ -138,8 +133,8 @@ public class MessageDeliveryManagerImpl
             messageDeliveryDao.saveNewObject(msg);
         }else{
             messageDeliveryDao.updateObject(msg);
-        }
-        return pushResult;
+        }*/
+        return ResponseData.successResponse;
     }
 
     /**
@@ -151,7 +146,7 @@ public class MessageDeliveryManagerImpl
     @Override
     @Transactional(propagation= Propagation.REQUIRED)
     public ResponseData pushMsgToAll(MessageDelivery msg){
-        String notifyType = msg.getNoticeTypes();
+        /*String notifyType = msg.getNoticeTypes();
         PushResult pushResult = new PushResult();
         if(msg.getMsgExpireSeconds() == null || msg.getMsgExpireSeconds() == 0){
             msg.setMsgExpireSeconds(3600 * 5);//消息默认过期时间
@@ -199,8 +194,8 @@ public class MessageDeliveryManagerImpl
             messageDeliveryDao.saveNewObject(msg);
         }else{
             messageDeliveryDao.updateObject(msg);
-        }
-        return pushResult;
+        }*/
+        return ResponseData.successResponse;
     }
 
     /**
@@ -224,16 +219,11 @@ public class MessageDeliveryManagerImpl
      */
     private ResponseData saveErrorPushResult(String errorReason,MessageDelivery msg){
         JSONObject json = new JSONObject();
-        PushResult pushResult = new PushResult();
-        Map<String,String> resultMap = new HashMap<>();
-        pushResult.setPushState("2");
-        resultMap.put("error",errorReason);
-        pushResult.setMap(resultMap);
         json.put("error",errorReason);
         msg.setPushResult(json.toString());
         msg.setPushState("2");
         messageDeliveryDao.saveNewObject(msg);
-        return pushResult;
+        return ResponseData.makeErrorMessage(2, errorReason);
     }
 
 
@@ -300,16 +290,16 @@ public class MessageDeliveryManagerImpl
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public ResponseData pushAgain(String userCode,String osId) {
-        PushResult result = new PushResult();
         List<MessageDelivery> msgList = messageDeliveryDao.listPushAgain(userCode,osId);
         for (MessageDelivery msg:msgList){
             try {
-                result = pushMessage(msg);
+                pushMessage(msg);
             } catch (Exception e) {
-                e.printStackTrace();
+               logger.error(e.getMessage(), e);
+               //return ResponseData.makeErrorMessage(e.getMessage());
             }
         }
-        return result;
+        return ResponseData.successResponse;
     }
 
     /**

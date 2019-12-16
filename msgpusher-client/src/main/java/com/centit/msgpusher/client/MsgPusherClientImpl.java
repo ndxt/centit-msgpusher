@@ -2,8 +2,8 @@ package com.centit.msgpusher.client;
 
 import com.centit.framework.appclient.AppSession;
 import com.centit.framework.appclient.HttpReceiveJSON;
+import com.centit.framework.common.ResponseData;
 import com.centit.msgpusher.client.po.MessageDelivery;
-import com.centit.msgpusher.client.po.PushResult;
 import com.centit.msgpusher.client.po.UserMsgPoint;
 import com.centit.msgpusher.client.po.UserNotifySetting;
 import com.centit.support.network.HttpExecutor;
@@ -38,25 +38,25 @@ public class MsgPusherClientImpl implements MsgPusherClient {
         appSession.releaseHttpClient(httpClient);
     }
 
-    public PushResult pushMessage(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception {
+    public ResponseData pushMessage(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception {
         String jsonStr = HttpExecutor.jsonPost(HttpExecutorContext.create(httpClient), appSession.completeQueryUrl("/msgdlvry/push"), msgdlvry);
 //        String jsonStr = HttpExecutor.formPost(httpClient, appSession.completeQueryUrl("/msgdlvry/push"), msgdlvry);
-        return HttpReceiveJSON.valueOfJson(jsonStr).getDataAsObject(PushResult.class);
+        return HttpReceiveJSON.valueOfJson(jsonStr).toResponseData();
 
     }
 
-    public PushResult pushMessage(MessageDelivery msgdlvry) throws Exception {
+    public ResponseData pushMessage(MessageDelivery msgdlvry) throws Exception {
         CloseableHttpClient httpClient = getHttpClient();
-        PushResult result = pushMessage(httpClient, msgdlvry);
+        ResponseData result = pushMessage(httpClient, msgdlvry);
         releaseHttpClient(httpClient);
         return result;
     }
 
-    public PushResult pushAppMessage(String userCode, String title, String message, String osId, String optId, String msgSender) throws Exception {
+    public ResponseData pushAppMessage(String userCode, String title, String message, String osId, String optId, String msgSender) throws Exception {
         return pushMessage(userCode, title, message, "A", osId, optId, msgSender);
     }
 
-    public PushResult pushMessage(String userCode, String title, String message, String noticeTypes, String osId, String optId, String msgSender) throws Exception {
+    public ResponseData pushMessage(String userCode, String title, String message, String noticeTypes, String osId, String optId, String msgSender) throws Exception {
         MessageDelivery msgdlvry = new MessageDelivery();
         msgdlvry.setMsgReceiver(userCode);
         msgdlvry.setMsgSubject(title);
@@ -68,26 +68,26 @@ public class MsgPusherClientImpl implements MsgPusherClient {
         return pushMessage(msgdlvry);
     }
 
-    public PushResult pushMsgToAll(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception {
+    public ResponseData pushMsgToAll(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception {
         String jsonStr = HttpExecutor.jsonPost(
             HttpExecutorContext.create(httpClient),
             appSession.completeQueryUrl("/msgdlvry/pushall"), msgdlvry);
         /*String jsonStr = HttpExecutor.formPost(httpClient, appSession.completeQueryUrl("/msgdlvry/pushall"), msgdlvry);*/
-        return HttpReceiveJSON.valueOfJson(jsonStr).getDataAsObject(PushResult.class);
+        return HttpReceiveJSON.valueOfJson(jsonStr).getDataAsObject(ResponseData.class);
     }
 
-    public PushResult pushMsgToAll(MessageDelivery msgdlvry) throws Exception {
+    public ResponseData pushMsgToAll(MessageDelivery msgdlvry) throws Exception {
         CloseableHttpClient httpClient = getHttpClient();
-        PushResult jsonStr = pushMsgToAll(httpClient, msgdlvry);
+        ResponseData jsonStr = pushMsgToAll(httpClient, msgdlvry);
         releaseHttpClient(httpClient);
         return jsonStr;
     }
 
-    public PushResult pushAppMsgToAll(String title , String message, String osId, String optId, String msgSender) throws Exception {
+    public ResponseData pushAppMsgToAll(String title , String message, String osId, String optId, String msgSender) throws Exception {
         return pushMsgToAll(title, message, "A", osId, optId, msgSender);
     }
 
-    public PushResult pushMsgToAll(String title , String message, String noticeTypes, String osId, String optId, String msgSender) throws Exception {
+    public ResponseData pushMsgToAll(String title , String message, String noticeTypes, String osId, String optId, String msgSender) throws Exception {
         MessageDelivery msgdlvry = new MessageDelivery();
         msgdlvry.setMsgSubject(title);
         msgdlvry.setMsgContent(message);

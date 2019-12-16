@@ -1,10 +1,9 @@
 package com.centit.msgpusher.client;
 
-import com.alibaba.fastjson.JSON;
+import com.centit.framework.common.ResponseData;
 import com.centit.framework.model.adapter.MessageSender;
 import com.centit.framework.model.basedata.NoticeMessage;
 import com.centit.msgpusher.client.po.MessageDelivery;
-import com.centit.msgpusher.client.po.PushResult;
 
 /**
  * Created by codefan on 17-4-11.
@@ -23,7 +22,7 @@ public class MessageSenderPusherImpl implements MessageSender {
      * @return "OK" 表示成功，其他的为错误信息
      */
     @Override
-    public String sendMessage(String sender, String receiver, NoticeMessage message) {
+    public ResponseData sendMessage(String sender, String receiver, NoticeMessage message) {
         MessageDelivery msgdlvry = new MessageDelivery();
         msgdlvry.copyFromNoticeMessage(message);
 
@@ -33,8 +32,7 @@ public class MessageSenderPusherImpl implements MessageSender {
         msgdlvry.setMsgReceiver(receiver);
 
         try {
-            PushResult jsonStr =jsonStr = msgPusherClient.pushMessage(msgdlvry);
-            return JSON.toJSONString(jsonStr);
+            return msgPusherClient.pushMessage(msgdlvry);
         } catch (Exception e) {
             e.printStackTrace();
         }

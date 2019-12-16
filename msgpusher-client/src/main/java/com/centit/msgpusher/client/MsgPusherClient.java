@@ -1,7 +1,7 @@
 package com.centit.msgpusher.client;
 
+import com.centit.framework.common.ResponseData;
 import com.centit.msgpusher.client.po.MessageDelivery;
-import com.centit.msgpusher.client.po.PushResult;
 import com.centit.msgpusher.client.po.UserMsgPoint;
 import com.centit.msgpusher.client.po.UserNotifySetting;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -99,9 +99,9 @@ public interface MsgPusherClient {
 
     // 点对点的消息推送接口，一般发送方均为系统 admin或者 system；如果系统中事件是由某个人发起的发送方也可以是某个具体的人
 
-    PushResult pushMessage(MessageDelivery msgdlvry) throws Exception;
+    ResponseData pushMessage(MessageDelivery msgdlvry) throws Exception;
 
-    PushResult pushMessage(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception;
+    ResponseData pushMessage(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception;
 
     /**
      * 消息点对点推送
@@ -114,7 +114,7 @@ public interface MsgPusherClient {
      * @return PushResult 推送结果
      * @throws Exception Exception
      */
-    PushResult pushAppMessage(String userCode, String title , String message, String osId, String optId, String msgSender) throws Exception;
+    ResponseData pushAppMessage(String userCode, String title , String message, String osId, String optId, String msgSender) throws Exception;
 
     /**
      * 指定类型的消息点对点推送，目前支持的推送方式有 app系统推送 email邮件推送 sms 短线推送 wx推送 msg 内置消息箱
@@ -128,13 +128,13 @@ public interface MsgPusherClient {
      * @return PushResult 推送结果
      * @throws Exception Exception
      */
-    PushResult pushMessage(String userCode, String title, String message, String noticeTypes, String osId, String optId, String msgSender) throws Exception;
+    ResponseData pushMessage(String userCode, String title, String message, String noticeTypes, String osId, String optId, String msgSender) throws Exception;
 
     // 消息广播
 
-    PushResult pushMsgToAll(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception;
+    ResponseData pushMsgToAll(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception;
 
-    PushResult pushMsgToAll(MessageDelivery msgdlvry) throws Exception;
+    ResponseData pushMsgToAll(MessageDelivery msgdlvry) throws Exception;
 
     /**
      * 消息广播
@@ -146,7 +146,7 @@ public interface MsgPusherClient {
      * @return PushResult 推送结果
      * @throws Exception Exception
      */
-    PushResult pushAppMsgToAll(String title , String message, String osId, String optId, String msgSender) throws Exception;
+    ResponseData pushAppMsgToAll(String title , String message, String osId, String optId, String msgSender) throws Exception;
 
     /**
      * 指定类型的消息广播
@@ -159,6 +159,6 @@ public interface MsgPusherClient {
      * @return PushResult 推送结果
      * @throws Exception Exception
      */
-    PushResult pushMsgToAll(String title , String message, String noticeTypes, String osId, String optId, String msgSender) throws Exception;
+    ResponseData pushMsgToAll(String title , String message, String noticeTypes, String osId, String optId, String msgSender) throws Exception;
 
 }

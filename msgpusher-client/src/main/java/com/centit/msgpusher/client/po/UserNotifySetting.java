@@ -10,8 +10,6 @@ package com.centit.msgpusher.client.po;
 public class UserNotifySetting implements java.io.Serializable {
     private static final long serialVersionUID =  1L;
 
-
-
     /**
      * 用户设定编号 null
      */

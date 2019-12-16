@@ -1,8 +1,7 @@
 package com.centit.msgpusher.client;
 
-import com.alibaba.fastjson.JSON;
 import com.centit.framework.appclient.HttpReceiveJSON;
-import com.centit.msgpusher.client.po.PushResult;
+import com.centit.framework.common.ResponseData;
 
 /**
  * Created by codefan on 17-4-11.
@@ -34,12 +33,12 @@ public class TestMsgPusher {
     public static void register(MsgPusherClientImpl client) throws Exception {
         String jsonStr = client.registerUser("001","osId", "deviceId", "deviceType", "channelId");
         HttpReceiveJSON resJson = HttpReceiveJSON.valueOfJson(jsonStr);
-        System.out.print("result:"+ JSON.toJSONString(resJson));
+        System.out.print("result:"+ resJson.toResponseData().toJSONString());
     }
 
     public static void pushMessage(MsgPusherClientImpl client) throws Exception {
-        PushResult jsonStr = client.pushAppMessage("001", "test", "testContent","df","zou_wy","centit.1");
-        System.out.print("result:"+ JSON.toJSONString(jsonStr));
+        ResponseData jsonStr = client.pushAppMessage("001", "test", "testContent","df","zou_wy","centit.1");
+        System.out.print("result:"+ jsonStr.toJSONString());
     }
 
 }

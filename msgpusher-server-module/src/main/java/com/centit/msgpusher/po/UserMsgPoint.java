@@ -1,5 +1,6 @@
 package com.centit.msgpusher.po;
 
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 
   用户消息接收端口（设备）信息用户设置 自己接收 通知的方式。
 */
+@Data
 @Entity
 @Table(name = "F_USER_MSG_POINT")
 public class UserMsgPoint implements java.io.Serializable {
@@ -89,15 +91,6 @@ public class UserMsgPoint implements java.io.Serializable {
         this.emailAddress = emailAddress;
     }
 
-    public UserMsgPointId getCid() {
-        return this.cid;
-    }
-
-    public void setCid(UserMsgPointId id) {
-        this.cid = id;
-    }
-
-    @Override
     public String getUserCode() {
         if(this.cid==null) {
             this.cid = new UserMsgPointId();
@@ -112,7 +105,6 @@ public class UserMsgPoint implements java.io.Serializable {
         this.cid.setUserCode(userCode);
     }
 
-    @Override
     public String getOsId() {
         if(this.cid==null) {
             this.cid = new UserMsgPointId();
@@ -125,76 +117,6 @@ public class UserMsgPoint implements java.io.Serializable {
             this.cid = new UserMsgPointId();
         }
         this.cid.setOsId(osId);
-    }
-
-    // Property accessors
-
-    @Override
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    @Override
-    public String getEmailAddress() {
-        return this.emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    @Override
-    public String getDeviceType() {
-        return this.deviceType;
-    }
-
-    public void setDeviceType(String deviceType) {
-        this.deviceType = deviceType;
-    }
-
-    public String getDeviceId() {
-        return this.deviceId;
-    }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
-
-    public String getOsVersion() {
-        return this.osVersion;
-    }
-
-    public void setOsVersion(String osVersion) {
-        this.osVersion = osVersion;
-    }
-
-    @Override
-    public String getChannelId() {
-        return this.channelId;
-    }
-
-    public void setChannelId(String channelId) {
-        this.channelId = channelId;
-    }
-
-    public String getWxToken() {
-        return this.wxToken;
-    }
-
-    public void setWxToken(String wxToken) {
-        this.wxToken = wxToken;
-    }
-
-    public String getMobilePhone() {
-        return this.mobilePhone;
-    }
-
-    public void setMobilePhone(String mobilePhone) {
-        this.mobilePhone = mobilePhone;
     }
 
 
@@ -214,53 +136,5 @@ public class UserMsgPoint implements java.io.Serializable {
         return this;
     }
 
-    public UserMsgPoint copyNotNullProperty(UserMsgPoint other){
 
-        if( other.getUserCode() != null) {
-            this.setUserCode(other.getUserCode());
-        }
-        if( other.getOsId() != null) {
-            this.setOsId(other.getOsId());
-        }
-        if( other.getUserName() != null) {
-            this.userName = other.getUserName();
-        }
-
-        if( other.getDeviceType() != null) {
-            this.deviceType = other.getDeviceType();
-        }
-        if( other.getDeviceId() != null) {
-            this.deviceId = other.getDeviceId();
-        }
-        if( other.getOsVersion() != null) {
-            this.osVersion = other.getOsVersion();
-        }
-        if( other.getChannelId() != null) {
-            this.channelId = other.getChannelId();
-        }
-        if( other.getWxToken() != null) {
-            this.wxToken = other.getWxToken();
-        }
-        if( other.getMobilePhone() != null) {
-            this.mobilePhone = other.getMobilePhone();
-        }
-        if( other.getEmailAddress() != null) {
-            this.emailAddress = other.getEmailAddress();
-        }
-
-        return this;
-    }
-
-    public UserMsgPoint clearProperties(){
-        this.userName = null;
-        this.deviceType= null;
-        this.deviceId= null;
-        this.osVersion= null;
-        this.channelId= null;
-        this.wxToken= null;
-        this.mobilePhone= null;
-        this.emailAddress = null;
-
-        return this;
-    }
 }
