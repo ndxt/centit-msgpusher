@@ -1,6 +1,5 @@
 package com.centit.msgpusher.plugins;
 
-import javax.annotation.Resource;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -13,9 +12,13 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint(value="/pusher/{userCode}" /*,configurator = SpringConfigurator.class*/)
 public class SocketPusherListener {
 
-    @Resource
-    protected SocketMsgPusher socketMsgPusher;
+    // static ApplicationContext context;
+    protected static ISocketMsgEvent socketEvent;
 
+    //@Autowired
+    public void setSocketEvent(ISocketMsgEvent socketEvent) {
+        SocketPusherListener.socketEvent = socketEvent;
+    }
     /**
      * 连接建立成功调用的方法
      * @param session session
@@ -24,7 +27,7 @@ public class SocketPusherListener {
     @OnOpen
     public void onOpen(Session session,
                        @PathParam("userCode") String userCode) {
-        socketMsgPusher.signInUser(userCode,session);
+        SocketPusherListener.socketEvent.signInUser(userCode,session);
     }
 
     /**
@@ -33,7 +36,7 @@ public class SocketPusherListener {
      */
     @OnClose
     public void onClose(Session session) {
-        socketMsgPusher.signOutUser(session);
+        SocketPusherListener.socketEvent.signOutUser(session);
     }
 
     /**
@@ -43,7 +46,7 @@ public class SocketPusherListener {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        socketMsgPusher.recvMessage(session, message);
+        SocketPusherListener.socketEvent.recvMessage(session, message);
     }
 
     /**
@@ -56,4 +59,6 @@ public class SocketPusherListener {
         //System.out.println("llws发生错误");
         error.printStackTrace();
     }
+
+
 }

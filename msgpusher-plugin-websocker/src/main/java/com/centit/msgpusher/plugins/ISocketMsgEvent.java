@@ -1,14 +1,12 @@
 package com.centit.msgpusher.plugins;
 
-import com.centit.framework.model.adapter.MessageSender;
-
 import javax.websocket.Session;
 
 /**
  * Created by zhang_gd on 2017/4/18.
  */
 
-public interface SocketMsgPusher extends MessageSender {
+public interface ISocketMsgEvent {
 
     /**
      * 登录

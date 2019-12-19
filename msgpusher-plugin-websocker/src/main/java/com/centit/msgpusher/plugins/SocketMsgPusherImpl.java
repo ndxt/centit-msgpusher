@@ -2,6 +2,7 @@ package com.centit.msgpusher.plugins;
 
 import com.alibaba.fastjson.JSON;
 import com.centit.framework.common.ResponseData;
+import com.centit.framework.model.adapter.MessageSender;
 import com.centit.framework.model.basedata.NoticeMessage;
 import com.centit.support.common.DoubleAspect;
 import org.slf4j.Logger;
@@ -9,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.websocket.Session;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by zhang_gd on 2017/4/18.
  */
 
-public class SocketMsgPusherImpl implements SocketMsgPusher {
+public class SocketMsgPusherImpl implements ISocketMsgEvent, MessageSender {
 
     private static final Logger logger = LoggerFactory.getLogger(SocketMsgPusherImpl.class);
 
