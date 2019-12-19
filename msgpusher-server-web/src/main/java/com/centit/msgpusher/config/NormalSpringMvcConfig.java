@@ -11,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * Created by zou_wy on 2017/3/29.
  */
 @Configuration
-@Import(WebConfig.class)
 @ComponentScan(basePackages = {"com.centit.msgpusher.controller"},
         includeFilters = {@ComponentScan.Filter(type= FilterType.ANNOTATION,value= org.springframework.stereotype.Controller.class)},
         useDefaultFilters = false)

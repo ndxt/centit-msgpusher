@@ -23,7 +23,7 @@ import java.util.Map;
 */
 @Service
 public class UserNotifySettingManagerImpl
-        extends BaseEntityManagerImpl<UserNotifySetting,String,UserNotifySettingDao>
+        extends BaseEntityManagerImpl<UserNotifySetting, String, UserNotifySettingDao>
     implements UserNotifySettingManager{
 
     //public static final Logger logger = LoggerFactory.getLogger(UserNotifySettingManager.class);
@@ -54,7 +54,6 @@ public class UserNotifySettingManagerImpl
 
         return DictionaryMapUtils.mapJsonArray(userNotifySettingDao.listObjectsPartFieldAsJson(
             filterMap, fields, pageDesc), UserNotifySetting.class);
-
     }
 
 }

@@ -14,11 +14,9 @@ import java.util.Map;
  * 用户通知接受参数设置用户设置 自己接收 通知的方式。
 */
 
-public interface UserNotifySettingManager extends BaseEntityManager<UserNotifySetting,String>
-{
-
+public interface UserNotifySettingManager
+    extends BaseEntityManager<UserNotifySetting, String> {
     JSONArray listUserNotifySettingsAsJson(
             String[] fields,
             Map<String, Object> filterMap, PageDesc pageDesc);
-
 }

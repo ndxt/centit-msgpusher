@@ -5,7 +5,6 @@ import com.centit.framework.core.dao.DictionaryMapUtils;
 import com.centit.framework.jdbc.service.BaseEntityManagerImpl;
 import com.centit.msgpusher.dao.UserMsgPointDao;
 import com.centit.msgpusher.po.UserMsgPoint;
-import com.centit.msgpusher.po.UserMsgPointId;
 import com.centit.msgpusher.service.UserMsgPointManager;
 import com.centit.support.database.utils.PageDesc;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ import java.util.Map;
 */
 @Service
 public class UserMsgPointManagerImpl
-        extends BaseEntityManagerImpl<UserMsgPoint,UserMsgPointId,UserMsgPointDao>
+        extends BaseEntityManagerImpl<UserMsgPoint, String, UserMsgPointDao>
     implements UserMsgPointManager{
 
     //public static final Logger logger = LoggerFactory.getLogger(UserMsgPointManager.class);
@@ -58,14 +57,14 @@ public class UserMsgPointManagerImpl
 
     @Override
     public UserMsgPoint getUserMsgPoint(String osId,String receiver){
-        UserMsgPoint userMsgPoint = userMsgPointDao.getObjectById(new UserMsgPointId(osId,receiver));
+        UserMsgPoint userMsgPoint = userMsgPointDao.getObjectById(receiver);
         return userMsgPoint;
     }
 
     @Override
     @Transactional(propagation= Propagation.REQUIRED)
     public void registerUserPoint(UserMsgPoint userMsgPoint) {
-        UserMsgPoint userMsgPointOld = userMsgPointDao.getObjectById(new UserMsgPointId(userMsgPoint.getOsId(),userMsgPoint.getUserCode()));
+        UserMsgPoint userMsgPointOld = userMsgPointDao.getObjectById(userMsgPoint.getUserCode());
         String deviceType = userMsgPoint.getDeviceType();
         String wXToken = userMsgPoint.getWxToken();
         String phoneNo = userMsgPoint.getMobilePhone();

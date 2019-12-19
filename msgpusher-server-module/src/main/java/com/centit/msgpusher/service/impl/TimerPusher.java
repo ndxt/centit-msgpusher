@@ -1,4 +1,4 @@
-package com.centit.msgpusher.plugins;
+package com.centit.msgpusher.service.impl;
 
 import com.centit.msgpusher.service.MessageDeliveryManager;
 import org.slf4j.Logger;

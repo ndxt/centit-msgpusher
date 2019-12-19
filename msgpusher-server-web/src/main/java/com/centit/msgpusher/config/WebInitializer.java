@@ -1,5 +1,7 @@
 package com.centit.msgpusher.config;
 
+import com.centit.framework.config.SystemSpringMvcConfig;
+import com.centit.framework.config.WebConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -10,7 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
 /**
- * Created by zou_wy on 2017/3/29.
+ * Created by codefan on 2019/12/18.
  */
 
 
@@ -20,23 +22,27 @@ public class WebInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
 
-        initializeSpringConfig(servletContext);
+        String [] servletUrlPatterns = {"/system/*","/msgpusher/*"};
+        WebConfig.registerSpringConfig(servletContext, ServiceConfig.class);
 
-        initializeSpringMvcConfig(servletContext);
+        WebConfig.registerServletConfig(servletContext, "system",
+            "/system/*",
+            SystemSpringMvcConfig.class,SwaggerConfig.class);
+
+        WebConfig.registerServletConfig(servletContext, "msgpusher",
+            "/msgpusher/*",
+            NormalSpringMvcConfig.class,SwaggerConfig.class);
+
+
+        WebConfig.registerRequestContextListener(servletContext);
+        WebConfig.registerSingleSignOutHttpSessionListener(servletContext);
+//        WebConfig.registerResponseCorsFilter(servletContext);
+        WebConfig.registerCharacterEncodingFilter(servletContext,servletUrlPatterns);
+        WebConfig.registerHttpPutFormContentFilter(servletContext,servletUrlPatterns);
+        WebConfig.registerHiddenHttpMethodFilter(servletContext,servletUrlPatterns);
+        WebConfig.registerRequestThreadLocalFilter(servletContext);
+        WebConfig.registerSpringSecurityFilter(servletContext,servletUrlPatterns);
+        //registerOpenSessionInViewFilter(servletContext);
     }
 
-    private void initializeSpringConfig(ServletContext servletContext){
-        AnnotationConfigWebApplicationContext springContext = new AnnotationConfigWebApplicationContext();
-        springContext.scan("com.centit");
-        servletContext.addListener(new ContextLoaderListener(springContext));
-    }
-
-    private void initializeSpringMvcConfig(ServletContext servletContext) {
-        AnnotationConfigWebApplicationContext contextSer = new AnnotationConfigWebApplicationContext();
-        contextSer.register(NormalSpringMvcConfig.class);
-        ServletRegistration.Dynamic msgpusher  = servletContext.addServlet("msgpusher", new DispatcherServlet(contextSer));
-        msgpusher.addMapping("/msgpusher/*");
-        msgpusher.setLoadOnStartup(1);
-        msgpusher.setAsyncSupported(true);
-    }
 }

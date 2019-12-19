@@ -33,7 +33,7 @@ import java.util.*;
 */
 @Service("messageDeliveryManager")
 public class MessageDeliveryManagerImpl
-        extends BaseEntityManagerImpl<MessageDelivery,String,MessageDeliveryDao>
+        extends BaseEntityManagerImpl<MessageDelivery, String, MessageDeliveryDao>
     implements MessageDeliveryManager{
 
     public static final Logger logger = LoggerFactory.getLogger(MessageDeliveryManagerImpl.class);

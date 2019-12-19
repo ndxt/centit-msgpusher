@@ -17,7 +17,7 @@ import java.util.Map;
  * 消息推送null
 */
 
-public interface MessageDeliveryManager extends BaseEntityManager<MessageDelivery,String>
+public interface MessageDeliveryManager extends BaseEntityManager<MessageDelivery, String>
 {
 
     JSONArray listMessageDeliverysAsJson(

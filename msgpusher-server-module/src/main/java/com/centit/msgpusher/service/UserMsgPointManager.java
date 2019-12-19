@@ -3,7 +3,6 @@ package com.centit.msgpusher.service;
 import com.alibaba.fastjson.JSONArray;
 import com.centit.framework.jdbc.service.BaseEntityManager;
 import com.centit.msgpusher.po.UserMsgPoint;
-import com.centit.msgpusher.po.UserMsgPointId;
 import com.centit.support.database.utils.PageDesc;
 
 import java.util.Map;
@@ -15,7 +14,7 @@ import java.util.Map;
  * 用户消息接收端口信息用户设置 自己接收 通知的方式。
 */
 
-public interface UserMsgPointManager extends BaseEntityManager<UserMsgPoint,UserMsgPointId>
+public interface UserMsgPointManager extends BaseEntityManager<UserMsgPoint, String>
 {
 
     JSONArray listUserMsgPointsAsJson(

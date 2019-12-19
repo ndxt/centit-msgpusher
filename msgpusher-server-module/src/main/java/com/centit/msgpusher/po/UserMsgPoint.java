@@ -2,10 +2,11 @@ package com.centit.msgpusher.po;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 
@@ -21,8 +22,10 @@ import javax.persistence.Table;
 public class UserMsgPoint implements java.io.Serializable {
     private static final long serialVersionUID =  1L;
 
-    @EmbeddedId
-    private UserMsgPointId cid;
+    @Id
+    @Column(name = "USER_CODE")
+    @NotBlank(message = "字段不能为空")
+    private String userCode;
 
     @Column(name = "USER_NAME")
     @Length(max = 50, message = "字段长度不能大于{max}")
@@ -75,56 +78,17 @@ public class UserMsgPoint implements java.io.Serializable {
     public UserMsgPoint() {
     }
 
-    public UserMsgPoint(UserMsgPointId id) {
-        this.cid = id;
-    }
-
-    public UserMsgPoint(UserMsgPointId id , String userName, String deviceType, String deviceId, String osVersion, String channelId, String wxToken, String mobilePhone, String emailAddress) {
-        this.cid = id;
-        this.userName = userName;
-        this.deviceType= deviceType;
-        this.deviceId= deviceId;
-        this.osVersion= osVersion;
-        this.channelId= channelId;
-        this.wxToken= wxToken;
-        this.mobilePhone= mobilePhone;
-        this.emailAddress = emailAddress;
-    }
-
     public String getUserCode() {
-        if(this.cid==null) {
-            this.cid = new UserMsgPointId();
-        }
-        return this.cid.getUserCode();
+        return this.userCode;
     }
 
     public void setUserCode(String userCode) {
-        if(this.cid==null) {
-            this.cid = new UserMsgPointId();
-        }
-        this.cid.setUserCode(userCode);
+        this.userCode = userCode;
     }
-
-    public String getOsId() {
-        if(this.cid==null) {
-            this.cid = new UserMsgPointId();
-        }
-        return this.cid.getOsId();
-    }
-
-    public void setOsId(String osId) {
-        if(this.cid==null) {
-            this.cid = new UserMsgPointId();
-        }
-        this.cid.setOsId(osId);
-    }
-
 
 
     public UserMsgPoint copy(UserMsgPoint other){
-
         this.setUserCode(other.getUserCode());
-        this.setOsId(other.getOsId());
         this.userName = other.getUserName();
         this.deviceType= other.getDeviceType();
         this.deviceId= other.getDeviceId();
@@ -135,6 +99,4 @@ public class UserMsgPoint implements java.io.Serializable {
         this.emailAddress = other.getEmailAddress();
         return this;
     }
-
-
 }
