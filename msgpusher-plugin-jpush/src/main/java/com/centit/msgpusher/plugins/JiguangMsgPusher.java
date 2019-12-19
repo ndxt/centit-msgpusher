@@ -36,7 +36,7 @@ public class JiguangMsgPusher implements MessageSender {
     private String masterScretKey;
 
     @Setter
-    private IJiguangPushSupport jiguangPushSupport;
+    private IJiguangPushSupport jiguangPushSupport = new IJiguangPushSupport(){};
 
     private static final Logger logger = LoggerFactory.getLogger(JiguangMsgPusher.class);
 
