@@ -17,6 +17,7 @@ import java.util.List;
  * Created by codefan on 17-4-6.
  */
 public abstract class EMailMsgPusher implements MessageSender {
+    private static final Logger logger = LoggerFactory.getLogger(EMailMsgPusher.class);
 
     @Setter
     public String  emailServerHost;
@@ -25,12 +26,10 @@ public abstract class EMailMsgPusher implements MessageSender {
     @Setter
     public String  emailServerHostPwd;
 
-    private static final Logger logger = LoggerFactory.getLogger(EMailMsgPusher.class);
+    @Setter
+    private IUserEmailSupport userEmailSupport;
 
-    protected abstract String getReceiverEmail(String receiver);
-    protected List<String> listAllUserEmail(){
-        return null;
-    }
+
     /**
      * 发送内部系统消息
      *
@@ -41,7 +40,7 @@ public abstract class EMailMsgPusher implements MessageSender {
      */
     @Override
     public ResponseData sendMessage(String sender, String receiver, NoticeMessage message) {
-        String receiverEmail = getReceiverEmail(receiver);
+        String receiverEmail = userEmailSupport.getReceiverEmail(receiver);
         if (receiverEmail == null || "".equals(receiverEmail)){
             return ResponseData.makeErrorMessage(2, "该用户没有设置注册邮箱");
         }
@@ -80,7 +79,7 @@ public abstract class EMailMsgPusher implements MessageSender {
             return ResponseData.successResponse;
         }*/
 
-        List<String> receiversList = listAllUserEmail();
+        List<String> receiversList = userEmailSupport.listAllUserEmail();
         if(receiversList==null || receiversList.isEmpty()){
             return ResponseData.successResponse;
         }

@@ -35,11 +35,15 @@ public class JiguangMsgPusher implements MessageSender {
     @Setter
     private String masterScretKey;
 
+    @Setter
+    private IJiguangPushSupport jiguangPushSupport;
+
     private static final Logger logger = LoggerFactory.getLogger(JiguangMsgPusher.class);
 
     @Override
     public ResponseData sendMessage(String sender, String receiver, NoticeMessage noticeMessage) {
-        PushResult pushResult = jPushMessage(sender, new String[]{receiver},
+        PushResult pushResult = jPushMessage(sender,
+            new String[]{jiguangPushSupport.getReceiverAlias(receiver)},
             noticeMessage);
         return ResponseData.makeErrorMessageWithData(pushResult,
             pushResult.error==null? 0 :pushResult.error.getCode(),
@@ -56,7 +60,8 @@ public class JiguangMsgPusher implements MessageSender {
      */
     @Override
     public ResponseData sendMessage(String sender, Collection<String> receivers, NoticeMessage message) {
-        PushResult pushResult = jPushMessage(sender, CollectionsOpt.listToArray(receivers),
+        PushResult pushResult = jPushMessage(sender,
+            jiguangPushSupport.getReceiversAlias(CollectionsOpt.listToArray(receivers)),
             message);
         return ResponseData.makeErrorMessageWithData(pushResult,
             pushResult.error==null? 0 :pushResult.error.getCode(),
