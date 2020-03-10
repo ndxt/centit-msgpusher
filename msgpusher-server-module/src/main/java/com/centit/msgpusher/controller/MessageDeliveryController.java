@@ -109,7 +109,7 @@ public class MessageDeliveryController  extends BaseController {
 //        userMsgPointManager.saveNewObject(userMsgPoint);
         userMsgPointManager.registerUserPoint(userMsgPoint);
         //重新推送消息有效期内推送失败的消息
-        return messageDeliveryManager.pushAgain(userMsgPoint.getUserCode(),userMsgPoint.getOsId());
+        return messageDeliveryManager.pushAgain(userMsgPoint.getUserCode(), "pusher"/*userMsgPoint.getOsId()*/);
         //TODO 添加 消息推送 PUSH_State='2' and valid_period >= 当前时间
 
     }

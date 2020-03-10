@@ -289,7 +289,7 @@ public class MessageDeliveryManagerImpl
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public ResponseData pushAgain(String userCode,String osId) {
+    public ResponseData pushAgain(String userCode, String osId) {
         List<MessageDelivery> msgList = messageDeliveryDao.listPushAgain(userCode,osId);
         for (MessageDelivery msg:msgList){
             try {

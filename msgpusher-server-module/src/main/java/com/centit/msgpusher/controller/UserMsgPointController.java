@@ -5,7 +5,6 @@ import com.centit.framework.common.JsonResultUtils;
 import com.centit.framework.common.ResponseMapData;
 import com.centit.framework.core.controller.BaseController;
 import com.centit.msgpusher.po.UserMsgPoint;
-import com.centit.msgpusher.po.UserMsgPointId;
 import com.centit.msgpusher.service.UserMsgPointManager;
 import com.centit.support.database.utils.PageDesc;
 import org.apache.commons.logging.Log;
@@ -79,7 +78,7 @@ public class UserMsgPointController  extends BaseController {
     public void getUserMsgPoint(@PathVariable String userCode,@PathVariable String osId, HttpServletResponse response) {
 
         UserMsgPoint userMsgPoint =
-                userMsgPointMag.getObjectById(new UserMsgPointId(  userCode, osId) );
+                userMsgPointMag.getObjectById(userCode);
 
         JsonResultUtils.writeSingleDataJson(userMsgPoint, response);
     }
@@ -92,7 +91,7 @@ public class UserMsgPointController  extends BaseController {
     @RequestMapping(method = {RequestMethod.POST})
     public void createUserMsgPoint(@RequestBody @Valid UserMsgPoint userMsgPoint, HttpServletResponse response) {
         userMsgPointMag.saveNewObject(userMsgPoint);
-        JsonResultUtils.writeSingleDataJson(userMsgPoint.getCid(),response);
+        JsonResultUtils.writeSingleDataJson(userMsgPoint.getUserCode(),response);
     }
 
     /**
@@ -104,7 +103,7 @@ public class UserMsgPointController  extends BaseController {
     @RequestMapping(value = "/{userCode}/{osId}", method = {RequestMethod.DELETE})
     public void deleteUserMsgPoint(@PathVariable String userCode,@PathVariable String osId, HttpServletResponse response) {
 
-        userMsgPointMag.deleteObjectById(new UserMsgPointId(  userCode, osId) );
+        userMsgPointMag.deleteObjectById(userCode);
 
         JsonResultUtils.writeBlankJson(response);
     }
@@ -120,7 +119,7 @@ public class UserMsgPointController  extends BaseController {
     public void updateUserMsgPoint(@PathVariable String userCode,@PathVariable String osId,
         @RequestBody @Valid UserMsgPoint userMsgPoint, HttpServletResponse response) {
         UserMsgPoint dbUserMsgPoint =
-                userMsgPointMag.getObjectById(new UserMsgPointId(userCode, osId));
+                userMsgPointMag.getObjectById(userCode);
 
         if (null != userMsgPoint) {
             dbUserMsgPoint .copy(userMsgPoint);
