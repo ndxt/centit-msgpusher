@@ -1,5 +1,7 @@
 package com.centit.msgpusher.plugins;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -13,9 +15,9 @@ import javax.websocket.server.ServerEndpoint;
 public class SocketPusherListener {
 
     // static ApplicationContext context;
-    protected static ISocketMsgEvent socketEvent;
+    public static ISocketMsgEvent socketEvent;
 
-    //@Autowired
+    @Autowired
     public void setSocketEvent(ISocketMsgEvent socketEvent) {
         SocketPusherListener.socketEvent = socketEvent;
     }
