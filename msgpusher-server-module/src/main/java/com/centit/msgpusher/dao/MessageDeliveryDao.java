@@ -31,24 +31,22 @@ public class MessageDeliveryDao extends BaseDaoImpl<MessageDelivery,String>{
 
     @Override
     public Map<String, String> getFilterField() {
-        if( filterField == null){
-            filterField = new HashMap<>();
-            filterField.put("notifyId" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("notifySender" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("notifyReceiver" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("msgSubject" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("msgContent" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("relUrl" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("noticeTypes" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("notifyState" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("errorMsg" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("planNotifyTime" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("notifyTime" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("osId" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("optId" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("optMethod" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("optTag" , CodeBook.EQUAL_HQL_ID);
-        }
+        Map<String, String> filterField = new HashMap<>();
+        filterField.put("notifyId" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("notifySender" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("notifyReceiver" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("msgSubject" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("msgContent" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("relUrl" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("noticeTypes" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("notifyState" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("errorMsg" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("planNotifyTime" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("notifyTime" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("osId" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("optId" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("optMethod" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("optTag" , CodeBook.EQUAL_HQL_ID);
         return filterField;
     }
 

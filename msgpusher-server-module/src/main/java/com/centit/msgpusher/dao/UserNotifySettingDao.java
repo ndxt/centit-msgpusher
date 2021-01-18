@@ -27,14 +27,12 @@ public class UserNotifySettingDao extends BaseDaoImpl<UserNotifySetting,String>
 
     @Override
     public Map<String, String> getFilterField() {
-        if( filterField == null){
-            filterField = new HashMap<>();
-            filterField.put("userSettingId" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("userCode" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("osId" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("optId" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("notifyTypes" , CodeBook.EQUAL_HQL_ID);
-        }
+        Map<String, String> filterField = new HashMap<>();
+        filterField.put("userSettingId" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("userCode" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("osId" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("optId" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("notifyTypes" , CodeBook.EQUAL_HQL_ID);
         return filterField;
     }
 

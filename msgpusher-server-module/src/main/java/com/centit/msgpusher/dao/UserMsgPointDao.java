@@ -32,16 +32,14 @@ public class UserMsgPointDao extends BaseDaoImpl<UserMsgPoint, String>
 
     @Override
     public Map<String, String> getFilterField() {
-        if( filterField == null){
-            filterField = new HashMap<>();
-            filterField.put("userCode" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("osId" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("androidToken" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("iosToken" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("pcHost" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("mobilePhone" , CodeBook.EQUAL_HQL_ID);
-            filterField.put("wxToken" , CodeBook.EQUAL_HQL_ID);
-        }
+        Map<String, String> filterField = new HashMap<>();
+        filterField.put("userCode" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("osId" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("androidToken" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("iosToken" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("pcHost" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("mobilePhone" , CodeBook.EQUAL_HQL_ID);
+        filterField.put("wxToken" , CodeBook.EQUAL_HQL_ID);
         return filterField;
     }
 
