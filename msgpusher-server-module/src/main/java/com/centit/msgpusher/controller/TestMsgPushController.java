@@ -43,7 +43,7 @@ public class TestMsgPushController extends BaseController {
             msg.setMsgReceiver(userCode);
             msg.setMsgSubject("测试消息");
             msg.setMsgContent("您收到一条测试消息，请点击查看：");
-            msg.setRelUrl("http://www.baidu.com");
+            //msg.setRelUrl("http://www.baidu.com");
             messageDeliveryManager.pushMessage(msg);
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,7 +65,7 @@ public class TestMsgPushController extends BaseController {
             msg.setMsgReceiver(userCode );
             msg.setMsgSubject("测试其他类别消息");
             msg.setMsgContent(content);
-            msg.setRelUrl("http://www.baidu.com");
+            //msg.setRelUrl("http://www.baidu.com");
             messageDeliveryManager.pushMessage(msg);
         } catch (Exception e) {
             e.printStackTrace();

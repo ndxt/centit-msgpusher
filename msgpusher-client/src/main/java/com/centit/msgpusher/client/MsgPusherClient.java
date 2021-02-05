@@ -1,15 +1,13 @@
 package com.centit.msgpusher.client;
 
-import com.centit.framework.common.ResponseData;
-import com.centit.msgpusher.client.po.MessageDelivery;
+import com.centit.framework.model.adapter.MessageSender;
 import com.centit.msgpusher.client.po.UserMsgPoint;
-import com.centit.msgpusher.client.po.UserNotifySetting;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 /**
  * Created by codefan on 17-4-11.
  */
-public interface MsgPusherClient {
+public interface MsgPusherClient extends MessageSender {
 
     /**
      * 注册用户信息
@@ -81,84 +79,5 @@ public interface MsgPusherClient {
      */
     String registerUserWeChat(String userCode, String osId, String wxToken) throws Exception;
 
-    //设置接收通知方式
-
-    String userNotifySetting(CloseableHttpClient httpClient, UserNotifySetting notifySetting) throws Exception;
-    String userNotifySetting(UserNotifySetting notifySetting) throws Exception;
-
-    /**
-     * 用户设置接收通知方式
-     * @param userCode 用户代码
-     * @param osId 业务系统ID
-     * @param notifyTypes 接收通知方式 可以多种方式  A：app推送， E: email推送，S：短信  C：微信  N：内部通知系统 U:未指定
-     * @return String
-     * @throws Exception Exception
-     */
-    String userNotifySetting(String userCode, String osId, String notifyTypes) throws Exception;
-
-
-    // 点对点的消息推送接口，一般发送方均为系统 admin或者 system；如果系统中事件是由某个人发起的发送方也可以是某个具体的人
-
-    ResponseData pushMessage(MessageDelivery msgdlvry) throws Exception;
-
-    ResponseData pushMessage(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception;
-
-    /**
-     * 消息点对点推送
-     * @param userCode 收件人
-     * @param title 消息主题
-     * @param message 消息内容
-     * @param optId 业务项目模块 模块，或者表
-     * @param osId 业务系统ID
-     * @param msgSender 发送人
-     * @return PushResult 推送结果
-     * @throws Exception Exception
-     */
-    ResponseData pushAppMessage(String userCode, String title , String message, String osId, String optId, String msgSender) throws Exception;
-
-    /**
-     * 指定类型的消息点对点推送，目前支持的推送方式有 app系统推送 email邮件推送 sms 短线推送 wx推送 msg 内置消息箱
-     * @param userCode 收件人
-     * @param title 消息主题
-     * @param message 消息内容
-     * @param noticeTypes 通知方式 可以多种方式  A：app推送， E: email推送，S：短信  C：微信  N：内部通知系统 U:未指定
-     * @param optId 业务项目模块 模块，或者表
-     * @param osId 业务系统ID
-     * @param msgSender 发送人
-     * @return PushResult 推送结果
-     * @throws Exception Exception
-     */
-    ResponseData pushMessage(String userCode, String title, String message, String noticeTypes, String osId, String optId, String msgSender) throws Exception;
-
-    // 消息广播
-
-    ResponseData pushMsgToAll(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception;
-
-    ResponseData pushMsgToAll(MessageDelivery msgdlvry) throws Exception;
-
-    /**
-     * 消息广播
-     * @param title 消息主题
-     * @param message 消息内容
-     * @param osId 业务系统ID
-     * @param optId 业务项目模块 模块，或者表
-     * @param msgSender 发送人
-     * @return PushResult 推送结果
-     * @throws Exception Exception
-     */
-    ResponseData pushAppMsgToAll(String title , String message, String osId, String optId, String msgSender) throws Exception;
-
-    /**
-     * 指定类型的消息广播
-     * @param title 消息主题
-     * @param message 消息内容
-     * @param osId 业务系统ID
-     * @param optId 业务项目模块 模块，或者表
-     * @param noticeTypes 通知方式 可以多种方式  A：app推送， E: email推送，S：短信  C：微信  N：内部通知系统 U:未指定
-     * @param msgSender 发送人
-     * @return PushResult 推送结果
-     * @throws Exception Exception
-     */
-    ResponseData pushMsgToAll(String title , String message, String noticeTypes, String osId, String optId, String msgSender) throws Exception;
 
 }

@@ -1,8 +1,6 @@
 package com.centit.msgpusher.service.impl;
 
 import com.centit.msgpusher.service.MessageDeliveryManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +16,7 @@ public class TimerPusher{
     private MessageDeliveryManager messageDeliveryManager;
 
 
-    private static final Logger logger = LoggerFactory.getLogger(TimerPusher.class);
+    //private static final Logger logger = LoggerFactory.getLogger(TimerPusher.class);
 
     @Scheduled(cron="0 0/5 9-18  * * ? ")   //每5分钟执行一次
     public void timePushMsg(){

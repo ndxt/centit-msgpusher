@@ -23,7 +23,7 @@ public class TestMsgPusher {
 
         /*register(client);*/
 
-        pushMessage(client);
+        //pushMessage(client);
 
 //        sendEmail();
 
@@ -36,9 +36,9 @@ public class TestMsgPusher {
         System.out.print("result:"+ resJson.toResponseData().toJSONString());
     }
 
-    public static void pushMessage(MsgPusherClientImpl client) throws Exception {
-        ResponseData jsonStr = client.pushAppMessage("001", "test", "testContent","df","zou_wy","centit.1");
+    /*public static void pushMessage(MsgPusherClientImpl client) throws Exception {
+        ResponseData jsonStr = client.sendMessage("001", "test", "testContent","df","zou_wy","centit.1");
         System.out.print("result:"+ jsonStr.toJSONString());
-    }
+    }*/
 
 }

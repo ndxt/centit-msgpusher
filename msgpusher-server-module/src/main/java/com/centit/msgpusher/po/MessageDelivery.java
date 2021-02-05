@@ -1,5 +1,6 @@
 package com.centit.msgpusher.po;
 
+import com.centit.framework.model.basedata.NoticeMessage;
 import com.centit.support.database.orm.GeneratorType;
 import com.centit.support.database.orm.ValueGenerator;
 import lombok.Data;
@@ -7,19 +8,19 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 
 /**
  * create by scaffold 2017-04-10
  * @author codefan@sina.com
-
   消息推送null
 */
 @Data
 @Entity
 @Table(name = "F_MESSAGE_DELIVERY")
-public class MessageDelivery implements java.io.Serializable {
+public class MessageDelivery implements Serializable {
     private static final long serialVersionUID =  1L;
 
     public static final String NOTICE_TYPE_APP = "A";
@@ -74,14 +75,9 @@ public class MessageDelivery implements java.io.Serializable {
     @NotBlank(message = "字段不能为空")
     @Length(max = 1000, message = "字段长度不能大于{max}")
     private String  msgContent;
+
     /**
-     * 关联URL null
-     */
-    @Column(name = "REL_URL")
-    @Length(max = 500, message = "字段长度不能大于{max}")
-    private String  relUrl;
-    /**
-     * 通知方式 可以多种方式  A：app推送， S：短信  C：微信  N：内部通知系统 U: unknown 未指定
+     * 通知方式 可以多种方式  A：app推送， S：短信  C：微信  E：邮件 U: unknown 未指定
      */
     @Column(name = "NOTICE_TYPES")
     @Length(max = 100, message = "字段长度不能大于{max}")
@@ -123,7 +119,7 @@ public class MessageDelivery implements java.io.Serializable {
      * 业务系统ID null
      */
     @Column(name = "OS_ID")
-    @Length(max = 20, message = "字段长度不能大于{max}")
+    @Length(max = 32, message = "字段长度不能大于{max}")
     private String  osId;
     /**
      * 业务项目模块 模块，或者表
@@ -148,17 +144,16 @@ public class MessageDelivery implements java.io.Serializable {
 
     // Constructors
     public MessageDelivery() {
-        this.msgType= "message";
+        this.msgType= "msg";
     }
 
-    public MessageDelivery(
-        String msgId
-        ,String  msgReceiver,String  msgContent,String optId){
-        this.msgType= "message";
-        this.msgId = msgId;
-        this.msgReceiver= msgReceiver;
-        this.msgContent= msgContent;
-        this.optId= optId;
+    public NoticeMessage toNoticeMessage(){
+        return NoticeMessage.create().typeOf(msgType)
+            .subject(msgSubject)
+            .content(msgContent)
+            .application(osId)
+            .operation(optId)
+            .tag(optTag)
+            .method(optMethod);
     }
-
 }

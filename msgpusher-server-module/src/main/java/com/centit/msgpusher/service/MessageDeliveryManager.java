@@ -62,7 +62,7 @@ public interface MessageDeliveryManager extends BaseEntityManager<MessageDeliver
      */
     String changePushState(String msgId);
 
-    ResponseData pushAgain(String userCode,String osId);
+    ResponseData pushAgain(String userCode, String osId);
 
     /**
      * 定时推送任务

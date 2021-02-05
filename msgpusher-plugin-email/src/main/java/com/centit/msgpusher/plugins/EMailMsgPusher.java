@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by codefan on 17-4-6.
  */
-public abstract class EMailMsgPusher implements MessageSender {
+public class EMailMsgPusher implements MessageSender {
     private static final Logger logger = LoggerFactory.getLogger(EMailMsgPusher.class);
 
     @Setter

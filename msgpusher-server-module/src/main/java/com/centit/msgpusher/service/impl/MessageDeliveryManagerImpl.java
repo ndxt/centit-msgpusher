@@ -8,11 +8,13 @@ import com.centit.framework.jdbc.dao.DatabaseOptUtils;
 import com.centit.framework.jdbc.service.BaseEntityManagerImpl;
 import com.centit.msgpusher.dao.MessageDeliveryDao;
 import com.centit.msgpusher.dao.UserMsgPointDao;
-import com.centit.msgpusher.dao.UserNotifySettingDao;
 import com.centit.msgpusher.po.MessageDelivery;
+import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.service.MessageDeliveryManager;
 import com.centit.msgpusher.service.MsgPusherCenter;
+import com.centit.support.algorithm.DatetimeOpt;
 import com.centit.support.database.utils.PageDesc;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,10 +50,6 @@ public class MessageDeliveryManagerImpl
     @Resource(name = "userMsgPointDao")
     private UserMsgPointDao userMsgPointDao ;
 
-    @Resource(name = "userNotifySettingDao")
-    private UserNotifySettingDao userNotifySettingDao ;
-
-
     private MessageDeliveryDao messageDeliveryDao ;
 
     @Resource(name = "messageDeliveryDao")
@@ -79,7 +77,6 @@ public class MessageDeliveryManagerImpl
     @Override
     @Transactional(propagation= Propagation.REQUIRED)
     public ResponseData pushMessage(MessageDelivery msg){
-        /*PushResult pushResult = new PushResult();
         if(msg.getMsgExpireSeconds() == null || msg.getMsgExpireSeconds() == 0){
             msg.setMsgExpireSeconds(3600 * 5);//消息默认过期时间
         }
@@ -90,51 +87,41 @@ public class MessageDeliveryManagerImpl
         if (planPushTime != null && planPushTime.after(DatetimeOpt.currentUtilDate())){
             msg.setPushState("0");
             messageDeliveryDao.saveNewObject(msg);
-            return pushResult;
+            return ResponseData.successResponse;
         }
         //如果未指定推送方式则查询设定的推送方式
-        if (StringUtils.isBlank(msg.getNoticeTypes()) || "U".equals(msg.getNoticeTypes())){
+        /*if (StringUtils.isBlank(msg.getNoticeTypes()) || "U".equals(msg.getNoticeTypes())){
             String notifySetting = userNotifySettingDao.getNotifyByUserCode(msg.getMsgReceiver(),msg.getOsId());
             msg.setNoticeTypes(notifySetting);
             //如果设定的推送方式也为空则返回为指定推送方式异常
             if(StringUtils.isBlank(notifySetting) || "U".equals(notifySetting)){
-                return saveErrorPushResult("未指定推送方式",msg);
+                return makeErrorPushResult("未指定推送方式",msg);
             }
-        }
+        }*/
         //如果接收人不存在则返回接收人不存在
-        UserMsgPoint userMsgPoint = userMsgPointDao.getObjectById(new UserMsgPointId(msg.getOsId(), msg.getMsgReceiver()));
+        UserMsgPoint userMsgPoint = userMsgPointDao.getObjectById(msg.getMsgReceiver());
         if (userMsgPoint == null){
-            return saveErrorPushResult("接收人不存在",msg);
+            return makeErrorPushResult("接收人不存在",msg);
         }
         try {
-            pushResult = msgPusherCenter.pushMessage(msg, userMsgPoint);
+            ResponseData pushResult = msgPusherCenter.pushMessage(msg, userMsgPoint);
+            msg.setPushState(pushResult.getCode() == 0?"1":"2");
+            msg.setPushTime(DatetimeOpt.currentUtilDate());//当前时间
+            msg.setPushResult(json.toString());
+            //默认消息有效时间为发送时间加一天
+            if (msg.getValidPeriod() == null){
+                msg.setValidPeriod(changeDate(DatetimeOpt.currentUtilDate(),1));
+            }
+            if (StringUtils.isBlank(msg.getMsgId())){
+                messageDeliveryDao.saveNewObject(msg);
+            }else{
+                messageDeliveryDao.updateObject(msg);
+            }
+            return ResponseData.successResponse;
         } catch (Exception e) {
             logger.error("推送服务异常");
-            return saveErrorPushResult("推送服务异常",msg);
+            return makeErrorPushResult("推送服务异常",msg);
         }
-        //推送结果为空则返回推送服务异常
-        if (pushResult == null){
-            return saveErrorPushResult("推送方式不支持",msg);
-        }
-        msg.setPushState(pushResult.getPushState());
-        if (!StringUtils.isBlank(pushResult.getMsgId())) {
-            json.put(MessageDelivery.NOTICE_TYPE_APP, pushResult.getMsgId());
-        }
-        for (Map.Entry<String, String> entry : pushResult.getMap().entrySet()) {
-            json.put(entry.getKey(),entry.getValue());
-        }
-        msg.setPushTime(DatetimeOpt.currentUtilDate());//当前时间
-        msg.setPushResult(json.toString());
-        //默认消息有效时间为发送时间加一天
-        if (msg.getValidPeriod() == null){
-            msg.setValidPeriod(changeDate(DatetimeOpt.currentUtilDate(),1));
-        }
-        if (StringUtils.isBlank(msg.getMsgId())){
-            messageDeliveryDao.saveNewObject(msg);
-        }else{
-            messageDeliveryDao.updateObject(msg);
-        }*/
-        return ResponseData.successResponse;
     }
 
     /**
@@ -146,8 +133,7 @@ public class MessageDeliveryManagerImpl
     @Override
     @Transactional(propagation= Propagation.REQUIRED)
     public ResponseData pushMsgToAll(MessageDelivery msg){
-        /*String notifyType = msg.getNoticeTypes();
-        PushResult pushResult = new PushResult();
+        String notifyType = msg.getNoticeTypes();
         if(msg.getMsgExpireSeconds() == null || msg.getMsgExpireSeconds() == 0){
             msg.setMsgExpireSeconds(3600 * 5);//消息默认过期时间
         }
@@ -158,44 +144,30 @@ public class MessageDeliveryManagerImpl
         if(planPushTime != null && planPushTime.after(DatetimeOpt.currentUtilDate())){
             msg.setPushState("0");
             messageDeliveryDao.saveNewObject(msg);
-            return pushResult;
+            return ResponseData.successResponse;
         }
         //群发未指定推送方式则直接返回未指定推送方式异常
         if (StringUtils.isBlank(notifyType) || "U".equals(notifyType)) {
-            return saveErrorPushResult("未指定推送方式",msg);
+            return makeErrorPushResult("未指定推送方式",msg);
         }
         try {
-            pushResult = msgPusherCenter.pushMsgToAll(msg);
+            ResponseData pushResult = msgPusherCenter.pushMsgToAll(msg);
+            msg.setPushTime(DatetimeOpt.currentUtilDate());//当前时间
+            msg.setPushResult(json.toString());
+            //默认消息有效时间为发送时间加一天
+            if (msg.getValidPeriod() == null){
+                msg.setValidPeriod(changeDate(DatetimeOpt.currentUtilDate(),1));
+            }
+            if (StringUtils.isBlank(msg.getMsgId())){
+                messageDeliveryDao.saveNewObject(msg);
+            }else{
+                messageDeliveryDao.updateObject(msg);
+            }
+            return ResponseData.successResponse;
         } catch (Exception e) {
             logger.error("推送服务异常");
-            return saveErrorPushResult("推送服务异常",msg);
+            return makeErrorPushResult("推送服务异常",msg);
         }
-        if (pushResult == null){
-            return saveErrorPushResult("推送方式不支持",msg);
-        }
-        msg.setPushState(pushResult.getPushState());
-
-        if (!StringUtils.isBlank(pushResult.getMsgId())) {
-            json.put("android", pushResult.getMsgId());
-        }
-        if (!StringUtils.isBlank(pushResult.getMsgId2())) {
-            json.put("ios", pushResult.getMsgId2());
-        }
-        for (Map.Entry<String, String> entry : pushResult.getMap().entrySet()) {
-            json.put(entry.getKey(),entry.getValue());
-        }
-        msg.setPushTime(DatetimeOpt.currentUtilDate());//当前时间
-        msg.setPushResult(json.toString());
-        //默认消息有效时间为发送时间加一天
-        if (msg.getValidPeriod() == null){
-            msg.setValidPeriod(changeDate(DatetimeOpt.currentUtilDate(),1));
-        }
-        if (StringUtils.isBlank(msg.getMsgId())){
-            messageDeliveryDao.saveNewObject(msg);
-        }else{
-            messageDeliveryDao.updateObject(msg);
-        }*/
-        return ResponseData.successResponse;
     }
 
     /**
@@ -217,7 +189,7 @@ public class MessageDeliveryManagerImpl
      * @param msg 消息
      * @return
      */
-    private ResponseData saveErrorPushResult(String errorReason,MessageDelivery msg){
+    private ResponseData makeErrorPushResult(String errorReason, MessageDelivery msg){
         JSONObject json = new JSONObject();
         json.put("error",errorReason);
         msg.setPushResult(json.toString());
@@ -225,8 +197,6 @@ public class MessageDeliveryManagerImpl
         messageDeliveryDao.saveNewObject(msg);
         return ResponseData.makeErrorMessage(2, errorReason);
     }
-
-
 
     /**
      * 这个维护型作业可以直接调用 delete 语句

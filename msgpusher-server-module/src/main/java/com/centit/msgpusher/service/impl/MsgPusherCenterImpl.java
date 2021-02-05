@@ -3,11 +3,11 @@ package com.centit.msgpusher.service.impl;
 import com.centit.framework.common.ResponseData;
 import com.centit.framework.model.adapter.MessageSender;
 import com.centit.msgpusher.dao.MessageDeliveryDao;
-import com.centit.msgpusher.dao.UserNotifySettingDao;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.service.MessageDeliveryManager;
 import com.centit.msgpusher.service.MsgPusherCenter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -36,12 +36,8 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
     @Resource(name="socketMsgPusher")
     private MessageSender socketPusher;
 
-    @Resource(name = "userNotifySettingDao")
-    private UserNotifySettingDao userNotifySettingDao ;
-
     @Resource(name = "messageDeliveryDao")
     private MessageDeliveryDao messageDeliveryDao ;
-
 
     @Resource
     private MessageDeliveryManager messageDeliveryManager;
@@ -58,9 +54,6 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
         pusherMap.put(MessageDelivery.NOTICE_TYPE_SMS,smsPusher);
     }
 
-
-
-
     /**
      * 点对点发送信息
      *
@@ -70,52 +63,25 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
 
     @Override
     public ResponseData pushMessage(MessageDelivery msg, UserMsgPoint userMsgPoint)throws Exception{
-        /*ResponseData pushResult = ResponseData.makeSuccessResponse();
+        //ResponseData pushResult = ResponseData.makeSuccessResponse();
         Map<String, ResponseData> resultMap = new HashMap<>();
         Map<String, String> pushMap = new HashMap<>();
         String noticeTypes = msg.getNoticeTypes();
         if (!StringUtils.isBlank(noticeTypes)) {
-            String[] noticeTypeArray =  noticeTypes.split(",");
+            String[] noticeTypeArray = noticeTypes.split(",");
             //多种发送方式循环发送
             for (int i = 0; i < noticeTypeArray.length; i++) {
-                if (pusherMap.get(noticeTypeArray[i]) != null){
+                if (pusherMap.get(noticeTypeArray[i]) != null) {
                     ResponseData pushResultTemp =
                         pusherMap.get(noticeTypeArray[i])
-                            .sendMessage(msg, userMsgPoint);
+                            .sendMessage(msg.getMsgSender(), msg.getMsgReceiver(), msg.toNoticeMessage());
                     resultMap.put(noticeTypeArray[i], pushResultTemp); //存储不同推送方式的返回信息
                 }
             }
             if (resultMap.size() == 0) {
                 return null;
             }
-            String appPushState = null;
-            String eMailPushState = null;
-            for (Map.Entry<String, PushResult> entry : resultMap.entrySet()) {
-                switch (entry.getKey()) {
-                    case "A"://app推送结果
-                        PushResult appPushResult = entry.getValue();
-                        pushResult.setMsgId(appPushResult.getMsgId());
-                        if (StringUtils.isBlank(appPushResult.getMsgId())) {
-                            pushMap.put("app", appPushResult.getMap().get("app"));
-                        }
-                        //添加pc推送结果
-                        pushMap.put("pc", appPushResult.getMap().get("pc"));
-                        appPushState = appPushResult.getPushState();
-                        pushResult.setPushState(appPushState);
-                        break;
-                    case "E"://eMail推送结果
-                        PushResult eMailPushResult = entry.getValue();
-                        pushMap.put("eMail", eMailPushResult.getMap().get("eMail"));
-                        eMailPushState = eMailPushResult.getPushState();
-                        pushResult.setPushState(eMailPushState);
-                        break;
-                }
-            }
-            if (!StringUtils.equals(appPushState,eMailPushState)){
-                pushResult.setPushState("3");//部分推送成功
-            }
-            pushResult.setMap(pushMap);
-        }*/
+        }
         return ResponseData.successResponse;
     }
 

@@ -1,14 +1,15 @@
 package com.centit.msgpusher.client;
 
 import com.centit.framework.appclient.AppSession;
-import com.centit.framework.appclient.HttpReceiveJSON;
 import com.centit.framework.common.ResponseData;
-import com.centit.msgpusher.client.po.MessageDelivery;
+import com.centit.framework.model.basedata.NoticeMessage;
 import com.centit.msgpusher.client.po.UserMsgPoint;
-import com.centit.msgpusher.client.po.UserNotifySetting;
+import com.centit.support.common.DoubleAspect;
 import com.centit.support.network.HttpExecutor;
 import com.centit.support.network.HttpExecutorContext;
 import org.apache.http.impl.client.CloseableHttpClient;
+
+import java.util.Collection;
 
 /**
  * Created by codefan on 17-4-11.
@@ -36,66 +37,6 @@ public class MsgPusherClientImpl implements MsgPusherClient {
 
     public void releaseHttpClient(CloseableHttpClient httpClient) {
         appSession.releaseHttpClient(httpClient);
-    }
-
-    public ResponseData pushMessage(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception {
-        String jsonStr = HttpExecutor.jsonPost(HttpExecutorContext.create(httpClient), appSession.completeQueryUrl("/msgdlvry/push"), msgdlvry);
-//        String jsonStr = HttpExecutor.formPost(httpClient, appSession.completeQueryUrl("/msgdlvry/push"), msgdlvry);
-        return HttpReceiveJSON.valueOfJson(jsonStr).toResponseData();
-
-    }
-
-    public ResponseData pushMessage(MessageDelivery msgdlvry) throws Exception {
-        CloseableHttpClient httpClient = getHttpClient();
-        ResponseData result = pushMessage(httpClient, msgdlvry);
-        releaseHttpClient(httpClient);
-        return result;
-    }
-
-    public ResponseData pushAppMessage(String userCode, String title, String message, String osId, String optId, String msgSender) throws Exception {
-        return pushMessage(userCode, title, message, "A", osId, optId, msgSender);
-    }
-
-    public ResponseData pushMessage(String userCode, String title, String message, String noticeTypes, String osId, String optId, String msgSender) throws Exception {
-        MessageDelivery msgdlvry = new MessageDelivery();
-        msgdlvry.setMsgReceiver(userCode);
-        msgdlvry.setMsgSubject(title);
-        msgdlvry.setMsgContent(message);
-        msgdlvry.setOsId(osId);
-        msgdlvry.setNoticeTypes(noticeTypes);
-        msgdlvry.setOptId(optId);
-        msgdlvry.setMsgSender(msgSender);
-        return pushMessage(msgdlvry);
-    }
-
-    public ResponseData pushMsgToAll(CloseableHttpClient httpClient, MessageDelivery msgdlvry) throws Exception {
-        String jsonStr = HttpExecutor.jsonPost(
-            HttpExecutorContext.create(httpClient),
-            appSession.completeQueryUrl("/msgdlvry/pushall"), msgdlvry);
-        /*String jsonStr = HttpExecutor.formPost(httpClient, appSession.completeQueryUrl("/msgdlvry/pushall"), msgdlvry);*/
-        return HttpReceiveJSON.valueOfJson(jsonStr).getDataAsObject(ResponseData.class);
-    }
-
-    public ResponseData pushMsgToAll(MessageDelivery msgdlvry) throws Exception {
-        CloseableHttpClient httpClient = getHttpClient();
-        ResponseData jsonStr = pushMsgToAll(httpClient, msgdlvry);
-        releaseHttpClient(httpClient);
-        return jsonStr;
-    }
-
-    public ResponseData pushAppMsgToAll(String title , String message, String osId, String optId, String msgSender) throws Exception {
-        return pushMsgToAll(title, message, "A", osId, optId, msgSender);
-    }
-
-    public ResponseData pushMsgToAll(String title , String message, String noticeTypes, String osId, String optId, String msgSender) throws Exception {
-        MessageDelivery msgdlvry = new MessageDelivery();
-        msgdlvry.setMsgSubject(title);
-        msgdlvry.setMsgContent(message);
-        msgdlvry.setNoticeTypes(noticeTypes);
-        msgdlvry.setOptId(optId);
-        msgdlvry.setOsId(osId);
-        msgdlvry.setMsgSender(msgSender);
-        return pushMsgToAll(msgdlvry);
     }
 
 
@@ -142,22 +83,42 @@ public class MsgPusherClientImpl implements MsgPusherClient {
         return registerUser(msgPoint);
     }
 
-    public String userNotifySetting(CloseableHttpClient httpClient, UserNotifySetting notifySetting) throws Exception {
-        return HttpExecutor.jsonPost(HttpExecutorContext.create(httpClient), appSession.completeQueryUrl("/notifysetting"), notifySetting);
+    /**
+     * 发送内部系统消息
+     *
+     * @param sender   发送人内部用户编码
+     * @param receiver 接收人内部用户编码
+     * @param message  消息主体
+     * @return "OK" 表示成功，其他的为错误信息
+     */
+    @Override
+    public ResponseData sendMessage(String sender, String receiver, NoticeMessage message) {
+        return null;
     }
 
-    public String userNotifySetting(UserNotifySetting notifySetting) throws Exception {
-        CloseableHttpClient httpClient = getHttpClient();
-        String jsonStr = userNotifySetting(httpClient, notifySetting);
-        releaseHttpClient(httpClient);
-        return jsonStr;
+    /**
+     * 批量发送内部系统消息
+     *
+     * @param sender    发送人内部用户编码
+     * @param receivers 接收人内部用户编码
+     * @param message   消息主体
+     * @return "OK" 表示成功，其他的为错误信息
+     */
+    @Override
+    public ResponseData sendMessage(String sender, Collection<String> receivers, NoticeMessage message) {
+        return null;
     }
 
-    public String userNotifySetting(String userCode, String osId, String notityTypes) throws Exception{
-        UserNotifySetting notifySetting = new UserNotifySetting();
-        notifySetting.setUserCode(userCode);
-        notifySetting.setOsId(osId);
-        notifySetting.setNotifyTypes(notityTypes);
-        return userNotifySetting(notifySetting);
+    /**
+     * 广播信息
+     *
+     * @param sender     发送人内部用户编码
+     * @param message    消息主体
+     * @param userInline DoubleAspec.ON 在线用户  OFF 离线用户 BOTH 所有用户
+     * @return 默认没有实现
+     */
+    @Override
+    public ResponseData broadcastMessage(String sender, NoticeMessage message, DoubleAspect userInline) {
+        return null;
     }
 }

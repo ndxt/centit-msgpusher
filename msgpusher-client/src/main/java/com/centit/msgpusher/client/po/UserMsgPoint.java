@@ -11,19 +11,15 @@ import lombok.Data;
 @Data
 public class UserMsgPoint implements java.io.Serializable {
     private static final long serialVersionUID =  1L;
-
     /**
      * 用户代码 null
      */
     private String userCode;
 
-
     /**
      * 业务系统ID null
      */
     private String osId;
-
-
 
     private String userName;
 

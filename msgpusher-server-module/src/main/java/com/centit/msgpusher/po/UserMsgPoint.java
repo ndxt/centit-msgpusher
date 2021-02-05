@@ -32,7 +32,7 @@ public class UserMsgPoint implements java.io.Serializable {
     private String userName;
 
     /**
-     * 移动设备类型 3 ：android ； 4：apple ， 0： 没有
+     * 移动设备类型 3 ：android ； 4：iOS ， 0： 没有
      */
     @Column(name = "DEVICE_TYPE")
     @Length(max = 1, message = "字段长度不能大于{max}")
