@@ -8,9 +8,7 @@ import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.service.MessageDeliveryManager;
 import com.centit.msgpusher.service.MsgPusherCenter;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,10 +16,10 @@ import java.util.Map;
 /**
  * Created by codefan on 17-4-10.
  */
-@Service("msgPusherCenter")
+//@Service("msgPusherCenter")
 public class MsgPusherCenterImpl implements MsgPusherCenter {
 
-    @Resource(name="appMsgPusher")
+    /*@Resource(name="appMsgPusher")
     private MessageSender appPusher;
 
     @Resource(name="emailMsgPusher")
@@ -35,6 +33,8 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
 
     @Resource(name="socketMsgPusher")
     private MessageSender socketPusher;
+*/
+    private String defaultPushType;
 
     @Resource(name = "messageDeliveryDao")
     private MessageDeliveryDao messageDeliveryDao ;
@@ -44,7 +44,7 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
 
     private Map<String/*pushType*/,MessageSender> pusherMap;
 
-    @PostConstruct
+    /*@PostConstruct
     public void init(){
         //通知方式 可以多种方式  A：app推送， S：短信  C：微信  N：内部通知系统 U: unknown 未指定
         pusherMap = new HashMap<>();
@@ -52,6 +52,18 @@ public class MsgPusherCenterImpl implements MsgPusherCenter {
         pusherMap.put(MessageDelivery.NOTICE_TYPE_EMAIL,emailPusher);
         pusherMap.put(MessageDelivery.NOTICE_TYPE_WX,wxPusher);
         pusherMap.put(MessageDelivery.NOTICE_TYPE_SMS,smsPusher);
+    }
+*/
+    public MsgPusherCenterImpl(){
+        pusherMap = new HashMap<>();
+    }
+
+    public void registerMessageSender(String sendType, MessageSender sender){
+        pusherMap.put(sendType, sender);
+    }
+
+    public void setDefaultPushType(String defaultPushType) {
+        this.defaultPushType = defaultPushType;
     }
 
     /**
