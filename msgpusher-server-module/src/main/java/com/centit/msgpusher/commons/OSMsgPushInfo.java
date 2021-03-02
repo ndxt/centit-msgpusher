@@ -38,8 +38,9 @@ public class OSMsgPushInfo {
 
     public OptMsgPushInfo getOptMsgPushConfig(String optId){
         for(OptMsgPushInfo optinfo: optInfos ){
-            if(StringUtils.equals(optinfo.getOptId(),optId))
+            if(StringUtils.equals(optinfo.getOptId(),optId)) {
                 return optinfo;
+            }
         }
         return null;
     }

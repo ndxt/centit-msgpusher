@@ -27,8 +27,7 @@ public class SocketPusherListener {
      * @param userCode 用户编号
      */
     @OnOpen
-    public void onOpen(Session session,
-                       @PathParam("userCode") String userCode) {
+    public void onOpen(Session session, @PathParam("userCode") String userCode) {
         SocketPusherListener.socketEvent.signInUser(userCode,session);
     }
 

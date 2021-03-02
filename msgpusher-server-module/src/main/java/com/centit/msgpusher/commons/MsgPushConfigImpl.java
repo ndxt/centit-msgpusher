@@ -97,8 +97,9 @@ public class MsgPushConfigImpl implements MsgPushConfig{
     @Override
     public OSMsgPushInfo getOSConfig(String osId) {
         for(OSMsgPushInfo osinfo: osInfos ){
-            if(StringUtils.equals(osinfo.getOsId(),osId))
+            if(StringUtils.equals(osinfo.getOsId(),osId)) {
                 return osinfo;
+            }
         }
         return null;
     }

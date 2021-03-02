@@ -1,6 +1,7 @@
 package com.centit.msgpusher.service;
 
 import com.centit.framework.common.ResponseData;
+import com.centit.framework.model.adapter.MessageSender;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.msgpusher.po.UserMsgPoint;
 
@@ -20,7 +21,12 @@ public interface MsgPusherCenter  {
 
     ResponseData pushMessage(MessageDelivery msg, UserMsgPoint userMsgPoint) throws Exception;
 
-
+    /**
+     * 注册消息推送
+     * @param sendType  推送方式
+     * @param sender    消息推送体
+     */
+     void registerMessageSender(String sendType, MessageSender sender);
 
 
     /**

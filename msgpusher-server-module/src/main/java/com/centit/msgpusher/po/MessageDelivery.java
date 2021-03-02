@@ -42,6 +42,7 @@ public class MessageDelivery implements Serializable {
      */
     @Column(name = "MSG_SENDER")
     @Length(max = 100, message = "字段长度不能大于{max}")
+
     private String  msgSender;
     /**
      * 推送类别 点对点、群发
@@ -53,7 +54,8 @@ public class MessageDelivery implements Serializable {
      * 收件人 null
      */
     @Column(name = "MSG_RECEIVER")
-    /*@NotBlank(message = "字段不能为空")*/
+    @NotBlank(message = "字段不能为空")
+
     @Length(max = 100, message = "字段长度不能大于{max}")
     private String  msgReceiver;
     /**
@@ -83,7 +85,7 @@ public class MessageDelivery implements Serializable {
     @Length(max = 100, message = "字段长度不能大于{max}")
     private String  noticeTypes;
     /**
-     * 发送状态 0 待发送 1 成功， 2失败 3 部分成功 4 定时发送消息被后台取消
+     * 发送状态 0 待发送 1 成功， 2 失败 3 部分成功 4 定时发送消息被后台取消
      */
     @Column(name = "PUSH_STATE")
     @Length(max = 1, message = "字段长度不能大于{max}")

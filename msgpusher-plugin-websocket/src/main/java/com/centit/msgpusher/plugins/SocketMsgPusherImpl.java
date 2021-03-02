@@ -28,8 +28,9 @@ public class SocketMsgPusherImpl implements ISocketMsgEvent, MessageSender {
 
 
     private static boolean webSockectPushMessage(Session session , String message) {
-        if(session==null)
+        if(session==null) {
             return false;
+        }
         boolean pushOk = true;
         synchronized (session) {
             //session.getAsyncRemote().sendText(message);
@@ -84,14 +85,16 @@ public class SocketMsgPusherImpl implements ISocketMsgEvent, MessageSender {
 
 
     private static Session getSessionByUserCode(String userCode){
-        if(userCode == null)
+        if(userCode == null) {
             return null;
+        }
         return userCodeToSession.get(userCode);
     }
 
     private static String getUserCodeBySession(Session session){
-        if(session == null)
+        if(session == null) {
             return null;
+        }
         return sessionToUserCode.get(session);
     }
 

@@ -3,6 +3,7 @@ package com.centit.msgpusher.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.centit.framework.common.ResponseData;
+import com.centit.framework.common.ResponseMapData;
 import com.centit.framework.core.dao.DictionaryMapUtils;
 import com.centit.framework.jdbc.dao.DatabaseOptUtils;
 import com.centit.framework.jdbc.service.BaseEntityManagerImpl;
@@ -80,10 +81,20 @@ public class MessageDeliveryManagerImpl
         if(msg.getMsgExpireSeconds() == null || msg.getMsgExpireSeconds() == 0){
             msg.setMsgExpireSeconds(3600 * 5);//消息默认过期时间
         }
+        if (StringUtils.isBlank(msg.getMsgReceiver())){
+            return new ResponseMapData(ResponseData.ERROR_USER_CONFIG,"请填写接收人");
+        }
+        //如果接收人不存在则返回接收人不存在
+        UserMsgPoint userMsgPoint = userMsgPointDao.getObjectById(msg.getMsgReceiver());
+        if (userMsgPoint == null){
+            return makeErrorPushResult("接收人不存在",msg);
+        }
+
         JSONObject json = new JSONObject();
         Date planPushTime = msg.getPlanPushTime();
         msg.setPushType("0");//点对点推送
         //如果指定为定时发送且发送时间大于当前时间则直接保存不发送
+        // 疑问：这个后面是否需要加一个定时任务定时扫描f_message_delivery消息推送表，将前面添加的定时发送消息给推送出去？
         if (planPushTime != null && planPushTime.after(DatetimeOpt.currentUtilDate())){
             msg.setPushState("0");
             messageDeliveryDao.saveNewObject(msg);
@@ -98,14 +109,14 @@ public class MessageDeliveryManagerImpl
                 return makeErrorPushResult("未指定推送方式",msg);
             }
         }*/
-        //如果接收人不存在则返回接收人不存在
-        UserMsgPoint userMsgPoint = userMsgPointDao.getObjectById(msg.getMsgReceiver());
-        if (userMsgPoint == null){
-            return makeErrorPushResult("接收人不存在",msg);
-        }
+
         try {
             ResponseData pushResult = msgPusherCenter.pushMessage(msg, userMsgPoint);
-            msg.setPushState(pushResult.getCode() == 0?"1":"2");
+            if (3==pushResult.getCode()){
+                msg.setPushState("3");//部分成功
+            }else {
+                msg.setPushState(pushResult.getCode() == 0?"1":"2");
+            }
             msg.setPushTime(DatetimeOpt.currentUtilDate());//当前时间
             msg.setPushResult(json.toString());
             //默认消息有效时间为发送时间加一天
@@ -117,7 +128,7 @@ public class MessageDeliveryManagerImpl
             }else{
                 messageDeliveryDao.updateObject(msg);
             }
-            return ResponseData.successResponse;
+            return pushResult;
         } catch (Exception e) {
             logger.error("推送服务异常");
             return makeErrorPushResult("推送服务异常",msg);
@@ -134,6 +145,10 @@ public class MessageDeliveryManagerImpl
     @Transactional(propagation= Propagation.REQUIRED)
     public ResponseData pushMsgToAll(MessageDelivery msg){
         String notifyType = msg.getNoticeTypes();
+        //群发未指定推送方式则直接返回未指定推送方式异常
+        if (StringUtils.isBlank(notifyType) || "U".equals(notifyType)) {
+            return makeErrorPushResult("未指定推送方式",msg);
+        }
         if(msg.getMsgExpireSeconds() == null || msg.getMsgExpireSeconds() == 0){
             msg.setMsgExpireSeconds(3600 * 5);//消息默认过期时间
         }
@@ -146,12 +161,14 @@ public class MessageDeliveryManagerImpl
             messageDeliveryDao.saveNewObject(msg);
             return ResponseData.successResponse;
         }
-        //群发未指定推送方式则直接返回未指定推送方式异常
-        if (StringUtils.isBlank(notifyType) || "U".equals(notifyType)) {
-            return makeErrorPushResult("未指定推送方式",msg);
-        }
+
         try {
             ResponseData pushResult = msgPusherCenter.pushMsgToAll(msg);
+            if (3==pushResult.getCode()){
+                msg.setPushState("3");//部分成功
+            }else {
+                msg.setPushState(pushResult.getCode() == 0?"1":"2");
+            }
             msg.setPushTime(DatetimeOpt.currentUtilDate());//当前时间
             msg.setPushResult(json.toString());
             //默认消息有效时间为发送时间加一天
@@ -163,7 +180,7 @@ public class MessageDeliveryManagerImpl
             }else{
                 messageDeliveryDao.updateObject(msg);
             }
-            return ResponseData.successResponse;
+            return pushResult;
         } catch (Exception e) {
             logger.error("推送服务异常");
             return makeErrorPushResult("推送服务异常",msg);
@@ -297,6 +314,5 @@ public class MessageDeliveryManagerImpl
             }
         } while (list.size() == 100);
     }
-
 }
 

@@ -1,5 +1,9 @@
 package com.centit.msgpusher.plugins;
 
+import com.centit.framework.components.CodeRepositoryUtil;
+import com.centit.framework.model.basedata.IUserInfo;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,6 +14,11 @@ public interface IUserEmailSupport {
     String getReceiverEmail(String receiver);
 
     default List<String> listAllUserEmail(){
-        return null;
+        List<IUserInfo> allUsers = CodeRepositoryUtil.getAllUsers("A");
+        List<String>  allEmails = new ArrayList<>();
+        for (IUserInfo allUser : allUsers) {
+            allEmails.add(allUser.getRegEmail());
+        }
+        return allEmails;
     }
 }

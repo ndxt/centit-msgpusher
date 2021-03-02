@@ -5,12 +5,17 @@ import com.centit.framework.model.adapter.MessageSender;
 import com.centit.framework.model.basedata.NoticeMessage;
 import com.centit.support.common.DoubleAspect;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.MultiPartEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.mail.Address;
+import javax.mail.internet.InternetAddress;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -78,24 +83,25 @@ public class EMailMsgPusher implements MessageSender {
         /*if(DoubleAspect.NONE.sameAspect(userInline)){
             return ResponseData.successResponse;
         }*/
-
-        List<String> receiversList = userEmailSupport.listAllUserEmail();
+        //List<String> receiversList = userEmailSupport.listAllUserEmail();
+        List<String> receiversList = new ArrayList<>();
+        receiversList.add("Wei_K@centit.com");
+        receiversList.add("17625999642@163.com");
         if(receiversList==null || receiversList.isEmpty()){
             return ResponseData.successResponse;
         }
         int successNo = 0;
         int failNo = 0;
         int totalNo = receiversList.size();
-
-        MultiPartEmail multMail = new MultiPartEmail();
-        // SMTP
-        multMail.setHostName(emailServerHost);
-        // 需要提供公用的消息用户名和密码
-        multMail.setAuthentication(emailServerHostUser, emailServerHostPwd);
-
         for (String email: receiversList){
             if (StringUtils.isNotBlank(email)) {
                 try {
+
+                    MultiPartEmail multMail = new MultiPartEmail();
+                    // SMTP
+                    multMail.setHostName(emailServerHost);
+                    // 需要提供公用的消息用户名和密码
+                    multMail.setAuthentication(emailServerHostUser, emailServerHostPwd);
                     multMail.setFrom(emailServerHostUser); //管理邮箱
                     multMail.addTo(email);
                     multMail.setSubject(message.getMsgSubject());
@@ -110,7 +116,7 @@ public class EMailMsgPusher implements MessageSender {
 
         }
         return ResponseData.makeErrorMessage(failNo==0?0:(successNo==0?1:2),
-           "total:"+totalNo+";success:"+successNo+"Fail:"+failNo);
+           "total:"+totalNo+";success:"+successNo+";Fail:"+failNo);
     }
 
 }

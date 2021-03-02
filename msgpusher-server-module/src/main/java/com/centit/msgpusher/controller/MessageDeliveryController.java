@@ -50,16 +50,15 @@ public class MessageDeliveryController  extends BaseController {
     private UserMsgPointManager userMsgPointManager;
 
 
-    private MessageDelivery
-        fetchMessageDelivery(HttpServletRequest request) throws IOException {
-
+    private MessageDelivery fetchMessageDelivery(HttpServletRequest request) throws IOException {
         String contentType = request.getContentType();
         if(StringUtils.indexOf(contentType,"form")>0){
             Map<String, String[]>  params = request.getParameterMap();
             Map<String, String> objMap = new HashMap<>();
             for(Map.Entry<String, String[]> ent : params.entrySet()){
-                if(ent.getValue()!=null && ent.getValue().length>0)
+                if(ent.getValue()!=null && ent.getValue().length>0) {
                     objMap.put(ent.getKey(),ent.getValue()[0]);
+                }
             }
             MessageDelivery msg = JSON.parseObject( JSON.toJSONString(objMap),MessageDelivery.class);
             return msg;
@@ -76,8 +75,9 @@ public class MessageDeliveryController  extends BaseController {
             Map<String, String[]>  params = request.getParameterMap();
             Map<String, String> objMap = new HashMap<>();
             for(Map.Entry<String, String[]> ent : params.entrySet()){
-                if(ent.getValue()!=null && ent.getValue().length>0)
+                if(ent.getValue()!=null && ent.getValue().length>0) {
                     objMap.put(ent.getKey(),ent.getValue()[0]);
+                }
             }
             UserMsgPoint userMsgPoint = JSON.parseObject( JSON.toJSONString(objMap),UserMsgPoint.class);
             return userMsgPoint;
