@@ -88,14 +88,17 @@ public class ServiceConfig {
         MsgPusherCenterImpl msgPusher =  new MsgPusherCenterImpl();
         //设置默认的推送方式   邮件推送
         msgPusher.registerMessageSender("email", emailPusher());
-        msgPusher.registerMessageSender("socket", socketMsgPusher());
-        msgPusher.registerMessageSender("baidu", baiduMsgPusher());
-        msgPusher.registerMessageSender("jiguang", jiguangMsgPusher());
+        //设置邮箱需要的参数
         emailPusher().setUserEmailSupport( (userCode)->
-                CodeRepositoryUtil.getUserInfoByCode(userCode).getRegEmail());
-        emailPusher().setEmailServerHost(emailServerHost);
-        emailPusher().setEmailServerHostUser(emailServerHostUser);
-        emailPusher().setEmailServerHostPwd(emailServerHostPwd);
+            CodeRepositoryUtil.getUserInfoByCode(userCode).getRegEmail());//邮件接收人信息
+        emailPusher().setEmailServerHost(emailServerHost);//邮件发送人
+        emailPusher().setEmailServerHostUser(emailServerHostUser);//登录用户名
+        emailPusher().setEmailServerHostPwd(emailServerHostPwd);//登录用户密码
+        //注册其它消息推送方式
+      /*  msgPusher.registerMessageSender("socket", socketMsgPusher());
+        msgPusher.registerMessageSender("baidu", baiduMsgPusher());
+        msgPusher.registerMessageSender("jiguang", jiguangMsgPusher());*/
+
         return msgPusher;
     }
 
