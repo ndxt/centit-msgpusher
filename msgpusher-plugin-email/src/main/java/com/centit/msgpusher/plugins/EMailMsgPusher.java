@@ -83,10 +83,7 @@ public class EMailMsgPusher implements MessageSender {
         /*if(DoubleAspect.NONE.sameAspect(userInline)){
             return ResponseData.successResponse;
         }*/
-        //List<String> receiversList = userEmailSupport.listAllUserEmail();
-        List<String> receiversList = new ArrayList<>();
-        receiversList.add("Wei_K@centit.com");
-        receiversList.add("17625999642@163.com");
+        List<String> receiversList = userEmailSupport.listAllUserEmail();
         if(receiversList==null || receiversList.isEmpty()){
             return ResponseData.successResponse;
         }
