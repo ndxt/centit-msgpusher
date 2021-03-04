@@ -54,8 +54,7 @@ public class MessageDelivery implements Serializable {
      * 收件人 null
      */
     @Column(name = "MSG_RECEIVER")
-    @NotBlank(message = "字段不能为空")
-
+    //@NotBlank(message = "字段不能为空")
     @Length(max = 100, message = "字段长度不能大于{max}")
     private String  msgReceiver;
     /**
