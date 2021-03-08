@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.centit.product</groupId>
         <artifactId>centit-msgpusher</artifactId>
-        <version>2.1-SNAPSHOT</version>
+        <version>5.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>msgpusher-server-web</artifactId>
@@ -116,25 +116,25 @@
         <dependency>
             <groupId>com.centit.product</groupId>
             <artifactId>msgpusher-plugin-email</artifactId>
-            <version>2.1-SNAPSHOT</version>
+            <version>5.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.centit.product</groupId>
             <artifactId>msgpusher-plugin-websocket</artifactId>
-            <version>2.1-SNAPSHOT</version>
+            <version>5.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
              <groupId>com.centit.product</groupId>
              <artifactId>msgpusher-plugin-baidu</artifactId>
-             <version>2.1-SNAPSHOT</version>
+             <version>5.1-SNAPSHOT</version>
              <scope>compile</scope>
          </dependency>
         <dependency>
             <groupId>com.centit.product</groupId>
             <artifactId>msgpusher-plugin-jpush</artifactId>
-            <version>2.1-SNAPSHOT</version>
+            <version>5.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 
