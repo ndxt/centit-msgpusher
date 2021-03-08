@@ -52,14 +52,11 @@ public class UserMsgPointController  extends BaseController {
     @RequestMapping(method = RequestMethod.GET)
     public void list(String[] field, PageDesc pageDesc, HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> searchColumn = BaseController.collectRequestParameters(request);
-
         JSONArray listObjects = userMsgPointMag.listUserMsgPointsAsJson(field,searchColumn, pageDesc);
-
         if (null == pageDesc) {
             JsonResultUtils.writeSingleDataJson(listObjects, response);
             return;
         }
-
         ResponseMapData resData = new ResponseMapData();
         resData.addResponseData(BaseController.OBJLIST, listObjects);
         resData.addResponseData(BaseController.PAGE_DESC, pageDesc);
@@ -76,7 +73,6 @@ public class UserMsgPointController  extends BaseController {
      */
     @RequestMapping(value = "/{userCode}/{osId}", method = {RequestMethod.GET})
     public void getUserMsgPoint(@PathVariable String userCode,@PathVariable String osId, HttpServletResponse response) {
-
         UserMsgPoint userMsgPoint =
                 userMsgPointMag.getObjectById(userCode);
 
@@ -102,9 +98,7 @@ public class UserMsgPointController  extends BaseController {
      */
     @RequestMapping(value = "/{userCode}/{osId}", method = {RequestMethod.DELETE})
     public void deleteUserMsgPoint(@PathVariable String userCode,@PathVariable String osId, HttpServletResponse response) {
-
         userMsgPointMag.deleteObjectById(userCode);
-
         JsonResultUtils.writeBlankJson(response);
     }
 

@@ -82,11 +82,6 @@ public class TestMsgPushController extends BaseController {
         return ResponseData.makeErrorMessage(ResponseData.ERROR_INTERNAL_SERVER_ERROR,"服务器处理异常！");
     }
 
-
-
-
-
-
     @RequestMapping(value = "/push/{msgType}/{userCode}", method = RequestMethod.GET)
     public void testPushStatus(@PathVariable String msgType,
                                @PathVariable String userCode,
