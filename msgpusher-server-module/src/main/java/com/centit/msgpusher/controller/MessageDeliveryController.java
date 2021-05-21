@@ -97,6 +97,7 @@ public class MessageDeliveryController  extends BaseController {
      * 3. 广播消息
      * 4. 查看消息状态
      * @param request HttpServletRequest
+     * @return ResponseData
      * @throws IOException IOException
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
