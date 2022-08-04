@@ -1,5 +1,6 @@
 package com.centit.msgpusher.config;
 
+import com.centit.framework.common.GlobalConstValue;
 import com.centit.framework.components.CodeRepositoryUtil;
 import com.centit.framework.components.impl.NotificationCenterImpl;
 import com.centit.framework.components.impl.TextOperationLogWriterImpl;
@@ -90,15 +91,16 @@ public class ServiceConfig {
         msgPusher.registerMessageSender("email", emailPusher());
         //设置邮箱需要的参数
         emailPusher().setUserEmailSupport( (userCode)->
-            CodeRepositoryUtil.getUserInfoByCode(userCode).getRegEmail());//邮件接收人信息
+            CodeRepositoryUtil.getUserInfoByCode(GlobalConstValue.NO_TENANT_TOP_UNIT,
+                userCode).getRegEmail());//邮件接收人信息
         emailPusher().setEmailServerHost(emailServerHost);//邮件发送人
         emailPusher().setEmailServerHostUser(emailServerHostUser);//登录用户名
         emailPusher().setEmailServerHostPwd(emailServerHostPwd);//登录用户密码
         //注册其它消息推送方式
-      /*  msgPusher.registerMessageSender("socket", socketMsgPusher());
+        /*  msgPusher.registerMessageSender("socket", socketMsgPusher());
         msgPusher.registerMessageSender("baidu", baiduMsgPusher());
-        msgPusher.registerMessageSender("jiguang", jiguangMsgPusher());*/
-
+        msgPusher.registerMessageSender("jiguang", jiguangMsgPusher());
+        */
         return msgPusher;
     }
 

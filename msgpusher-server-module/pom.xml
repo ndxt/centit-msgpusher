@@ -5,10 +5,9 @@
     <parent>
         <artifactId>centit-msgpusher</artifactId>
         <groupId>com.centit.product</groupId>
-        <version>5.1-SNAPSHOT</version>
+        <version>5.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>msgpusher-server-module</artifactId>
 
     <dependencies>
@@ -48,7 +47,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.2</version>
             <scope>provided</scope>
         </dependency>
         <!-- test library -->
@@ -78,24 +76,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.centit.product</groupId>
-            <artifactId>msgpusher-plugin-email</artifactId>
-            <version>5.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.centit.product</groupId>
-            <artifactId>msgpusher-plugin-websocket</artifactId>
-            <version>5.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.centit.product</groupId>
-            <artifactId>msgpusher-plugin-baidu</artifactId>
-            <version>5.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
 
     </dependencies>
 </project>

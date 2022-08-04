@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.centit.product</groupId>
         <artifactId>centit-msgpusher</artifactId>
-        <version>5.1-SNAPSHOT</version>
+        <version>5.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -27,7 +27,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.2</version>
             <scope>provided</scope>
         </dependency>
 
