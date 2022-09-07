@@ -12,11 +12,14 @@ import java.util.List;
  * 对百度推送进行封装
  */
 public interface IUserEmailSupport {
-    String getReceiverEmail(String receiver);
+    default String getReceiverEmail(String topUnit,String receiver){
+        IUserInfo userinfo = CodeRepositoryUtil.getUserInfoByCode(topUnit, receiver);
+        return userinfo.getRegEmail();
+    }
 
-    default List<String> listAllUserEmail(){
+    default List<String> listAllUserEmail(String topUnit){
         List<IUserInfo> allUsers = CodeRepositoryUtil.getAllUsers(
-            GlobalConstValue.NO_TENANT_TOP_UNIT,"A");
+            topUnit,"A");
         List<String>  allEmails = new ArrayList<>();
         for (IUserInfo allUser : allUsers) {
             allEmails.add(allUser.getRegEmail());

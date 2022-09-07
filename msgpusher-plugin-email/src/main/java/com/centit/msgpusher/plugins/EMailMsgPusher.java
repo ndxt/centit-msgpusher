@@ -30,6 +30,8 @@ public class EMailMsgPusher implements MessageSender {
     public String  emailServerHostUser;
     @Setter
     public String  emailServerHostPwd;
+    @Setter
+    public String  topUnit;
 
     @Setter
     private IUserEmailSupport userEmailSupport;
@@ -45,7 +47,7 @@ public class EMailMsgPusher implements MessageSender {
      */
     @Override
     public ResponseData sendMessage(String sender, String receiver, NoticeMessage message) {
-        String receiverEmail = userEmailSupport.getReceiverEmail(receiver);
+        String receiverEmail = userEmailSupport.getReceiverEmail(topUnit,receiver);
         if (receiverEmail == null || "".equals(receiverEmail)){
             return ResponseData.makeErrorMessage(2, "该用户没有设置注册邮箱");
         }
@@ -83,7 +85,7 @@ public class EMailMsgPusher implements MessageSender {
         /*if(DoubleAspect.NONE.sameAspect(userInline)){
             return ResponseData.successResponse;
         }*/
-        List<String> receiversList = userEmailSupport.listAllUserEmail();
+        List<String> receiversList = userEmailSupport.listAllUserEmail(topUnit);
         if(receiversList==null || receiversList.isEmpty()){
             return ResponseData.successResponse;
         }
