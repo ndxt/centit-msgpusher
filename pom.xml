@@ -79,6 +79,7 @@
         <module>msgpusher-plugin-baidu</module>
         <module>msgpusher-plugin-email</module>
         <module>msgpusher-server-module</module>
+        <module>msgpusher-plugin-tio</module>
     </modules>
 
     <build>
