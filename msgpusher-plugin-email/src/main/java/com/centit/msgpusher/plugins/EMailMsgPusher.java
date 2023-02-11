@@ -1,9 +1,13 @@
 package com.centit.msgpusher.plugins;
 
+import com.centit.framework.common.GlobalConstValue;
 import com.centit.framework.common.ResponseData;
+import com.centit.framework.common.WebOptUtils;
+import com.centit.framework.filter.RequestThreadLocal;
 import com.centit.framework.model.adapter.MessageSender;
 import com.centit.framework.model.basedata.NoticeMessage;
 import com.centit.support.common.DoubleAspect;
+import com.centit.support.common.ObjectException;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +18,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.mail.Address;
 import javax.mail.internet.InternetAddress;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +32,9 @@ public class EMailMsgPusher implements MessageSender {
 
     @Setter
     public String  emailServerHost;
+
+    @Setter
+    public int  emailServerPort;
     @Setter
     public String  emailServerHostUser;
     @Setter
@@ -37,6 +46,10 @@ public class EMailMsgPusher implements MessageSender {
     private IUserEmailSupport userEmailSupport;
 
 
+    public EMailMsgPusher(){
+        emailServerPort = 25;
+        topUnit = GlobalConstValue.NO_TENANT_TOP_UNIT;
+    }
     /**
      * 发送内部系统消息
      *
@@ -47,22 +60,18 @@ public class EMailMsgPusher implements MessageSender {
      */
     @Override
     public ResponseData sendMessage(String sender, String receiver, NoticeMessage message) {
-        String receiverEmail = userEmailSupport.getReceiverEmail(topUnit,receiver);
+        HttpServletRequest request = RequestThreadLocal.getLocalThreadWrapperRequest();
+        String currentTopUnit = WebOptUtils.getCurrentTopUnit(request);
+        currentTopUnit = StringUtils.isBlank(currentTopUnit)? topUnit : currentTopUnit;
+
+        String receiverEmail = userEmailSupport.getReceiverEmail(currentTopUnit, receiver);
         if (receiverEmail == null || "".equals(receiverEmail)){
             return ResponseData.makeErrorMessage(2, "该用户没有设置注册邮箱");
         }
-        MultiPartEmail multMail = new MultiPartEmail();
-        // SMTP
-        multMail.setHostName(emailServerHost);
-        // 需要提供公用的消息用户名和密码
-        multMail.setAuthentication(emailServerHostUser,emailServerHostPwd);
+
         try {
-//            multMail.setFrom(msg.getMsgSender());
-            multMail.setFrom(emailServerHostUser); //管理邮箱
-            multMail.addTo(receiverEmail);
-            multMail.setSubject(message.getMsgSubject());
-            multMail.setMsg(message.getMsgContent());
-            multMail.send();
+            sendEmail(new String[]{receiver}, sender,
+                message.getMsgSubject(), message.getMsgContent(), null);
             return ResponseData.successResponse;
         } catch (EmailException e) {
             //e.printStackTrace();
@@ -82,41 +91,56 @@ public class EMailMsgPusher implements MessageSender {
     @Override
     public ResponseData broadcastMessage(String sender, NoticeMessage message, DoubleAspect userInline) {
 
-        /*if(DoubleAspect.NONE.sameAspect(userInline)){
-            return ResponseData.successResponse;
-        }*/
-        List<String> receiversList = userEmailSupport.listAllUserEmail(topUnit);
+        HttpServletRequest request = RequestThreadLocal.getLocalThreadWrapperRequest();
+        String currentTopUnit = WebOptUtils.getCurrentTopUnit(request);
+        currentTopUnit = StringUtils.isBlank(currentTopUnit)? topUnit : currentTopUnit;
+
+        List<String> receiversList = userEmailSupport.listAllUserEmail(currentTopUnit);
         if(receiversList==null || receiversList.isEmpty()){
+            return ResponseData.makeErrorMessage(ObjectException.DATA_NOT_FOUND_EXCEPTION,
+                "没有找到对应的用户，可能时没有正确的配置用户信息支持接口 IUserEmailSupport 。");
+        }
+
+        try {
+            sendEmail(receiversList.toArray(new String[receiversList.size()]), sender,
+                message.getMsgSubject(), message.getMsgContent(), null);
             return ResponseData.successResponse;
+        } catch (EmailException e) {
+            //e.printStackTrace();
+            logger.error(e.getMessage(), e);
+            return ResponseData.makeErrorMessage(2, e.getMessage());
         }
-        int successNo = 0;
-        int failNo = 0;
-        int totalNo = receiversList.size();
-        for (String email: receiversList){
-            if (StringUtils.isNotBlank(email)) {
-                try {
 
-                    MultiPartEmail multMail = new MultiPartEmail();
-                    // SMTP
-                    multMail.setHostName(emailServerHost);
-                    // 需要提供公用的消息用户名和密码
-                    multMail.setAuthentication(emailServerHostUser, emailServerHostPwd);
-                    multMail.setFrom(emailServerHostUser); //管理邮箱
-                    multMail.addTo(email);
-                    multMail.setSubject(message.getMsgSubject());
-                    multMail.setMsg(message.getMsgContent());
-                    multMail.send();
-                    successNo++;
-                } catch (EmailException e) {
-                    failNo ++;
-                    logger.error(e.getMessage(), e);
-                }
-            }
-
-        }
-        return ResponseData.makeErrorMessage(failNo==0?0:(successNo==0?1:2),
-           "total:"+totalNo+";success:"+successNo+";Fail:"+failNo);
     }
 
+
+    public void sendEmail(String[] mailTo, String mailFrom,
+                          String msgSubject, String msgContent, List<File> annexs)
+        throws EmailException {
+
+        MultiPartEmail multMail = new MultiPartEmail();
+        // SMTP
+        multMail.setHostName(emailServerHost);
+        multMail.setSmtpPort(emailServerPort);
+        // 需要提供公用的邮件用户名和密码
+        multMail.setAuthentication(emailServerHostUser, emailServerHostPwd);
+        //multMail.setFrom(CodeRepositoryUtil.getRight("SysMail", "admin_email"));
+        multMail.setFrom(mailFrom);
+        multMail.addTo(mailTo);
+        multMail.setCharset("utf-8");
+        multMail.setSubject(msgSubject);
+        msgContent = msgContent.trim();
+        if(msgContent.endsWith("</html>") || msgContent.endsWith("</HTML>")){
+            multMail.addPart(msgContent, "text/html;charset=utf-8");
+        }else{
+            multMail.setContent(msgContent, "text/plain;charset=gb2312");
+        }
+        if(annexs!=null) {
+            for (File attachment : annexs) {
+                multMail.attach(attachment);
+            }
+        }
+        multMail.send();
+    }
 }
 

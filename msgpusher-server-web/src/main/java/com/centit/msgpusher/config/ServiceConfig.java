@@ -89,10 +89,10 @@ public class ServiceConfig {
         MsgPusherCenterImpl msgPusher =  new MsgPusherCenterImpl();
         //设置默认的推送方式   邮件推送
         msgPusher.registerMessageSender("email", emailPusher());
+        //msgPusher.
         //设置邮箱需要的参数
-        emailPusher().setUserEmailSupport( (userCode)->
-            CodeRepositoryUtil.getUserInfoByCode(GlobalConstValue.NO_TENANT_TOP_UNIT,
-                userCode).getRegEmail());//邮件接收人信息
+        emailPusher().setUserEmailSupport((topUnit, receiver) ->
+            CodeRepositoryUtil.getUserInfoByCode(topUnit, receiver).getRegEmail());//邮件接收人信息
         emailPusher().setEmailServerHost(emailServerHost);//邮件发送人
         emailPusher().setEmailServerHostUser(emailServerHostUser);//登录用户名
         emailPusher().setEmailServerHostPwd(emailServerHostPwd);//登录用户密码
