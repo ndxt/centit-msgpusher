@@ -34,13 +34,13 @@ public class EMailMsgPusher implements MessageSender {
     public String  emailServerHost;
 
     @Setter
-    public int  emailServerPort;
+    private int  emailServerPort;
     @Setter
-    public String  emailServerHostUser;
+    private String  emailServerUser;
     @Setter
-    public String  emailServerHostPwd;
+    private String  emailServerPwd;
     @Setter
-    public String  topUnit;
+    private String  topUnit;
 
     @Setter
     private IUserEmailSupport userEmailSupport;
@@ -123,7 +123,7 @@ public class EMailMsgPusher implements MessageSender {
         multMail.setHostName(emailServerHost);
         multMail.setSmtpPort(emailServerPort);
         // 需要提供公用的邮件用户名和密码
-        multMail.setAuthentication(emailServerHostUser, emailServerHostPwd);
+        multMail.setAuthentication(emailServerUser, emailServerPwd);
         //multMail.setFrom(CodeRepositoryUtil.getRight("SysMail", "admin_email"));
         multMail.setFrom(mailFrom);
         multMail.addTo(mailTo);
