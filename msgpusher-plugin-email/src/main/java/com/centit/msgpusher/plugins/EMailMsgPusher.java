@@ -65,7 +65,7 @@ public class EMailMsgPusher implements MessageSender {
         currentTopUnit = StringUtils.isBlank(currentTopUnit)? topUnit : currentTopUnit;
 
         String receiverEmail = userEmailSupport.getReceiverEmail(currentTopUnit, receiver);
-        if (receiverEmail == null || "".equals(receiverEmail)){
+        if (StringUtils.isBlank(receiverEmail)){
             return ResponseData.makeErrorMessage(2, "该用户没有设置注册邮箱");
         }
 

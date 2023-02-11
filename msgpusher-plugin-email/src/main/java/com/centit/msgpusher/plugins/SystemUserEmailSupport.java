@@ -14,6 +14,8 @@ public class SystemUserEmailSupport implements IUserEmailSupport{
     @Override
     public String getReceiverEmail(String topUnit, String receiver){
         IUserInfo userinfo = CodeRepositoryUtil.getUserInfoByCode(topUnit, receiver);
+        if(userinfo==null)
+            return null;
         return userinfo.getRegEmail();
     }
 
