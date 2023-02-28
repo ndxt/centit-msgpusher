@@ -1,6 +1,6 @@
 package com.centit.msgpusher.plugins;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.baidu.yun.push.auth.PushKeyPair;
 import com.baidu.yun.push.client.BaiduPushClient;
 import com.baidu.yun.push.constants.BaiduPushConstants;

@@ -1,6 +1,6 @@
 package com.centit.msgpusher.service;
 
-import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson2.JSONArray;
 import com.centit.framework.common.ResponseData;
 import com.centit.framework.jdbc.service.BaseEntityManager;
 import com.centit.msgpusher.po.MessageDelivery;

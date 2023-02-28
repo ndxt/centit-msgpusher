@@ -1,7 +1,7 @@
 package com.centit.msgpusher.commons;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -60,7 +60,7 @@ public class MsgPushConfigImpl implements MsgPushConfig{
             JSONObject jo= JSONObject.parseObject(lastStr);
             System.out.println("jo=" + jo);
             String con = jo.get("osInfos").toString();
-            JSONArray jsonArray = JSONObject.parseArray(con);
+            JSONArray jsonArray = JSONArray.parseArray(con);
             System.out.println("con=" + con);
             for (int i = 0; i<jsonArray.size();i++){
                 OSMsgPushInfo osMsgPushInfo = new OSMsgPushInfo();
@@ -68,7 +68,7 @@ public class MsgPushConfigImpl implements MsgPushConfig{
                 osMsgPushInfo.setOsId(json.get("osId").toString());
                 osMsgPushInfo.setAndroidPkg(json.get("androidPkg").toString());
                 String opt = json.get("optInfos").toString();
-                JSONArray jsonOptArray = JSONObject.parseArray(opt);
+                JSONArray jsonOptArray = JSONArray.parseArray(opt);
                 List<OptMsgPushInfo> optInfos = new ArrayList<>();
                 for (int j = 0; j<jsonOptArray.size();j++){
                     OptMsgPushInfo optMsgPushInfo = new OptMsgPushInfo();

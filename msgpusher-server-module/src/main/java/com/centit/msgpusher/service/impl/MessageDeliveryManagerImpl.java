@@ -1,7 +1,7 @@
 package com.centit.msgpusher.service.impl;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import com.centit.framework.common.ResponseData;
 import com.centit.framework.common.ResponseMapData;
 import com.centit.framework.core.dao.DictionaryMapUtils;
@@ -13,6 +13,7 @@ import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.service.MessageDeliveryManager;
 import com.centit.msgpusher.service.MsgPusherCenter;
+import com.centit.support.algorithm.CollectionsOpt;
 import com.centit.support.algorithm.DatetimeOpt;
 import com.centit.support.database.utils.PageDesc;
 import org.apache.commons.lang3.StringUtils;
@@ -66,8 +67,8 @@ public class MessageDeliveryManagerImpl
     public JSONArray listMessageDeliverysAsJson(
             String[] fields,
             Map<String, Object> filterMap, PageDesc pageDesc){
-        return DictionaryMapUtils.mapJsonArray( messageDeliveryDao.listObjectsPartFieldAsJson(
-            filterMap, fields, pageDesc),MessageDelivery.class);
+        return DictionaryMapUtils.mapJsonArray( messageDeliveryDao.listObjectsPartFieldByPropertiesAsJson(
+            filterMap, CollectionsOpt.arrayToList(fields), pageDesc),MessageDelivery.class);
     }
 
     /**

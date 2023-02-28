@@ -1,7 +1,6 @@
 package com.centit.msgpusher.client;
 
 import com.centit.framework.appclient.HttpReceiveJSON;
-import com.centit.framework.common.ResponseData;
 
 /**
  * Created by codefan on 17-4-11.
