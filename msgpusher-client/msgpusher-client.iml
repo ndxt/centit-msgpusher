@@ -13,7 +13,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: com.centit.framework:framework-adapter:5.3-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.centit.support:centit-utils:5.3-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.83" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba.fastjson2:fastjson2:2.0.24" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.13" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.13" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />

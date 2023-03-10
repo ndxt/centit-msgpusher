@@ -8,10 +8,7 @@ import com.centit.framework.ip.app.config.IPAppSystemBeanConfig;
 import com.centit.framework.jdbc.config.JdbcConfig;
 import com.centit.framework.model.adapter.NotificationCenter;
 import com.centit.framework.model.adapter.OperationLogWriter;
-import com.centit.msgpusher.plugins.BaiduMsgPusher;
-import com.centit.msgpusher.plugins.EMailMsgPusher;
-import com.centit.msgpusher.plugins.JiguangMsgPusher;
-import com.centit.msgpusher.plugins.SocketMsgPusherImpl;
+import com.centit.msgpusher.plugins.*;
 import com.centit.msgpusher.service.MsgPusherCenter;
 import com.centit.msgpusher.service.impl.MsgPusherCenterImpl;
 import org.springframework.beans.factory.annotation.Value;
@@ -73,10 +70,6 @@ public class ServiceConfig {
         return new SocketMsgPusherImpl();
     }
 
-    @Bean(value = "emailPusher")
-    public EMailMsgPusher emailPusher() {
-        return new EMailMsgPusher();
-    }
 
     @Bean(value = "baiduMsgPusher")
     public BaiduMsgPusher baiduMsgPusher() {
@@ -87,14 +80,14 @@ public class ServiceConfig {
     public MsgPusherCenter msgPusherCenter() {
         MsgPusherCenterImpl msgPusher =  new MsgPusherCenterImpl();
         //设置默认的推送方式   邮件推送
-        msgPusher.registerMessageSender("email", emailPusher());
-        //msgPusher.
+        EMailMsgPusher emailPusher = new EMailMsgPusher();
+        msgPusher.registerMessageSender("email", emailPusher);
+
         //设置邮箱需要的参数
-        emailPusher().setUserEmailSupport((topUnit, receiver) ->
-            CodeRepositoryUtil.getUserInfoByCode(topUnit, receiver).getRegEmail());//邮件接收人信息
-        emailPusher().setEmailServerHost(emailServerHost);//邮件发送人
-        emailPusher().setEmailServerUser(emailServerHostUser);//登录用户名
-        emailPusher().setEmailServerPwd(emailServerHostPwd);//登录用户密码
+        emailPusher.setUserEmailSupport(new SystemUserEmailSupport());//邮件接收人信息
+        emailPusher.setEmailServerHost(emailServerHost);//邮件发送人
+        emailPusher.setEmailServerUser(emailServerHostUser);//登录用户名
+        emailPusher.setEmailServerPwd(emailServerHostPwd);//登录用户密码
         //注册其它消息推送方式
         /*  msgPusher.registerMessageSender("socket", socketMsgPusher());
         msgPusher.registerMessageSender("baidu", baiduMsgPusher());

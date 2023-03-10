@@ -60,12 +60,17 @@ public class EMailMsgPusher implements MessageSender {
         currentTopUnit = StringUtils.isBlank(currentTopUnit)? topUnit : currentTopUnit;
 
         String receiverEmail = userEmailSupport.getReceiverEmail(currentTopUnit, receiver);
+        String sendEmail = userEmailSupport.getReceiverEmail(currentTopUnit, sender);
+        if(StringUtils.isBlank(sendEmail)){
+            sendEmail = emailServerUser;
+        }
+
         if (StringUtils.isBlank(receiverEmail)){
             return ResponseData.makeErrorMessage(2, "该用户没有设置注册邮箱");
         }
 
         try {
-            sendEmail(new String[]{receiver}, sender,
+            sendEmail(new String[]{receiverEmail}, sendEmail,
                 message.getMsgSubject(), message.getMsgContent(), null);
             return ResponseData.successResponse;
         } catch (EmailException e) {
@@ -91,13 +96,18 @@ public class EMailMsgPusher implements MessageSender {
         currentTopUnit = StringUtils.isBlank(currentTopUnit)? topUnit : currentTopUnit;
 
         List<String> receiversList = userEmailSupport.listAllUserEmail(currentTopUnit);
+        String sendEmail = userEmailSupport.getReceiverEmail(currentTopUnit, sender);
+        if(StringUtils.isBlank(sendEmail)){
+            sendEmail = emailServerUser;
+        }
+
         if(receiversList==null || receiversList.isEmpty()){
             return ResponseData.makeErrorMessage(ObjectException.DATA_NOT_FOUND_EXCEPTION,
                 "没有找到对应的用户，可能时没有正确的配置用户信息支持接口 IUserEmailSupport 。");
         }
 
         try {
-            sendEmail(receiversList.toArray(new String[receiversList.size()]), sender,
+            sendEmail(receiversList.toArray(new String[receiversList.size()]), sendEmail,
                 message.getMsgSubject(), message.getMsgContent(), null);
             return ResponseData.successResponse;
         } catch (EmailException e) {
