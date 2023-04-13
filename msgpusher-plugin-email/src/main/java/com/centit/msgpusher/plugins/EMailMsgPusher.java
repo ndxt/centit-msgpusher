@@ -27,7 +27,6 @@ public class EMailMsgPusher implements MessageSender {
 
     @Setter
     public String  emailServerHost;
-
     @Setter
     private int  emailServerPort;
     @Setter
@@ -36,10 +35,8 @@ public class EMailMsgPusher implements MessageSender {
     private String  emailServerPwd;
     @Setter
     private String  topUnit;
-
     @Setter
     private IUserEmailSupport userEmailSupport;
-
 
     public EMailMsgPusher(){
         emailServerPort = 25;
@@ -118,11 +115,9 @@ public class EMailMsgPusher implements MessageSender {
 
     }
 
-
     public void sendEmail(String[] mailTo, String mailFrom,
                           String msgSubject, String msgContent, List<File> annexs)
         throws EmailException {
-
         MultiPartEmail multMail = new MultiPartEmail();
         // SMTP
         multMail.setHostName(emailServerHost);

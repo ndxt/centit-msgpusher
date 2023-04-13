@@ -2,7 +2,6 @@ package com.centit.msgpusher.plugins;
 
 import com.centit.framework.components.CodeRepositoryUtil;
 import com.centit.framework.model.basedata.IUserInfo;
-
 import java.util.ArrayList;
 import java.util.List;
 
