@@ -1,7 +1,7 @@
 package com.centit.msgpusher.plugins;
 
 import com.centit.framework.components.CodeRepositoryUtil;
-import com.centit.framework.model.basedata.IUserInfo;
+import com.centit.framework.model.basedata.UserInfo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class SystemUserEmailSupport implements IUserEmailSupport{
     @Override
     public String getReceiverEmail(String topUnit, String receiver){
-        IUserInfo userinfo = CodeRepositoryUtil.getUserInfoByCode(topUnit, receiver);
+        UserInfo userinfo = CodeRepositoryUtil.getUserInfoByCode(topUnit, receiver);
         if(userinfo==null)
             return null;
         return userinfo.getRegEmail();
@@ -20,10 +20,10 @@ public class SystemUserEmailSupport implements IUserEmailSupport{
 
     @Override
     public List<String> listAllUserEmail(String topUnit){
-        List<IUserInfo> allUsers = CodeRepositoryUtil.getAllUsers(
+        List<UserInfo> allUsers = CodeRepositoryUtil.getAllUsers(
             topUnit,"A");
         List<String>  allEmails = new ArrayList<>();
-        for (IUserInfo allUser : allUsers) {
+        for (UserInfo allUser : allUsers) {
             allEmails.add(allUser.getRegEmail());
         }
         return allEmails;
