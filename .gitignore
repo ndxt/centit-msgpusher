@@ -1,5 +1,11 @@
-*.iml
-.idea/
-node_modules/
+.idea
 target
-
+**/*.iml
+**/target
+**/node_modules
+.mvn
+mvn*
+.settings
+**/~$*
+out.*
+.flattened-pom.xml

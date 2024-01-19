@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.centit.product</groupId>
         <artifactId>centit-msgpusher</artifactId>
-        <version>5.4-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -15,12 +15,12 @@
     <packaging>jar</packaging>
     <description>消息推送服务器的客户端，并且实现了先腾框架的底层服务接口，
         可以对框架中的消息服务进行替换。</description>
-
     <dependencies>
 
         <dependency>
             <groupId>com.centit.framework</groupId>
             <artifactId>framework-adapter</artifactId>
+            <version>${revision}</version>
             <optional>true</optional>
         </dependency>
 
