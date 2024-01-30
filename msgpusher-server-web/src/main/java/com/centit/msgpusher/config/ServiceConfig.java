@@ -1,10 +1,8 @@
 package com.centit.msgpusher.config;
 
-import com.centit.framework.components.CodeRepositoryUtil;
 import com.centit.framework.components.impl.NotificationCenterImpl;
 import com.centit.framework.components.impl.TextOperationLogWriterImpl;
 import com.centit.framework.config.SpringSecurityDaoConfig;
-import com.centit.framework.ip.app.config.IPAppSystemBeanConfig;
 import com.centit.framework.jdbc.config.JdbcConfig;
 import com.centit.framework.model.adapter.NotificationCenter;
 import com.centit.framework.model.adapter.OperationLogWriter;
@@ -21,8 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableScheduling
 @ComponentScan(basePackages = {"com.centit.*"})
 @Import({SpringSecurityDaoConfig.class,
-    //SpringSecurityCasConfig.class,
-    IPAppSystemBeanConfig.class, JdbcConfig.class})
+    JdbcConfig.class})
 
 public class ServiceConfig {
 

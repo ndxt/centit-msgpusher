@@ -1,13 +1,13 @@
 package com.centit.msgpusher.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.centit.framework.common.ResponseData;
-import com.centit.framework.model.adapter.MessageSender;
 import com.centit.msgpusher.po.MessageDelivery;
 import com.centit.msgpusher.po.UserMsgPoint;
 import com.centit.msgpusher.service.MsgPusherCenter;
 import com.centit.support.common.DoubleAspect;
 import org.apache.commons.lang3.StringUtils;
+import com.centit.framework.model.adapter.MessageSender;
+import com.centit.framework.common.ResponseData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,40 +19,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 //@Service("msgPusherCenter")
 public class MsgPusherCenterImpl implements MsgPusherCenter {
 
-    /*@Resource(name="appMsgPusher")
-    private MessageSender appPusher;
-
-    @Resource(name="emailMsgPusher")
-    private MessageSender emailPusher;
-
-    @Resource(name="wxMsgPusher")
-    private MessageSender wxPusher;
-
-    @Resource(name="smsMsgPusher")
-    private MessageSender smsPusher;
-
-    @Resource(name="socketMsgPusher")
-    private MessageSender socketPusher;
-*/
     private String defaultPushType;
 
- /*   @Resource(name = "messageDeliveryDao")
-    private MessageDeliveryDao messageDeliveryDao ;
+    private Map<String/*noticeTypes*/, MessageSender> pusherMap;
 
-    @Resource
-    private MessageDeliveryManager messageDeliveryManager;*/
-
-    private Map<String/*noticeTypes*/,MessageSender> pusherMap;
-
-/*    @PostConstruct
-    public void init(){
-        //通知方式 可以多种方式  A：app推送， S：短信  C：微信  N：内部通知系统 U: unknown 未指定
-        pusherMap = new HashMap<>();
-        pusherMap.put(MessageDelivery.NOTICE_TYPE_APP,appPusher);
-        pusherMap.put(MessageDelivery.NOTICE_TYPE_EMAIL,emailPusher);
-        pusherMap.put(MessageDelivery.NOTICE_TYPE_WX,wxPusher);
-        pusherMap.put(MessageDelivery.NOTICE_TYPE_SMS,smsPusher);
-    }*/
 
     public MsgPusherCenterImpl(){
         pusherMap = new HashMap<>();

@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.centit.framework</groupId>
         <artifactId>centit-project-bulid-parent</artifactId>
-        <version>5.5-SNAPSHOT</version>
+        <version>5.4.240119</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -94,7 +94,6 @@
                     <encoding>UTF-8</encoding>
                     <compilerArguments>
                         <verbose />
-                        <bootclasspath>${java.home}/lib/rt.jar;${java.home}/lib/jce.jar</bootclasspath>
                     </compilerArguments>
                 </configuration>
             </plugin>
@@ -146,7 +145,7 @@
             </plugin>-->
 
             <!-- sonatype release :
-                mvn nexus-staging:release -->
+                mvn nexus-staging:release
 
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
@@ -158,7 +157,7 @@
                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
-            </plugin>
+            </plugin> -->
         </plugins>
     </build>
 </project>
