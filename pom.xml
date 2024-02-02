@@ -28,16 +28,6 @@
         </license>
     </licenses>
 
-    <distributionManagement>
-
-        <repository>
-            <id>centit-releases</id>
-            <name>centit-release</name>
-            <url>http://nexus.centit.com:8081/nexus/content/repositories/centit-releases/</url>
-        </repository>
-
-    </distributionManagement>
-
     <developers>
         <developer>
             <name>杨淮生</name>
