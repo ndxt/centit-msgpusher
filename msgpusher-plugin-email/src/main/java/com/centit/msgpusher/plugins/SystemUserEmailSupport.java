@@ -12,6 +12,9 @@ import java.util.List;
 public class SystemUserEmailSupport implements IUserEmailSupport{
     @Override
     public String getReceiverEmail(String topUnit, String receiver){
+        if(receiver.indexOf('@')>0){
+            return receiver;
+        }
         UserInfo userinfo = CodeRepositoryUtil.getUserInfoByCode(topUnit, receiver);
         if(userinfo==null)
             return null;
