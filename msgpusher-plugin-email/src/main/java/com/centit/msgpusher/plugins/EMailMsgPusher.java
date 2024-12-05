@@ -52,10 +52,7 @@ public class EMailMsgPusher implements MessageSender {
      */
     @Override
     public ResponseData sendMessage(String sender, String receiver, NoticeMessage message) {
-        HttpServletRequest request = RequestThreadLocal.getLocalThreadWrapperRequest();
-        String currentTopUnit = WebOptUtils.getCurrentTopUnit(request);
-        currentTopUnit = StringUtils.isBlank(currentTopUnit)? topUnit : currentTopUnit;
-
+        String currentTopUnit = StringUtils.isBlank(message.getTopUnit())? topUnit : message.getTopUnit();
         String receiverEmail = userEmailSupport.getReceiverEmail(currentTopUnit, receiver);
         String sendEmail = userEmailSupport.getReceiverEmail(currentTopUnit, sender);
         if(StringUtils.isBlank(sendEmail)){
@@ -87,10 +84,7 @@ public class EMailMsgPusher implements MessageSender {
      */
     @Override
     public ResponseData broadcastMessage(String sender, NoticeMessage message, DoubleAspect userInline) {
-
-        HttpServletRequest request = RequestThreadLocal.getLocalThreadWrapperRequest();
-        String currentTopUnit = WebOptUtils.getCurrentTopUnit(request);
-        currentTopUnit = StringUtils.isBlank(currentTopUnit)? topUnit : currentTopUnit;
+        String currentTopUnit = StringUtils.isBlank(message.getTopUnit())? topUnit : message.getTopUnit();
 
         List<String> receiversList = userEmailSupport.listAllUserEmail(currentTopUnit);
         String sendEmail = userEmailSupport.getReceiverEmail(currentTopUnit, sender);
