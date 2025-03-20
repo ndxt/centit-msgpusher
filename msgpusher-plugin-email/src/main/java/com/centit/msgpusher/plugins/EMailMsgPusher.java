@@ -2,8 +2,6 @@ package com.centit.msgpusher.plugins;
 
 import com.centit.framework.common.GlobalConstValue;
 import com.centit.framework.common.ResponseData;
-import com.centit.framework.common.WebOptUtils;
-import com.centit.framework.filter.RequestThreadLocal;
 import com.centit.framework.model.adapter.MessageSender;
 import com.centit.framework.model.basedata.NoticeMessage;
 import com.centit.support.common.DoubleAspect;
@@ -15,7 +13,6 @@ import org.apache.commons.mail.MultiPartEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.List;
 
